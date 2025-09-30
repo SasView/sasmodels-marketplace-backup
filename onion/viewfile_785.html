@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/73/">Onion</a></li>
+<li><a href="/uploads/785">onion.c</a></li>
+</ol>
+<h1>Onion - onion.c</h1>
+<pre>
+    <code>
+static double
+f_exp(double q, double r, double sld_in, double sld_out,
+    double thickness, double A, double side)
+{
+  const double vol = M_4PI_3 * cube(r);
+  const double qr = q * r;
+  const double bes = sas_3j1x_x(qr);
+  const double alpha = A * r/thickness;
+  double result;
+  if (qr == 0.0) {
+    result = 1.0;
+  } else if (fabs(A) &gt; 0.0) {
+    const double qrsq = qr * qr;
+    const double alphasq = alpha * alpha;
+    const double sumsq = alphasq + qrsq;
+    double sinqr, cosqr;
+    SINCOS(qr, sinqr, cosqr);
+    const double t1 = (alphasq - qrsq)*sinqr/qr - 2.0*alpha*cosqr;
+    const double t2 = alpha*sinqr/qr - cosqr;
+    const double fun = -3.0*(t1/sumsq - t2)/sumsq;
+    const double slope = (sld_out - sld_in)/expm1(A);
+    const double contrast = slope*exp(A*side);
+    result = contrast*fun + (sld_in-slope)*bes;
+  } else {
+    result = sld_in*bes;
+  }
+  return vol * result;
+}
+
+static double
+outer_radius(double radius_core, double n_shells, double thickness[])
+{
+  int n = (int)(n_shells+0.5);
+  double r = radius_core;
+  for (int i=0; i &lt; n; i++) {
+    r += thickness[i];
+  }
+  return r;
+}
+
+static double
+form_volume(double radius_core, double n_shells, double thickness[])
+{
+  return M_4PI_3*cube(outer_radius(radius_core, n_shells, thickness));
+}
+
+static double
+radius_effective(int mode, double radius_core, double n_shells, double thickness[])
+{
+  // case 1: outer radius
+  return outer_radius(radius_core, n_shells, thickness);
+}
+
+static void
+Fq(double q, double *F1, double *F2, double sld_core, double radius_core, double sld_solvent,
+    double n_shells, double sld_in[], double sld_out[], double thickness[],
+    double A[])
+{
+  int n = (int)(n_shells+0.5);
+  double r_out = radius_core;
+  double f = f_exp(q, r_out, sld_core, 0.0, 0.0, 0.0, 0.0);
+  for (int i=0; i &lt; n; i++){
+    const double r_in = r_out;
+    r_out += thickness[i];
+    f -= f_exp(q, r_in, sld_in[i], sld_out[i], thickness[i], A[i], 0.0);
+    f += f_exp(q, r_out, sld_in[i], sld_out[i], thickness[i], A[i], 1.0);
+  }
+  f -= f_exp(q, r_out, sld_solvent, 0.0, 0.0, 0.0, 0.0);
+
+  *F1 = 1e-2 * f;
+  *F2 = 1e-4 * f * f;
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/73/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/onion.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

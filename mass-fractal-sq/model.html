@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Mass Fractal S(q) | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/118/">Mass Fractal S(q)</a></li>
+</ol>
+<h1>Mass Fractal S(q)</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Calculates the structure factor term ONLY from the Mass Fractal model.</p>
+<p>Definition<br/>----------<br/>The Sinha-Mildner-Hall fractal structure factor.</p>
+<p>The functional form of the structure factor is defined below</p>
+<p>\begin{equation}<br/>    S(q) = \frac{\Gamma(D_m-1)\xi^{D_m-1}}{\left[1+(q\xi)^2<br/>    \right]^{(D_m-1)/2}}<br/>    \frac{sin\left[(D_m - 1) tan^{-1}(q\xi) \right]}{q}<br/>\end{equation}</p>
+<p>where $D_m$ is the $mass$ fractal dimension and $\xi$ is the upper fractal cutoff length, i.e. the length scale above which the system is no longer fractal.</p>
+<p>SasView automatically appends two additional parameters $radius$_$effective$ and $volfraction$ to all $S(q)$ models. However, these are not used by this model.</p>
+<p>The mass fractal dimension ( $D_m$ ) is only valid if $1 &lt;= D_m &lt;= 3$. It is also only valid over a limited $q$ range (see the references for details).</p>
+<p>WARNING! By convention, $S(q)$ is normally dimensionless. THIS FUNCTION IS NOT DIMENSIONLESS!</p>
+<p>References<br/>---------------<br/>D Mildner and P Hall, J. Phys. D: Appl. Phys.,<br/>19 (1986) 1535-1545 Equation(9)</p>
+<p>P Wong, Methods in the physics of porous media<br/>San Diego; London. Academic. (1999) </p>
+<p>Authorship and Verification<br/>-----------------------------------<br/>Author: Ziggy Attala and Matt D G Hughes Date: 09/09/2019<br/>Last Modified by: Steve King Date: 18/09/2019<br/>Last Reviewed by:</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/3/">smk78</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 18, 2019, 6:01 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Structure Factor</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/608">mass_fractal_sq.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<div class="comment well">
+<div class="detail-container">
+<div class="user">
+                    smk78:
+                </div>
+<div class="time">
+                    Wed 18 Sep 2019 at 18:04
+                </div>
+</div>
+<div class="content">
+                This is a cleaned-up version of the same model submitted by Z Attala.
+            </div>
+</div>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

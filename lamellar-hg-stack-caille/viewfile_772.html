@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/lamellae/">Lamellae</a></li>
+<li><a href="/models/51/">Lamellar Hg Stack Caille</a></li>
+<li><a href="/uploads/772">lamellar_hg_stack_caille.c</a></li>
+</ol>
+<h1>Lamellar Hg Stack Caille - lamellar_hg_stack_caille.c</h1>
+<pre>
+    <code>/*	LamellarCailleHG kernel - allows for name changes of passed parameters ...
+    Maths identical to LamellarCaille apart from the line for P(Q)
+*/
+
+static double
+Iq(double qval,
+   double length_tail,
+   double length_head,
+   double fp_Nlayers,
+   double dd,
+   double Cp,
+   double tail_sld,
+   double head_sld,
+   double solvent_sld)
+{
+  int Nlayers = (int)(fp_Nlayers+0.5);    //cast to an integer for the loop
+  double inten,Pq,Sq,alpha,temp,t2;
+  //double dQ, dQDefault, t1, t3;
+  // from wikipedia 0.577215664901532860606512090082402431042159335
+  const double Euler = 0.577215664901533;   // Euler's constant, increased sig figs for new models Feb 2015
+  //dQDefault = 0.0;    //[=] 1/A, q-resolution, default value
+  //dQ = dQDefault; // REMOVED UNUSED dQ calculations for new models Feb 2015
+
+  Pq = (head_sld-solvent_sld)*(sin(qval*(length_head+length_tail))-sin(qval*length_tail))
+       + (tail_sld-solvent_sld)*sin(qval*length_tail);
+  Pq *= Pq;
+  Pq *= 4.0/(qval*qval);
+
+  Sq = 0.0;
+  for(int ii=1; ii &lt; Nlayers; ii++) {
+    temp = 0.0;
+    alpha = Cp/4.0/M_PI/M_PI*(log(M_PI*ii) + Euler);
+    //t1 = 2.0*dQ*dQ*dd*dd*alpha;
+    t2 = 2.0*qval*qval*dd*dd*alpha;
+    //t3 = dQ*dQ*dd*dd*ii*ii;
+
+    temp = 1.0-(double)ii/(double)Nlayers;
+    //temp *= cos(dd*qval*ii/(1.0+t1));
+    temp *= cos(dd*qval*ii);
+    //if (temp &lt; 0) printf("q=%g: ii=%d, cos(dd*q*ii)=cos(%g) &lt; 0\n",qval,ii,dd*qval*ii);
+    //temp *= exp(-1.0*(t2 + t3)/(2.0*(1.0+t1)) );
+    temp *= exp(-t2/2.0);
+    //temp /= sqrt(1.0+t1);
+
+    Sq += temp;
+  }
+
+  Sq *= 2.0;
+  Sq += 1.0;
+
+  //if (Sq &lt; 0) printf("q=%g: S(q) =%g\n", qval, Sq);
+
+  inten = 2.0*M_PI*Pq*Sq/(dd*qval*qval);
+
+  inten *= 1.0e-04;   // 1/A to 1/cm
+  return inten;
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/51/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/lamellar_hg_stack_caille.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

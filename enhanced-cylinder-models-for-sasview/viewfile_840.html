@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/161/">Enhanced Cylinder Models for SasView</a></li>
+<li><a href="/uploads/840">hollow_cylinder_high_res_integration.c</a></li>
+</ol>
+<h1>Enhanced Cylinder Models for SasView - hollow_cylinder_high_res_integration.c</h1>
+<pre>
+    <code>
+
+#define min(a,b) ((a) &lt; (b) ? (a) : (b))
+#define max(a,b) ((a) &gt; (b) ? (a) : (b))
+
+const double coeffs[] = {-4.947090333125777e-15, 0.5650307788861153, 0.3166711615676249, 0.2436727663119887, 0.16859361052538338, 0.013352225246354545, 0.015881407078550572, 0.01157181752170385, 0.013617508843405879, 0.01672260228770812, -0.008413826135788088, -0.013091202622457651, 0.006695877709010346, -0.006464139231893942, 0.015094052566744256, -0.00023295814235393811, -0.0014140558404368388, -0.0003536003752557154, -0.0005301238650319541, -0.0009008642929335271, -0.0004290062892654165, -0.0007700685021726832, -0.0008940285206048428, -4.103480688405019e-05, -0.0008494607178137389, 0.00043294569883312446, -0.0005498761232470379, -0.0008806238587081575, -0.001457729566320206, 0.0026715221234369624, -0.0010629819248146963, 0.000622075299171881, -0.0005752697865157617, -0.0011685378827954482, 0.0005223208296159535};
+const double intercept = 2.950898721346258;
+const double limits[][2] = {{0.0005, 0.5}, {1.0, 1000000.0}, {1.0, 1000000.0}, {1.0, 1000000.0}};
+
+
+inline float log2m (float val)
+{
+   int * const    exp_ptr = (int *) (&amp;val);
+   int            x = *exp_ptr;
+   const int      log_2 = ((x &gt;&gt; 23) &amp; 255) - 128;
+   x &amp;= ~(255 &lt;&lt; 23);
+   x += 127 &lt;&lt; 23;
+   *exp_ptr = x;
+
+   val = ((-1.0f/3) * val + 2) * val - 2.0f/3;   // (1)
+
+   return (val + log_2);
+}
+
+
+        
+double eval_poly(double var0, double var1, double var2, double var3){
+    return 1 * coeffs[0] + var0 * coeffs[1] + var1 * coeffs[2] + var2 * coeffs[3] + var3 * coeffs[4] + (var0 * var0) * coeffs[5] + var0 * var1 * coeffs[6] + var0 * var2 * coeffs[7] + var0 * var3 * coeffs[8] + (var1 * var1) * coeffs[9] + var1 * var2 * coeffs[10] + var1 * var3 * coeffs[11] + (var2 * var2) * coeffs[12] + var2 * var3 * coeffs[13] + (var3 * var3) * coeffs[14] + (var0 * var0 * var0) * coeffs[15] + (var0 * var0) * var1 * coeffs[16] + (var0 * var0) * var2 * coeffs[17] + (var0 * var0) * var3 * coeffs[18] + var0 * (var1 * var1) * coeffs[19] + var0 * var1 * var2 * coeffs[20] + var0 * var1 * var3 * coeffs[21] + var0 * (var2 * var2) * coeffs[22] + var0 * var2 * var3 * coeffs[23] + var0 * (var3 * var3) * coeffs[24] + (var1 * var1 * var1) * coeffs[25] + (var1 * var1) * var2 * coeffs[26] + (var1 * var1) * var3 * coeffs[27] + var1 * (var2 * var2) * coeffs[28] + var1 * var2 * var3 * coeffs[29] + var1 * (var3 * var3) * coeffs[30] + (var2 * var2 * var2) * coeffs[31] + (var2 * var2) * var3 * coeffs[32] + var2 * (var3 * var3) * coeffs[33] + (var3 * var3 * var3) * coeffs[34] + intercept;
+}
+    
+    </code>
+</pre>
+<a class="btn btn-default" href="/models/161/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/hollow_cylinder_high_res_integration.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/127/">Peak Voigt</a></li>
+<li><a href="/uploads/619">peak_voigt.py</a></li>
+</ol>
+<h1>Peak Voigt - peak_voigt.py</h1>
+<pre>
+    <code>r"""
+This model describes a pseudo-Voigt shaped peak on a flat background.
+
+Definition
+----------
+
+This pseudo-Voigt peak function is a weighted linear summation of
+Lorentzian (L) and Gaussian (G) peak shapes. The usefulness of this
+function is that it produces a peak shape with asymmetry.
+ 
+The scattering intensity $I(q)$ is calculated as
+
+.. math::
+
+    I(q) = scale . [{W_f.I(q)_L} + {(1-W_f).I(q)_G}] + background
+	
+where $W_f$ is a weighting factor and
+
+.. math::
+
+    I(q)_L = frac{1}{igl(1+igl(frac{q-q_0}{HWHM}igr)^2igr)}
+
+
+    I(q)_G = expleft[ -frac12 (q-q_0)^2 / sigma^2 ight]
+
+The peak is taken to be centered at $q_0$ with a HWHM (half-width
+half-maximum) of 1.177 $sigma$, where $sigma$ is the standard deviation
+of the Gaussian. In other words, the widths of the Lorentzian and the
+Gaussian have been coupled for convenience of parameterisation.
+
+When $W_f$ = 1 a Lorentzian peak is returned, and when $W_f$ = 0 a
+Gaussian peak is returned.
+
+For practical purposes 0 &lt; $sigma$ &lt; 0.1 else no peak is generated.
+
+For 2D data the scattering intensity is calculated in the same way as 1D,
+where the $q$ vector is defined as
+
+.. math::
+
+    q = sqrt{q_x^2 + q_y^2}
+
+References
+----------
+Aaron L. Stancik, Eric B. Brauns
+A simple asymmetric lineshape for fitting infrared absorption spectra
+Vibrational Spectroscopy 47 (2008) 66-69
+
+Authorship and Verification
+---------------------------
+
+* **Author:** Steve King **Date:** 19/11/2019
+* **Last Modified by:** Steve King **Date:** 24/06/2020
+* **Last Reviewed by:** **Date:**
+
+"""
+
+import numpy as np
+from numpy import inf
+
+name = "peak_voigt"
+title = "A Voigt peak on a flat background"
+description = """
+        Evaluates a pseudo-Voigt shaped peak."""
+
+category = "shape-independent"
+
+#             ["name", "units", default, [lower, upper], "type", "description"],
+parameters = [["wf", "", 0.5, [0, 1], "",
+               "Weighting factor"],
+              ["q0", "1/Ang", 0.05, [-inf, inf], "",
+               "Peak position in q"],
+              ["sigma", "1/Ang", 0.005, [0, inf], "",
+               "Peak width (Std dev)"]]
+
+def Iq(q, wf, q0, sigma):
+    hwhm = 1.177*sigma
+    intens = (wf*(1/(1+((q-q0)**2.0/hwhm**2.0))))+((1.0-wf)*np.exp((-0.5*(q-q0)**2.0)/(sigma**2.0)))
+    return intens
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+demo = dict(scale=100, background=0.1,
+            wf=0.5, q0=0.05, sigma=0.005)
+
+tests = [
+    [{'scale': 1.0, 'background' : 0.001, 'wf' : 0.5,
+      'q0' : 0.05, 'sigma' : 0.005},
+     [0.0005, 0.0514693877551], [0.00796878321113, 0.950526807316]],
+	]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/127/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/peak_voigt.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

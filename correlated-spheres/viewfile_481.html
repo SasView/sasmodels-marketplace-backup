@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/112/">correlated_spheres</a></li>
+<li><a href="/uploads/481">correlated_spheres.py</a></li>
+</ol>
+<h1>correlated_spheres - correlated_spheres.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+The 1D scattering intensity of two correlated spherical particles can be written as: P(q)=F1^2 + F2^2 + 2*F1*F2*sin(qD)/qD, where F1 and F2 are the scattering amplitudes of particle1 and particle2 respectively, D is the center-to-center distance between the two particles.
+Particularly, this model is to calculate the scattering intensity of two spatially correlated hard spheres of different size(radius) and scatterling length density(SLDs) at fixed distance D from each other.
+
+References 
+----------
+Tianfu Li, Yiyun Cheng, Yu Wang, Hui Wang, Dongfeng Chen, Yuntao Liu, Li Zhang, Wenze Han, Rongdeng Liu , Zijun Wang, Chunming Yang, Charl J. Jafta, Daniel Clemens and and Uwe Keiderling. Analysis of Dimer Impurity in Polyamidoamine Dendrimer Solutions by Small-angle Neutron Scattering[J]. Chinese J. Polym. Sci. doi: 10.1007/s10118-019-2260-x 
+
+Authorship and Verification
+---------------------------
+
+* **Author:Tianfu Li, Dongfeng Chen, Paul Butler ** --- **Date:** 2019YYY-03m-28d
+* **Last Modified by:** --- **Date:** 2019YYY-03m-28d
+* **Last Reviewed by:** --- **Date:** 2019YYY-03m-28d
+"""
+
+from math import *
+from numpy import inf
+
+name = "correlated_spheres"
+title = "User model for correlated_spheres"
+description = """two spheres of different size and SL1Ds at fixed distance D from each other """
+
+parameters = [ 
+#   ["name", "units", default, [lower, upper], "type", "description"],
+    ['Radius1', 'Ang', 20.0, [0, inf], '', 'radius of particle1'],
+    ['Radius2', 'Ang', 50.0, [0, inf], '', 'radius of particle2'],
+    ['D', 'Ang', 80.0, [0, inf], '', 'center to center distance'],
+    ['SLD1', '1e-6/Ang^2', 1.0, [-inf, inf], '', 'scattering length density of particle1'],
+    ['SLD2', '1e-6/Ang^2', 2.0, [-inf, inf], '', 'scattering length density of particle2'],
+    ['SLDsolvent', '1e-6/Ang^2', 6.38, [-inf, inf], '', 'scattering length density of solvent'],
+    ]
+def Iq(x, Radius1, Radius2, D, SLD1, SLD2, SLDsolvent):
+    """Absolute scattering"""
+    qr1 = x * Radius1
+    qr2 = x * Radius2
+    qD = x * D
+    sn1 = sin(qr1)
+    cn1 = cos(qr1)
+    sn2 = sin(qr2)
+    cn2 = cos(qr2)  
+    bes1 = 3 * (sn1 * qr1 * cn1) / qr1**3
+    bes1[qr1 == 0] = 1
+    bes2 = 3 * (sn2 * qr2 * cn2) / qr2**3
+    bes2[qr2 == 0] = 1
+    fq1 = bes1 * (SLD1 - SLDsolvent) * 1.33333333333 * pi * Radius1**3
+    fq2 = bes2 * (SLD2 - SLDsolvent) * 1.33333333333 * pi * Radius2**3
+    Intensity = 1.0e-4 * (fq1**2 + fq2**2 + fq1 * fq2 *sin(qD)/qD)
+    
+    return Intensity
+## uncomment the following if Iq works for vector x
+#Iq.vectorized = True
+
+#def Iqxy(x, y, Radius1, Radius2, D, SLD1, SLD2, SLDsolvent):
+#    """Absolute scattering of oriented particles."""
+#    ...
+#    return oriented_form(x, y, args)
+## uncomment the following if Iqxy works for vector x, y
+#Iqxy.vectorized = True
+</code>
+</pre>
+<a class="btn btn-default" href="/models/112/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/correlated_spheres.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

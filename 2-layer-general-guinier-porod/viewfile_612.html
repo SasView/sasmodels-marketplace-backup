@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/122/">2 Layer General Guinier Porod</a></li>
+<li><a href="/uploads/612">general_guinier_porod.py</a></li>
+</ol>
+<h1>2 Layer General Guinier Porod - general_guinier_porod.py</h1>
+<pre>
+    <code>import os
+import sys
+import numpy as np
+
+
+#name 
+name = "general_guinier_porod" 
+
+#title
+title = "Generalized Guinier Porod"
+
+#description
+description = """
+        Guinier-Porod model with TWO Guinier regions.
+        rg2 and s2 fit the low-q region
+        rg1 and s1 fit the mid-q region
+        porod_exp fits the high-q region
+
+        ref: B Hammouda, *A new Guinier-Porod model, J. Appl. Cryst.*, (2010), 43, 716-719."""
+
+#parameters 
+parameters = [["rg2", "Ang", 100.0, [0, np.inf], "", "Low-Q Radius of gyration"],
+              ["s2",  "",    0.0,  [0, np.inf], "", "Low-Q Dimension variable"],
+              ["rg1", "Ang", 10.0, [0, np.inf], "", "Mid-Q Radius of gyration"],
+              ["s1",  "",    1.0,  [0, np.inf], "", "Mid-Q Dimension variable"],
+              ["porod_exp",  "",    3.0,  [0, np.inf], "", "Porod exponent"]]
+
+# def form_volume(*arg): 
+#    return 1.0 
+
+# def ER(*arg): 
+#    return 1.0 
+
+def Iq(q, rg2, s2, rg1, s1, porod_exp):
+
+    import numpy as np # somehow this is necessary for the code to function properly
+
+    # preallocate return value
+    Iq = 0.0*q
+
+    # Take care of the singular points
+    if rg2 &lt;= 0.0 or rg1 &lt;= 0.0 or s2 &gt; s1:
+        return Iq
+
+    # Calculate cross-over points and scale factors; the parameter "scale" = G1 multiplies all three pieces
+    Q1 = np.sqrt((porod_exp-s1)*(3-s1)/2)/rg1
+    Q2 = np.sqrt((s1-s2)/(2*np.power(rg2,2)/(3-s2) - 2*np.power(rg1,2)/(3-s1)))
+    D = np.power(rg1,-(porod_exp-s1)) * np.exp(-(porod_exp-s1)/2) * np.power((porod_exp-s1)*(3-s1)/2,(porod_exp-s1)/2)
+    G2 = np.exp(-np.power(Q2,2) * (np.power(rg1,2)/(3-s1) - np.power(rg2,2)/(3-s2))) * np.power(Q2,(s2-s1))
+
+    # parse data using Q2 and Q1 transition points
+    idx_G2 = q &lt;= Q2
+    idx_G1 = np.logical_and((q &gt; Q2),(q &lt;= Q1))
+    idx_P = q &gt; Q1
+
+    # Do the calculation and return the function value
+    with np.errstate(divide='ignore'):
+        Iq[idx_G2] = G2 * np.power(q[idx_G2],-s2) * np.exp(-np.power(q[idx_G2]*rg2,2)/(3-s2))
+        Iq[idx_G1] = np.power(q[idx_G1],-s1) * np.exp(-np.power(q[idx_G1]*rg1,2)/(3-s1))
+        Iq[idx_P] = D * np.power(q[idx_P],-porod_exp)
+    return Iq
+Iq.vectorized = True # Iq accepts an array of q values
+
+def Iqxy(x, y, rg2, s2, rg1, s1, porod_exp):
+    return Iq(np.sqrt(x*x + y*y), rg2, s2, rg1, s1, porod_exp)
+Iqxy.vectorized = True
+
+</code>
+</pre>
+<a class="btn btn-default" href="/models/122/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/general_guinier_porod.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>core_shell_ellipsoid_tied and core_shell_ellipsoid_repar | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/ellipsoid/">Ellipsoid</a></li>
+<li><a href="/models/139/">core_shell_ellipsoid_tied and core_shell_ellipsoid_repar</a></li>
+</ol>
+<h1>core_shell_ellipsoid_tied and core_shell_ellipsoid_repar</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Two methods, both requiring sasview v5,  to produce a core_shell_ellipsoid with solvent in the shell.<br/>Parameters include the dry_shell / core volume ratio, the local fraction of solvent in the shell, and the sld of the dry shell.<br/>Values for these parameters may often be fairly easy to estimate from molecular formulae, then the solvent content of the shell may be adjusted by fitting or more likely by trial and error around an expected value.<br/>The shell thickness has to be calculated as the solution of a cubic equation, "on the fly".<br/>Sorry there is currently no easy way to return the value of the shell thickness, or the scattering length density of the wet shell, back to the user!<br/>The shell thickness may be (tediously) logged every time the solver is called by printing to the sasview log file.</p>
+<p>core_shell_ellipsoid_repar simply uses the reparameterize method, new to sasiew 5, on the default core_shell_ellipsoid model.<br/>(For a simpler example see the documentation in the sasview help for "plugin models".)</p>
+<p>core_shell_ellipsoid_tied is a more traditional rewrite of the default model.<br/>Both versions include a number of unit tests<br/>Both use cubic_solve_reparam3.c to solve the cubic equation.</p>
+<p>Many thanks to Paul Kienzle for setting up reparameterize, and much other help here.</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/11/">richardh</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Feb. 16, 2021, 5:26 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Ellipsoid</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/653">core_shell_ellipsoid_tied.py</a><br>
+<a href="/uploads/654">core_shell_ellipsoid_tied.c</a><br>
+<a href="/uploads/655">core_shell_ellipsoid_repar.py</a><br>
+<a href="/uploads/656">cubic_solve_reparam3.c</a><br>
+</br></br></br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

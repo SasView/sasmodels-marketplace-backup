@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Supercylinder | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/164/">Supercylinder</a></li>
+</ol>
+<h1>Supercylinder</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>## Definition</p>
+<p>This supercylinder model is an implementation based on Maric $\textit{et al}$, 2017 (#reference-1). Its shape can be described by a superellipsoid (Barr, 1992 (#reference-2) as:</p>
+<p>$$\left(\left| x \right|^{2} + \left| y \right|^{2}\right)^{t/2} + \left|\frac{ z}{\epsilon}\right|^t \leq |R|^t$$</p>
+<p>Setting $|r|^2 = \left| x \right|^{2} + \left| y \right|^{2}$, the radius $r$ of the superellisoid at a $z$ value can be related as:</p>
+<p>$$r(z) = \left|R^t - \left|\frac{z}{\epsilon}\right|^t\right|^{1/t}$$</p>
+<p>Where, $R$ is the radius at the equator, $\epsilon$ is the eccentricity and $t$ is the superellipticity. </p>
+<p>The supercylinder model is based on the form factor amplitude for a cylinder with length $2R_{cyl}\epsilon$ and radius $R_{cyl}$: </p>
+<p>$$F(q) = 2 \Delta \rho V \frac{\sin\left(\frac{1}{2} q (2 R_{cyl}\epsilon)\cos\theta\right) J_1\left(q R_{cyl} \sin\theta\right)}{\frac{1}{2}q (2R_{cyl}\epsilon) \cos\theta \ \ \ q R_{cyl} \sin\theta}$$</p>
+<p>where $V$ is the volume of the supercylinder, $\Delta\rho$ is the contrast between the solvents and the particles scattering length density, and $J_1$ is the first order Bessel function of first kind.</p>
+<p>If the radius is $R_{cyl} = r(z)$ such that it changes with $z$, the small cylinders must all <br/>be integrated over the length of the cylinder.  </p>
+<p>$$<br/>F(q) = 2 \Delta \rho V \frac{\sin\left(q R_{cyl}\epsilon\cos\theta\right) J_1\left(q R_{cyl} \sin\theta\right)}{q R_{cyl}\epsilon \cos\theta \ \ \ q R_{cyl} \sin\theta}\\<br/>$$</p>
+<p>$$<br/>= 2 \int_0^{R \epsilon} 2 \Delta \rho \pi r(z)^2 \frac{J_1\left(q r(z) \sin\theta\right)}{q \cos\theta \ \ \ q r(z) \sin\theta} \cos\left(q z\cos\theta\right) q \cos\theta \ dz\\<br/>$$</p>
+<p>$$<br/>=  \int_0^{R \epsilon} 4 \Delta \rho \pi r(z) \frac{J_1\left(q r(z) \sin\theta\right)}{q \sin\theta} \cos\left(q z\cos\theta\right) \ dz<br/>$$<br/>Given randomly oriented particles, the form factor can be written as:</p>
+<p>$$P(q) = \int^{\pi / 2}_0 \left| \int_0^{R\epsilon} 4 \Delta \rho \pi \epsilon r(z) \frac{\cos\left( q  r(z)\cos\theta\right) J_1\left(q z\sin\theta\right)}{q \sin\theta} \ dz \right|^2 \sin\theta \ d\theta$$</p>
+<p>which is solved numerically. Thus, the supercylinder model is given as:</p>
+<p>$$I(q) = \text{scale}  \ P(q) + \text{background}$$ </p>
+<p>## Validation</p>
+<p>The model is validated by using Shape2SAS (Larsen $\textit{et al}$, 2023 (#reference-3) to numerically generate simulated SAXS data for different supercylinders and fitting these with the model. This has been done in the range of $R \in [50, 100]$, $t \in [0.2, 50]$ and $\epsilon \in [0.5, 1.5]$. In these ranges, the model is found to be stable.</p>
+<p>## References</p>
+<p>1. Maric, Selma &amp; Lind, Tania &amp; Lyngsø, Jeppe &amp; Cárdenas, Marité &amp; Pedersen, Jan. (2017). Modeling Small-Angle X-Ray Scattering Data for Low Density Lipoproteins – Insights Into The Fatty Core Phase Packing And Transition. ACS Nano. 11. 10.1021/acsnano.6b08089. </p>
+<p>2. A.H. Barr, III. 8-RIGID PHYSICALLY BASED SUPERQUADRICS, Editor(s): DAVID KIRK, Graphics Gems III (IBM Version), Morgan Kaufmann, 1992, Pages 137-159, ISBN 9780124096738, https://doi.org/10.1016/B978-0-08-050755-2.50038-5.</p>
+<p>3. Larsen, A. H., Brookes, E., Pedersen, M. C. &amp; Kirkensgaard, J. J. K. (2023). Shape2SAS: a web application to simulate small-angle scattering data and pair distance distributions from user-defined shapes. Journal of Applied Crystallography 56, 1287-1294. [https://doi.org/10.1107/S1600576723005848](https://doi.org/10.1107/S1600576723005848)</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Supercylinder',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005237261180003165, y: 14426330596414.21},{x: 0.0005485780933513635, y: 14425872257119.12},{x: 0.0005746093505018498, y: 14425369404818.49},{x: 0.0006018758490100341, y: 14424817718361.83},{x: 0.0006304362038403404, y: 14424212457497.97},{x: 0.0006603518113683154, y: 14423548422304.6},{x: 0.0006916869813648103, y: 14422819908706.29},{x: 0.0007245090752430989, y: 14422020659707.05},{x: 0.0007588886508661356, y: 14421143811928.31},{x: 0.0007948996142252376, y: 14420181837005.24},{x: 0.0008326193783162658, y: 14419126477352.57},{x: 0.0008721290295548306, y: 14417968675765.4},{x: 0.0009135135020882696, y: 14416698498271.89},{x: 0.0009568617603791271, y: 14415305049600.51},{x: 0.00100226699045262, y: 14413776380566.68},{x: 0.001049826800219222, y: 14412099386620.78},{x: 0.001099643429303014, y: 14410259696730.96},{x: 0.001151823968826847, y: 14408241551700.66},{x: 0.001206480591626805, y: 14406027670941.25},{x: 0.001263730793390863, y: 14403599106634.28},{x: 0.001323697645240115, y: 14400935084125.84},{x: 0.001386510058295532, y: 14398012827296.83},{x: 0.001452303060799023, y: 14394807367547.13},{x: 0.001521218088384502, y: 14391291334919.29},{x: 0.001593403288122955, y: 14387434729767.85},{x: 0.00166901383699515, y: 14383204673253.78},{x: 0.001748212275476568, y: 14378565134811.03},{x: 0.001831168856951686, y: 14373476634592.81},{x: 0.001918061913708767, y: 14367895918761.11},{x: 0.002009078240301904, y: 14361775605334.55},{x: 0.002104413495104446, y: 14355063798158.54},{x: 0.00220427262091706, y: 14347703666409.6},{x: 0.002308870285534551, y: 14339632986896.88},{x: 0.002418431343218585, y: 14330783646278.86},{x: 0.002533191318068324, y: 14321081100179.85},{x: 0.002653396910328057, y: 14310443786072.16},{x: 0.002779306526720295, y: 14298782486693.85},{x: 0.00291119083594433, y: 14285999640707.4},{x: 0.00304933335053444, y: 14271988597282.28},{x: 0.003194031036328602, y: 14256632811316.18},{x: 0.003345594950857817, y: 14239804976114.28},{x: 0.003504350912028449, y: 14221366090538.79},{x: 0.003670640198535057, y: 14201164457949.98},{x: 0.003844820283509358, y: 14179034614708.92},{x: 0.004027265602982465, y: 14154796186638.22},{x: 0.004218368360812421, y: 14128252672677.05},{x: 0.004418539371807301, y: 14099190156070.29},{x: 0.00462820894485639, y: 14067375944852.89},{x: 0.004847827807967957, y: 14032557145194.16},{x: 0.005077868077202089, y: 13994459173429.21},{x: 0.005318824271581564, y: 13952784215412.11},{x: 0.005571214376162549, y: 13907209645277.44},{x: 0.00583558095555034, y: 13857386419906.55},{x: 0.006112492320253915, y: 13802937470488.13},{x: 0.006402543748386662, y: 13743456118680.04},{x: 0.006706358765339491, y: 13678504552172.15},{x: 0.007024590484177295, y: 13607612403079.47},{x: 0.007357923009640278, y: 13530275482729.81},{x: 0.007707072908768225, y: 13445954738214.12},{x: 0.008072790751309181, y: 13354075509696.11},{x: 0.008455862723224032, y: 13254027183058.86},{x: 0.008857112316755426, y: 13145163350080.51},{x: 0.009277402100694209, y: 13026802607989.1},{x: 0.009717635574649131, y: 12898230151844.66},{x: 0.01017875911130553, y: 12758700336478.58},{x: 0.0106617639908488, y: 12607440409207.12},{x: 0.01116768853192561, y: 12443655639462.71},{x: 0.01169762032372411, y: 12266536095697.81},{x: 0.01225269856397128, y: 12075265341765.22},{x: 0.01283411650787347, y: 11869031342200.21},{x: 0.0134431240332647, y: 11647039875393.83},{x: 0.01408103032747697, y: 11408530751623.71},{x: 0.01474920670170849, y: 11152797114319.18},{x: 0.01544908953894008, y: 10879208061653.91},{x: 0.01618218338173679, y: 10587234754250.48},{x: 0.01695006416657249, y: 10276480064983.37},{x: 0.01775438261163056, y: 9946711669224.764},{x: 0.01859686776536321, y: 9597898258657.191},{x: 0.01947933072343779, y: 9230248279761.932},{x: 0.02040366852206076, y: 8844250241989.33},{x: 0.02137186821604828, y: 8440713207133.211},{x: 0.02238601115041064, y: 8020805564133.197},{x: 0.02344827743463274, y: 7586089626599.672},{x: 0.02456095062926925, y: 7138548993206.092},{x: 0.02572642265492925, y: 6680605033604.604},{x: 0.026947198934203, y: 6215118380367.367},{x: 0.02822590377758481, y: 5745371026418.7},{x: 0.02956528602496994, y: 5275024684977.099},{x: 0.03096822495485305, y: 4808051630582.641},{x: 0.03243773647393144, y: 4348635486140.241},{x: 0.0339769796004188, y: 3901041522729.906},{x: 0.03558926325500659, y: 3469459114128.465},{x: 0.03727805337407182, y: 3057823039202.05},{x: 0.03904698036042249, y: 2669625158668.613},{x: 0.04089984688759735, y: 2307733126190.962},{x: 0.0428406360744974, y: 1974237375860.393},{x: 0.04487352004792172, y: 1670350403532.05},{x: 0.04700286891141484, y: 1396381736595.981},{x: 0.04923326013970614, y: 1151806275662.085},{x: 0.05156948841893605, y: 935431575871.3329},{x: 0.05401657595382337, y: 745650900405.1919},{x: 0.05657978326393033, y: 580745317463.3488},{x: 0.05926462049223502, y: 439174358415.1641},{x: 0.06207685925032052, y: 319778563104.4034},{x: 0.06502254502564488, y: 221818526920.3959},{x: 0.06810801017756359, y: 144803042167.7459},{x: 0.07133988755004285, y: 88117082015.09743},{x: 0.07472512473032619, y: 50540293568.38817},{x: 0.07827099898420638, y: 29823523680.0867},{x: 0.08198513290001026, y: 22525397378.90295},{x: 0.0858755107749249, y: 24262669464.64994},{x: 0.08995049577889155, y: 30381141057.58068},{x: 0.09421884793296548, y: 36846410999.13438},{x: 0.09868974294078842, y: 40988305852.37856},{x: 0.1033727919136565, y: 41741077679.00346},{x: 0.1082780620315877, y: 39271585262.90578},{x: 0.1134160981848019, y: 34278295021.19208},{x: 0.1187979456421381, y: 27489615522.88741},{x: 0.1244351737951392, y: 19702918402.86743},{x: 0.1303399010288461, y: 12124681719.59783},{x: 0.1365248207727661, y: 6328204030.533775},{x: 0.1430032287880195, y: 3468835282.726492},{x: 0.1497890517493212, y: 3375214854.418294},{x: 0.1568968771832412, y: 4613431214.244277},{x: 0.1643419848271027, y: 5644715106.500765},{x: 0.1721403794759309, y: 5779977214.639408},{x: 0.1803088253880614, y: 4982942751.018942},{x: 0.1888648823233727, y: 3423198707.084718},{x: 0.1978269432916132, y: 1736274010.945844},{x: 0.2072142740919709, y: 899295709.3817629},{x: 0.217047054728883, y: 1084880429.825324},{x: 0.2273464227931203, y: 1498718279.594784},{x: 0.2381345189013994, y: 1570308640.700199},{x: 0.2494345342922059, y: 1191582060.187247},{x: 0.2612707606801477, y: 570495943.5452774},{x: 0.2736686424760069, y: 336271066.0523847},{x: 0.2866548314847516, y: 509301320.9153129},{x: 0.3002572441990878, y: 600199288.3157309},{x: 0.3145051218117226, y: 436113501.750304},{x: 0.3294290930753407, y: 178221714.9045904},{x: 0.3450612401454263, y: 199712496.479097},{x: 0.3614351675474782, y: 274439969.2677207},{x: 0.3785860744168699, y: 197791625.8032744},{x: 0.3965508301666525, y: 81604929.06421247},{x: 0.4153680537459675, y: 127078764.0998712},{x: 0.4350781966594453, y: 130525686.0058722},{x: 0.4557236299260592, y: 51155613.54676705},{x: 0.4773487351643757, y: 70467379.60510622},{x: 0.5, y: 71846845.88306315},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/60/">Thomas</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 9, 2024, 10:57 a.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/851">supercylinder.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

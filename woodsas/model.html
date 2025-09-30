@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>WoodSAS | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/111/">WoodSAS</a></li>
+</ol>
+<h1>WoodSAS</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model is tailored for fitting the equatorial intensity profile from wood samples (Penttilä et al., 2019). The model consists of three independent contributions:<br/>1) Scattering in the plane perpendicular to the long axis of infinite cylinders packed in a hexagonal lattice with paracrystalline distortion (based on Hashimoto et al., 1994)<br/>2) Gaussian function centered at $q = 0$<br/>3) Power law scattering</p>
+<p>The fitted function is<br/>\[ I(q) = A I_{cyl}(q,\bar{R},\Delta R/\bar{R},a,\Delta a /a) + B \exp{-q^2/(2\sigma^2)} + C q^{-\alpha} + background ,\]<br/>where the cylinder radius $R$ has a Gaussian distribution with mean $\bar{R}$ and standard deviation $\Delta R$, and the paracrystalline distortion of the distance $a$ between the cylinders' center points is characterized by $\Delta a$. </p>
+<p>The cylinder contribution is<br/>\[ I_{cyl}(q) = \frac{1}{2\pi} \int_{0}^{2\pi} I_{\perp}(q,\psi) d\psi , \]<br/>where $\psi$ is the rotational angle around the cylinder axis and <br/>\[ I_{\perp}(q,\psi) = \left\langle \left| f^2 \right| \right\rangle - \left| \left\langle f \right\rangle \right| ^2 + \left| \left\langle f \right\rangle \right| ^2 Z_1 Z_2 .\]</p>
+<p>The form factor of an infinitely long cylinder is<br/>\[ f(q, R) = A_{cyl} \frac{J_1(qR)}{qR} = \pi R \frac{J_1(qR)}{q} ,\]<br/>where $J_1$ is the Bessel function of the first kind and $A_{cyl}$ the cross-sectional area of the cylinder. </p>
+<p>The terms with averaging are <br/>\[  \left\langle \left| f^2(q) \right| \right\rangle = \frac{\int_{0}^{\infty} P(R) f^2(q,R) dR }{\int_{0}^{\infty} P(R) dR} \]<br/>and<br/>\[ \left| \left\langle f(q) \right\rangle \right| ^2 = \left( \frac{\int_{0}^{\infty} P(R) f(q,R) dR }{\int_{0}^{\infty} P(R) dR} \right)^2 ,\]<br/>where the Gaussian distribution of the radius is<br/>\[ P(R) \propto \exp \left[ -\frac{(R-\bar{R})^2}{2(\Delta R)^2} \right].\]</p>
+<p>The paracrystalline lattice factors $Z_1$ and $Z_2$ for a hexagonal lattice with lattice vectors a$_1$ and a$_2$ are<br/>\[ Z_k(q) = \frac{1- \left| F_k \right|^2}{1 - 2\left| F_k \right| \cos(\mathbf{q \cdot a_k}) + \left| F_k \right|^2} ,\]<br/>where <br/>\[ \left| F_k \right| = \exp \left\{ -\frac{1}{2} \left( \Delta a/a \right)^2 \left[ \left( \mathbf{q \cdot a_1 } \right)^2 + \left( \mathbf{q \cdot a_2 } \right)^2 \right] \right\} ,\]<br/>\[ \mathbf{q \cdot a_1} = -a q \cos{(\psi-\frac{\pi}{6})} ,\]<br/>\[ \mathbf{q \cdot a_2 } = a q \sin{\psi} .\]</p>
+<p>The lattice factor $Z_k(q)$ has been modified according to Penttilä et al, 2019:<br/>\[ Z_k =\begin{cases}<br/>Z_k(q_0), &amp; \text{if $q \leq  7.061 \times 10^{-5} a^2 - 0.007413a + 0.2465$} \\<br/>Z_k(q) \text{ as in Hashimoto et al., 1994}, &amp; \text{if $q&gt; 7.061 \times 10^{-5} a^2 - 0.007413a + 0.2465$}<br/>\end{cases}\]</p>
+<p>A detailed description of the model is given in reference Penttilä et al., 2019.</p>
+<p>For the model to work properly, the scaling parameter of SasView should be fixed to 1.0 and $da/a$ should be larger than 0. The output intensity is given in arbitrary units (not in cm$^{-1}$!).</p>
+<p>References<br/>---------------</p>
+<p>Hashimoto, T., Kawamura, T., Harada, M., &amp; Tanaka, H. (1994). Macromolecules, 27, 3063-3072. DOI: 10.1021/ma00089a025<br/>Penttilä, P. A., Rautkari, L., Österberg, M., &amp; Schweins, R. (2019). Journal of Applied Crystallography, 52, 369-377. DOI: 10.1107/S1600576719002012</p>
+<p>Authorship and Verification<br/>-----------------------------------</p>
+<p>* **Author:** Paavo Penttilä **Date:** March 15, 2019</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'WoodSAS',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 160000.0},{x: 0.00301005, y: 122.31},{x: 0.0055201, y: 11.2615},{x: 0.00803015, y: 2.89387},{x: 0.0105402, y: 1.29549},{x: 0.0130503, y: 0.825497},{x: 0.0155603, y: 0.645943},{x: 0.0180704, y: 0.563026},{x: 0.0205804, y: 0.518187},{x: 0.0230905, y: 0.490236},{x: 0.0256005, y: 0.470449},{x: 0.0281106, y: 0.454875},{x: 0.0306206, y: 0.441595},{x: 0.0331307, y: 0.429627},{x: 0.0356407, y: 0.418454},{x: 0.0381508, y: 0.407795},{x: 0.0406608, y: 0.397501},{x: 0.0431709, y: 0.387489},{x: 0.0456809, y: 0.377718},{x: 0.048191, y: 0.368165},{x: 0.050701, y: 0.358816},{x: 0.0532111, y: 0.349664},{x: 0.0557211, y: 0.340702},{x: 0.0582312, y: 0.331923},{x: 0.0607412, y: 0.323317},{x: 0.0632513, y: 0.314922},{x: 0.0657613, y: 0.307489},{x: 0.0682714, y: 0.300991},{x: 0.0707814, y: 0.295381},{x: 0.0732915, y: 0.290619},{x: 0.0758015, y: 0.286671},{x: 0.0783116, y: 0.283508},{x: 0.0808216, y: 0.281106},{x: 0.0833317, y: 0.279443},{x: 0.0858417, y: 0.278498},{x: 0.0883518, y: 0.27825},{x: 0.0908618, y: 0.278674},{x: 0.0933719, y: 0.279739},{x: 0.0958819, y: 0.281407},{x: 0.098392, y: 0.283625},{x: 0.100902, y: 0.28633},{x: 0.103412, y: 0.289436},{x: 0.105922, y: 0.292841},{x: 0.108432, y: 0.296423},{x: 0.110942, y: 0.300037},{x: 0.113452, y: 0.303522},{x: 0.115962, y: 0.306704},{x: 0.118472, y: 0.309404},{x: 0.120982, y: 0.311443},{x: 0.123492, y: 0.312656},{x: 0.126003, y: 0.312899},{x: 0.128513, y: 0.312057},{x: 0.131023, y: 0.310054},{x: 0.133533, y: 0.306854},{x: 0.136043, y: 0.302461},{x: 0.138553, y: 0.296919},{x: 0.141063, y: 0.290305},{x: 0.143573, y: 0.282725},{x: 0.146083, y: 0.274303},{x: 0.148593, y: 0.265177},{x: 0.151103, y: 0.255488},{x: 0.153613, y: 0.245379},{x: 0.156123, y: 0.234982},{x: 0.158633, y: 0.224424},{x: 0.161143, y: 0.213817},{x: 0.163653, y: 0.203258},{x: 0.166163, y: 0.192833},{x: 0.168673, y: 0.18261},{x: 0.171183, y: 0.172648},{x: 0.173693, y: 0.162989},{x: 0.176204, y: 0.153667},{x: 0.178714, y: 0.144705},{x: 0.181224, y: 0.136119},{x: 0.183734, y: 0.127917},{x: 0.186244, y: 0.120102},{x: 0.188754, y: 0.112672},{x: 0.191264, y: 0.105622},{x: 0.193774, y: 0.0989448},{x: 0.196284, y: 0.09263},{x: 0.198794, y: 0.0866667},{x: 0.201304, y: 0.0810429},{x: 0.203814, y: 0.0757462},{x: 0.206324, y: 0.070764},{x: 0.208834, y: 0.0660836},{x: 0.211344, y: 0.0616924},{x: 0.213854, y: 0.057578},{x: 0.216364, y: 0.0537285},{x: 0.218874, y: 0.0501322},{x: 0.221384, y: 0.0467777},{x: 0.223894, y: 0.043654},{x: 0.226405, y: 0.0407504},{x: 0.228915, y: 0.0380565},{x: 0.231425, y: 0.0355622},{x: 0.233935, y: 0.0332577},{x: 0.236445, y: 0.0311333},{x: 0.238955, y: 0.0291798},{x: 0.241465, y: 0.027388},{x: 0.243975, y: 0.0257489},{x: 0.246485, y: 0.0242538},{x: 0.248995, y: 0.0228943},{x: 0.251505, y: 0.0216619},{x: 0.254015, y: 0.0205488},{x: 0.256525, y: 0.0195469},{x: 0.259035, y: 0.0186486},{x: 0.261545, y: 0.0178466},{x: 0.264055, y: 0.0171337},{x: 0.266565, y: 0.016503},{x: 0.269075, y: 0.0159479},{x: 0.271585, y: 0.0154619},{x: 0.274095, y: 0.015039},{x: 0.276606, y: 0.0146733},{x: 0.279116, y: 0.0143593},{x: 0.281626, y: 0.0140918},{x: 0.284136, y: 0.0138656},{x: 0.286646, y: 0.0136761},{x: 0.289156, y: 0.0135189},{x: 0.291666, y: 0.0133898},{x: 0.294176, y: 0.0132849},{x: 0.296686, y: 0.0132006},{x: 0.299196, y: 0.0131335},{x: 0.301706, y: 0.0130805},{x: 0.304216, y: 0.0130387},{x: 0.306726, y: 0.0130056},{x: 0.309236, y: 0.0129787},{x: 0.311746, y: 0.0129558},{x: 0.314256, y: 0.0129351},{x: 0.316766, y: 0.0129148},{x: 0.319276, y: 0.0128934},{x: 0.321786, y: 0.0128694},{x: 0.324296, y: 0.0128417},{x: 0.326807, y: 0.0128094},{x: 0.329317, y: 0.0127715},{x: 0.331827, y: 0.0127274},{x: 0.334337, y: 0.0126764},{x: 0.336847, y: 0.0126182},{x: 0.339357, y: 0.0125524},{x: 0.341867, y: 0.0124789},{x: 0.344377, y: 0.0123975},{x: 0.346887, y: 0.0123083},{x: 0.349397, y: 0.0122112},{x: 0.351907, y: 0.0121065},{x: 0.354417, y: 0.0119943},{x: 0.356927, y: 0.0118749},{x: 0.359437, y: 0.0117487},{x: 0.361947, y: 0.0116159},{x: 0.364457, y: 0.0114771},{x: 0.366967, y: 0.0113326},{x: 0.369477, y: 0.0111829},{x: 0.371987, y: 0.0110284},{x: 0.374497, y: 0.0108697},{x: 0.377008, y: 0.0107073},{x: 0.379518, y: 0.0105416},{x: 0.382028, y: 0.0103731},{x: 0.384538, y: 0.0102024},{x: 0.387048, y: 0.0100299},{x: 0.389558, y: 0.00985608},{x: 0.392068, y: 0.00968144},{x: 0.394578, y: 0.00950641},{x: 0.397088, y: 0.00933141},{x: 0.399598, y: 0.00915686},{x: 0.402108, y: 0.00898314},{x: 0.404618, y: 0.00881062},{x: 0.407128, y: 0.00863963},{x: 0.409638, y: 0.0084705},{x: 0.412148, y: 0.00830352},{x: 0.414658, y: 0.00813895},{x: 0.417168, y: 0.00797704},{x: 0.419678, y: 0.007818},{x: 0.422188, y: 0.00766203},{x: 0.424698, y: 0.00750931},{x: 0.427209, y: 0.00735997},{x: 0.429719, y: 0.00721414},{x: 0.432229, y: 0.00707192},{x: 0.434739, y: 0.0069334},{x: 0.437249, y: 0.00679864},{x: 0.439759, y: 0.00666767},{x: 0.442269, y: 0.00654053},{x: 0.444779, y: 0.00641722},{x: 0.447289, y: 0.00629774},{x: 0.449799, y: 0.00618207},{x: 0.452309, y: 0.00607016},{x: 0.454819, y: 0.00596198},{x: 0.457329, y: 0.00585746},{x: 0.459839, y: 0.00575654},{x: 0.462349, y: 0.00565915},{x: 0.464859, y: 0.00556519},{x: 0.467369, y: 0.00547459},{x: 0.469879, y: 0.00538724},{x: 0.472389, y: 0.00530305},{x: 0.474899, y: 0.00522191},{x: 0.47741, y: 0.00514371},{x: 0.47992, y: 0.00506835},{x: 0.48243, y: 0.00499572},{x: 0.48494, y: 0.00492571},{x: 0.48745, y: 0.00485821},{x: 0.48996, y: 0.0047931},{x: 0.49247, y: 0.00473028},{x: 0.49498, y: 0.00466964},{x: 0.49749, y: 0.00461107},{x: 0.5, y: 0.00455448},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/23/">penttila</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>March 15, 2019, 2:12 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/480">woodsas.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

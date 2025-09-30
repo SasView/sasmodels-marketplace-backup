@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/157/">Spherical Micelle</a></li>
+<li><a href="/uploads/822">spherical_micelle.py</a></li>
+</ol>
+<h1>Spherical Micelle - spherical_micelle.py</h1>
+<pre>
+    <code>r"""
+Spherical core with Gaussian chain micelle model
+"""
+
+import numpy as np
+from sasmodels.special import sas_3j1x_x, sas_sinx_x
+
+name = "spherical_micelle"
+title = "Spherical core with a Gaussian chain micelle"
+description = """ See J. Appl. Cryst. (2000). 33, 637±640
+      """
+category = "shape:sphere"
+
+#             ["name", "units", default, [lower, upper], "type", "description"],
+parameters = [["v_core",    "Ang^3",  4000.0, [0.0, np.inf], "", "Volume of the core (single block)"],
+              ["v_corona",      "Ang^3",      4000.0, [0.0, np.inf], "", "Volume of the corona (single block)"],
+              ["sld_solvent",  "Ang^-2",     1.0, [0.0, np.inf], "sld", "Solvent scattering length density"],
+              ["sld_core",      "Ang^-2", 2.0, [0.0, np.inf], "sld", "Core scattering length density"],
+              ["sld_corona",    "Ang^-2", 2.0,  [0.0, np.inf], "sld", "Corona scattering length density"],
+              ["radius_core",   "Ang",       40.0,  [0.0, np.inf], "volume", "Radius of core ( must be &gt;&gt; rg )"],
+              ["rg",    "Ang",       10.0,  [0.0, np.inf], "volume", "Radius of gyration of chains in corona"],
+              ["d_penetration", "",           1.0,  [0.0, np.inf], "", "Factor to mimic non-penetration of Gaussian chains"],
+              ["x_solv",      "",           0.0,  [0.0, 1.0], "", "Core solvation fraction"],        
+             ]
+
+
+def Iq(q,
+        v_core=4000,
+        v_corona=4000,
+        sld_solvent=1,
+        sld_core=2,
+        sld_corona=1,
+        radius_core=40,
+        rg=10,
+        d_penetration=1,
+        x_solv = 0.0
+        ):
+    n_aggreg = ((1-x_solv)*(4/3)*np.pi*(radius_core**3))/v_core
+    rho_solv = sld_solvent    
+    rho_core = sld_core       
+    rho_corona = sld_corona    
+
+    beta_core = v_core * (rho_core - rho_solv)
+    beta_corona = v_corona * (rho_corona - rho_solv)
+
+    # Self-correlation term of the core
+    bes_core = sas_3j1x_x(q*radius_core)
+    term1 = np.power(n_aggreg*beta_core*bes_core, 2)
+
+    # Self-correlation term of the chains
+    qrg2 = np.power(q*rg, 2)
+    debye_chain = 2.0*(np.vectorize(np.expm1)(-qrg2)+qrg2)/(qrg2**2) 
+    debye_chain[qrg2==0.0] = 1.0
+    term2 = n_aggreg * beta_corona * beta_corona * debye_chain
+
+    # Interference cross-term between core and chains
+    chain_ampl = -np.vectorize(np.expm1)(-qrg2)/qrg2
+    chain_ampl[qrg2==0.0] =  1.0 
+    bes_corona = sas_sinx_x(q*(radius_core + (d_penetration * rg)))
+    term3 = 2.0 * n_aggreg * n_aggreg * beta_core * beta_corona * bes_core * chain_ampl * bes_corona
+
+    # Interference cross-term between chains
+    term4 = n_aggreg * (n_aggreg - 1.0)* np.power(beta_corona * chain_ampl * bes_corona, 2)
+
+    # I(q)_micelle : Sum of 4 terms computed above
+    i_micelle = term1 + term2 + term3 + term4
+
+    return i_micelle
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+def random():
+    """Return a random parameter set for the model."""
+    radius_core = 10**np.random.uniform(1, 3)
+    rg = radius_core * 10**np.random.uniform(-2, -0.3)
+    d_penetration = np.random.randn()*0.05 + 1
+    v_core = np.random.uniform(3, 5)*(10**3)
+    v_corona = np.random.uniform(3, 5)*(10**3)
+    x_solv = np.random.uniform(0.0, 1.0)
+    sld_solvent = np.random.uniform(0.0, 2.0),
+    sld_core = np.random.uniform(0.0, 2.0),
+    sld_corona = np.random.uniform(0.0, 2.0),
+
+    pars = dict(
+        background=0,
+        scale=1.0,
+        v_core=v_core,
+        v_corona=v_corona,
+        sld_solvent = sld_solvent,
+        sld_core = sld_core,
+        sld_corona = sld_corona,
+        radius_core=radius_core,
+        rg=rg,
+        d_penetration=d_penetration,
+        x_solv = x_solv
+    )
+    return pars</code>
+</pre>
+<a class="btn btn-default" href="/models/157/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/spherical_micelle.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

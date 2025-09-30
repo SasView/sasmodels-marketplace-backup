@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/4/">Guinier Porod</a></li>
+<li><a href="/uploads/797">guinier_porod.py</a></li>
+</ol>
+<h1>Guinier Porod - guinier_porod.py</h1>
+<pre>
+    <code>r"""
+Calculates the scattering for a generalized Guinier/power law object. This is
+an empirical model that can be used to determine the size and dimensionality
+of scattering objects, including asymmetric objects such as rods or
+platelets, and shapes intermediate between spheres and rods or between rods
+and platelets, and overcomes some of the deficiencies of the (Beaucage)
+:ref:`unified-power-rg` model (see Hammouda, 2010).
+
+Definition
+----------
+
+The following functional form is used
+
+.. math::
+
+    I(q) = \begin{cases}
+    \frac{G}{Q^s}\ \exp{\left[\frac{-Q^2R_g^2}{3-s} \right]} &amp; Q \leq Q_1 \\
+    D / Q^m  &amp; Q \geq Q_1
+    \end{cases}
+
+This is based on the generalized Guinier law for such elongated objects
+(see the Glatter reference below). For 3D globular objects (such as spheres),
+$s = 0$ and one recovers the standard Guinier formula. For 2D symmetry
+(such as for rods) $s = 1$, and for 1D symmetry (such as for lamellae or
+platelets) $s = 2$. A dimensionality parameter ($3-s$) is thus defined,
+and is 3 for spherical objects, 2 for rods, and 1 for plates.
+
+Enforcing the continuity of the Guinier and Porod functions and their
+derivatives yields
+
+.. math::
+
+    Q_1 = \frac{1}{R_g} \sqrt{(m-s)(3-s)/2}
+
+and
+
+.. math::
+
+    D &amp;= G \ \exp{ \left[ \frac{-Q_1^2 R_g^2}{3-s} \right]} \ Q_1^{m-s}
+
+      &amp;= \frac{G}{R_g^{m-s}} \ \exp \left[ -\frac{m-s}{2} \right]
+          \left( \frac{(m-s)(3-s)}{2} \right)^{\frac{m-s}{2}}
+
+
+Note that the radius of gyration for a sphere of radius $R$ is given
+by $R_g = R \sqrt{3/5}$. For a cylinder of radius $R$ and length $L$,
+$R_g^2 = \frac{L^2}{12} + \frac{R^2}{2}$ from which the cross-sectional
+radius of gyration for a randomly oriented thin cylinder is $R_g = R/\sqrt{2}$
+and the cross-sectional radius of gyration of a randomly oriented lamella
+of thickness $T$ is given by $R_g = T / \sqrt{12}$.
+
+For 2D data: The 2D scattering intensity is calculated in the same way as 1D,
+where the q vector is defined as
+
+.. math::
+    q = \sqrt{q_x^2+q_y^2}
+
+
+Reference
+---------
+
+#. B Hammouda, *A new Guinier-Porod model*,
+   *J. Appl. Cryst.*, (2010), 43, 716-719
+#. B Hammouda, *Analysis of the Beaucage model*,
+   *J. Appl. Cryst.*, (2010), 43, 1474-1478
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:**
+"""
+
+import numpy as np
+from numpy import inf, sqrt, exp, errstate
+
+name = "guinier_porod"
+title = "Guinier-Porod function"
+description = """\
+         I(q) = scale/q^s* exp ( - R_g^2 q^2 / (3-s) ) for q&lt;= ql
+         = scale/q^porod_exp*exp((-ql^2*Rg^2)/(3-s))*ql^(porod_exp-s) for q&gt;=ql
+                        where ql = sqrt((porod_exp-s)(3-s)/2)/Rg.
+                        List of parameters:
+                        scale = Guinier Scale
+                        s = Dimension Variable
+                        Rg = Radius of Gyration [A]
+                        porod_exp = Porod Exponent
+                        background  = Background [1/cm]"""
+
+category = "shape-independent"
+
+# pylint: disable=bad-whitespace, line-too-long
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [["rg", "Ang", 60.0, [0, inf], "", "Radius of gyration"],
+              ["s",  "",    1.0,  [0, inf], "", "Dimension variable"],
+              ["porod_exp",  "",    3.0,  [0, inf], "", "Porod exponent"]]
+# pylint: enable=bad-whitespace, line-too-long
+
+# pylint: disable=C0103
+def Iq(q, rg, s, porod_exp):
+    """
+    @param q: Input q-value
+    """
+    n = 3.0 - s
+    ms = 0.5*(porod_exp-s) # =(n-3+porod_exp)/2
+
+    # preallocate return value
+    iq = 0.0*q
+
+    # Take care of the singular points
+    if rg &lt;= 0.0 or ms &lt;= 0.0:
+        return iq
+
+    # Do the calculation and return the function value
+    idx = q &lt; sqrt(n*ms)/rg
+    with errstate(divide='ignore'):
+        iq[idx] = q[idx]**-s * exp(-(q[idx]*rg)**2/n)
+        iq[~idx] = q[~idx]**-porod_exp * (exp(-ms) * (n*ms/rg**2)**ms)
+    return iq
+
+Iq.vectorized = True # Iq accepts an array of q values
+
+def random():
+    """Return a random parameter set for the model."""
+    rg = 10**np.random.uniform(1, 5)
+    s = np.random.uniform(0, 3)
+    porod_exp = s + np.random.uniform(0, 3)
+    pars = dict(
+        #scale=1, background=0,
+        rg=rg,
+        s=s,
+        porod_exp=porod_exp,
+    )
+    return pars
+
+tests = [[{'scale': 1.5, 'background':0.5}, 0.04, 5.290096890253155]]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/4/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/guinier_porod.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

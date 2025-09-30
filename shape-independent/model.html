@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Shape-Independent | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            // Dislay all LaTeX as inline
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ], [ "\\[", "\\]" ], [ "$$", "$$" ] ],
+            processEscapes: true
+        }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+</ol>
+<h1>Shape-Independent</h1>
+<div class="row">
+<div class="col-md-10">
+<table class="table search-results">
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Category</th>
+<th>Upload Date</th>
+<th>Author</th>
+<th>Score</th>
+<th>Verified</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="model-name"><a href="/models/80/">Two Power Law</a></td>
+<td>Definition 
+
+ 
+
+ The scattering intensity $I(q)$ is calculated as 
+
+ $$  I(q) = \begin{cases} A q^{-m1} + \text{background} &amp; q &lt;= q_c \\ C q^{-m2} + \text{background} &amp; q &gt; q_c \end{cases} 
+$$
+whe...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/52/">Unified Power Rg</a></td>
+<td>Definition 
+
+ 
+
+ This model employs the empirical multiple level unified Exponential/Power-law fit method developed by Beaucage. Four functions are included so that 1, 2, 3, or 4 levels can be used...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/53/">Gaussian Peak</a></td>
+<td>
+
+ Definition 
+
+ 
+
+ This model describes a Gaussian shaped peak on a flat background 
+
+ $$  I(q) = (\text{scale}) \exp\left[ -\tfrac12 (q-q_0)^2 / \sigma^2 \right] + \text{background} 
+$$
+with the ...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/60/">Teubner Strey</a></td>
+<td>Definition 
+
+ 
+
+ This model calculates the scattered intensity of a two-component system using the Teubner-Strey model. Unlike `dab` this function generates a peak. A two-phase material can be char...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/62/">Fractal</a></td>
+<td>Definition 
+
+ This model calculates the scattering from fractal-like aggregates of spherical building blocks according the following equation: 
+
+ $$  I(q) = \phi\ V_\text{block} (\rho_\text{block} ...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/66/">Correlation Length</a></td>
+<td>#correlation length model # Note: model title and parameter table are inserted automatically Definition 
+
+ 
+
+ The scattering intensity I(q) is calculated as 
+
+ $$ I(Q) = \frac{A}{Q^n} + \frac{C}{1 ...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/69/">Peak Lorentz</a></td>
+<td>This model describes a Lorentzian shaped peak on a flat background. 
+
+ Definition 
+
+ 
+
+ The scattering intensity $I(q)$ is calculated as 
+
+ $$  I(q) = \frac{scale}{\bigl(1+\bigl(\frac{q-q_0}{B}\big...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/70/">Gel Fit</a></td>
+<td>*This model was implemented by an interested user!* 
+
+ Unlike a concentrated polymer solution, the fine-scale polymer distribution in a gel involves at least two characteristic length scales, a sho...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/72/">Power Law</a></td>
+<td>#power_law model #conversion of PowerLawAbsModel.py #converted by Steve King, Dec 2015 
+
+ This model calculates a simple power law with a flat background. 
+
+ Definition 
+
+ 
+
+ $$  I(q) = \text{scale...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/76/">Lorentz</a></td>
+<td>Lorentz (Ornstein-Zernicke Model) 
+
+ Definition 
+
+ 
+
+ The Ornstein-Zernicke model is defined by 
+
+ $$ I(q)=\frac{\text{scale}}{1+(qL)^2}+\text{background} 
+$$
+The parameter $L$ is the screening len...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/50/">Spinodal</a></td>
+<td>Definition 
+
+ 
+
+ This model calculates the SAS signal of a phase separating system undergoing spinodal decomposition. The scattering intensity $I(q)$ is calculated as 
+
+ $$ I(q) = I_{max}\frac{(1+\...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/82/">Guinier</a></td>
+<td>Definition 
+
+ 
+
+ This model fits the Guinier function 
+
+ $$  I(q) = \text{scale} \cdot \exp{\left[ \frac{-Q^2 R_g^2 }{3} \right]} + \text{background} 
+$$
+to the data directly without any need for l...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/84/">Line</a></td>
+<td>This model calculates intensity using simple linear function 
+
+ Definition 
+
+ 
+
+ The scattering intensity $I(q)$ is calculated as 
+
+ $$  I(q) = \text{scale} (A + B \cdot q) + \text{background} 
+$$
+...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/87/">broad-peak (SASfit)</a></td>
+<td>This file has been automatically generated by sasfit_convert and manually edited by Wojciech Potrzebowski, ESS on 2017-12-05.
+
+The model calculates an empirical functional form for SAS data chara...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Dec 2017</td>
+<td><a href="/accounts/user/7/">wojciechpotrzebowski</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/102/">Star Polymer w/ Excluded Volume</a></td>
+<td>This model describes scattering from a star-branched polymer where the arms of the polymer may have excluded volume, i.e., they need not be Gaussian chains.
+
+Under this model, the form factor of ...</td>
+<td>Shape-Independent</td>
+<td class="model-date">22 Aug 2018</td>
+<td><a href="/accounts/user/17/">mjahore</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/122/">2 Layer General Guinier Porod</a></td>
+<td>Implementation of the 2 layer General guinier porod model described in 
+B. Hammouda, "A new Guinier–Porod model", Journal of Applied Crystallography, 43(4), 716, 2010</td>
+<td>Shape-Independent</td>
+<td class="model-date">03 Feb 2020</td>
+<td><a href="/accounts/user/28/">dfsunday</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/123/">Exponential</a></td>
+<td>Flexible exponential model with a flat background.
+
+DEFINITION
+This model calculates a variety of exponential functions.
+
+The scattered intensity $I(q)$ is calculated as
+
+   $I(q) = \text{sc...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Mar 2020</td>
+<td><a href="/accounts/user/3/">smk78</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/124/">Binary Blend</a></td>
+<td>Two-polymer RPA model with a flat background.
+
+Definition
+------------
+This model calculates the scattering from a two polymer blend using the Random Phase Approximation (RPA).
+
+This is a rev...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 May 2020</td>
+<td><a href="/accounts/user/3/">smk78</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/127/">Peak Voigt</a></td>
+<td>This model describes a pseudo-Voigt shaped peak on a flat background.
+
+Definition
+This pseudo-Voigt peak function is a weighted linear summation of Lorentzian (L) and Gaussian (G) peak shapes. T...</td>
+<td>Shape-Independent</td>
+<td class="model-date">24 Jun 2020</td>
+<td><a href="/accounts/user/3/">smk78</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span></span>
+</td>
+</tr>
+<tr>
+<td class="model-name"><a href="/models/33/">Rpa</a></td>
+<td>.. warning:: This model is not functioning correctly in SasView and it              appears it has not done so for some time. Whilst the              problem is investigated, a workaround for Case ...</td>
+<td>Shape-Independent</td>
+<td class="model-date">07 Sep 2017</td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+<td>0</td>
+<td align="center">
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span></span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-md-2">
+<h3>Categories:</h3>
+<ul class="nav nav-pills nav-stacked">
+<li role="presentation"><a href="/models/cylinder/">Cylinder</a></li>
+<li role="presentation"><a href="/models/dls/">DLS</a></li>
+<li role="presentation"><a href="/models/ellipsoid/">Ellipsoid</a></li>
+<li role="presentation"><a href="/models/lamellae/">Lamellae</a></li>
+<li role="presentation"><a href="/models/other/">Other</a></li>
+<li role="presentation"><a href="/models/paracrystal/">Paracrystal</a></li>
+<li role="presentation"><a href="/models/parallelepiped/">Parallelepiped</a></li>
+<li class="active" role="presentation"><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li role="presentation"><a href="/models/sphere/">Sphere</a></li>
+<li role="presentation"><a href="/models/structure-factor/">Structure Factor</a></li>
+<li role="presentation"><a href="/models/">All Models</a></li>
+</ul>
+</div>
+</div>
+<div class="pagination-container">
+<div>
+<span>Page 1 of 2</span>
+<a class="btn btn-default" href="?page=2"><span class="glyphicon glyphicon-menu-right"></span></a>
+</div>
+</div>
+</div>
+</body>
+</html>

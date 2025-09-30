@@ -1,0 +1,174 @@
+# Note: model title and parameter table are inserted automatically
+r"""
+This model provides the scattering intensity, $I(q)$, for a lyotropic lamellar
+phase where a random distribution in solution are assumed. The SLD of the outer,
+solvent-exposed region is taken to be different from the SLD of the inner region.
+
+This model is intended to be used with input parameters including the molecualr
+volumes and  bound coherrent scattering length of the inner portion of the
+amphiphile (solvent not exposed), the outer portion of the amphiphile (outer
+solvent exposed), and solvent molecule. 
+
+The variable parameters are intended to be the APL, the average area per
+amphiphile (lipid) molecules at the inner/outer interface and n_W, the number
+of solvent (water) molecules residing in the outer region of the bilayer.
+
+This model is adapted from the lipid bilayer model of Nagle and Wiener(1988) and fitting function lamellar_hg.
+
+Note that the model can be applied with other combinations of input parameters/
+assumptions; and is ideally applied as a simultaneous fit to datasets with
+multiple independent measurments; such as neutron contrast variation strategies.
+
+
+Definition
+----------
+
+
+The scattering intensity $I(q)$ is
+
+
+.. math::
+
+
+   I(q) = 2pifrac{	ext{scale}}{2(delta_H + delta_T)}  P(q) frac{1}{q^2}
+
+
+The form factor $P(q)$ is
+
+
+.. math::
+
+
+    P(q) = frac{4}{q^2}
+        leftlbrace
+            Delta ho_H
+            left[sin[q(delta_H + delta_T) - sin(qdelta_T)ight]
+            + Deltaho_Tsin(qdelta_T)
+        ightbrace^2
+
+
+where $delta_T$ is *length_tail*, $delta_H$ is *length_head*,
+$Deltaho_H$ is the head contrast (*sld_head* $-$ *sld_solvent*),
+and $Deltaho_T$ is tail contrast (*sld_tail* $-$ *sld_solvent*),
+$length_tail$ equals (*Volume_tail*$/$*APL*),
+$length_head$ equals ((*Volume_head*$+$*n_H*$*$*Volume_water*)$/$*APL*),
+$sld_head$ equals (*B_head*$+$*n_H*$*$*B_water*)$/$(*Volume_head*$+$*n_H*$*$*Volume_water*),
+$sld_tails equals (*B_tail*$/$*Volume_tail*).
+
+
+The total thickness of the lamellar sheet is $delta_H + delta_T + delta_T + delta_H$.
+Note that in a non aqueous solvent the chemical "head" group may be the
+"Tail region" and vice-versa.
+
+
+The 2D scattering intensity is calculated in the same way as 1D, where
+the $q$ vector is defined as
+
+
+.. math:: q = sqrt{q_x^2 + q_y^2}
+
+
+
+References
+----------
+
+
+.. [#] F Nallet, R Laversanne, and D Roux, *J. Phys. II France*, 3, (1993) 487-502
+.. [#] J Berghausen, J Zipfel, P Lindner, W Richtering, *J. Phys. Chem. B*, 105, (2001) 11081-11088
+.. [#] Nagle, J., & Wiener, M. (1988). Structure of fully hydrated bilayer dispersions. Biochimica et Biophysica Acta (BBA)-Biomembranes, 942(1), 1-10
+.. [#] Tan, L., Elkins J.G., Davison, B.H., Kelly, E.G., Nickels, J.D. Implementation of Slab Model of Bilayer Structure in SASview. Submitted (2020)
+
+Authorship and Verification
+----------------------------
+
+
+* **Author:luoxi Tan, James G. Elkins, Brian H. Davison, Elizabeth G. Kelly and Jonathan D. Nickels
+"""
+
+
+import numpy as np
+from numpy import inf
+
+
+name = "lamellar_Slab_APL_nW"
+title = "Random lamellar phase with Head and Tail Groups"
+description = """
+    [Random lamellar phase with Head and Tail Groups]
+        I(q)= 2*pi*P(q)/(2(H+T)*q^(2)), where
+        P(q)= see manual
+        layer thickness =(H+T+T+H) = 2(Head+Tail)
+        SLD_c = Tail scattering length density
+        SLD_h = Head scattering length density
+        SLD_w = solvent scattering length density
+        background = incoherent background
+        scale = scale factor
+        B_h = Bound coherrent scattering length of lipid headgroup
+        B_c = Bound coherrent scattering length of lipid tails
+        B_w = Bound coherrent scattering length of water
+        APL = Average area per lipid
+        V_w = Molecualar volume of water
+        V_h = Molecular volume of lipid headgroup
+        V_c = Molecualr volume of lipid tails
+        N_w = Number molecules of water molecule permeating into bilayer region
+        Dc = Average length of lipid tail
+        Dh = Average length of lipid headgroup
+"""
+category = "shape:lamellae"
+
+
+# pylint: disable=bad-whitespace, line-too-long
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [["B_h", "1e-6*Ang",       58,   [-inf, inf],  "volume",  "Bound coherrent scattering length of lipid headgroup"],
+              ["B_c", "1e-6*Ang",       -9.05984,   [-inf, inf],  "volume",  "Bound coherrent scattering length of lipid tails"],
+              ["B_w", "1e-6*Ang", 19.145, [-inf,inf], "volume",    "Bound coherrent scattering length of water"],
+              ["APL", "Ang^2", 60,   [0,inf], "volume",    "Area"],
+    ["V_w", "Ang^3", 30.4,   [0,inf], "volume",    "Molecualar volume of water"],
+    ["V_h", "Ang^3", 211,   [0,inf], "volume",    "Molecular volume of lipid headgroup"],
+    ["V_c", "Ang^3", 896.608,   [0,inf], "volume",    "Molecualr volume of lipid tails"],    
+          ["N_w", "None", 20,   [0,inf], "sld",    "Number molecules of water molecule permeating into bilayer region"]
+   ]
+# pylint: enable=bad-whitespace, line-too-long
+
+
+# No volume normalization despite having a volume parameter
+# This should perhaps be volume normalized?
+
+
+
+def Iq(q, 
+       B_h=58, 
+       B_c=-9.05984, 
+       B_w=19.145, 
+       APL=60, 
+       V_w=30.4, 
+       V_h=211, 
+       V_c=896.608, 
+       N_w=20):
+    SLD_h = (B_h + N_w*B_w)/(V_h +N_w*V_w) #the calculation of sld of headgroup
+    SLD_c = (B_c/V_c) #the calculation of sld of tail
+    SLD_w = (B_w/V_w) #the calculation of sld of solvent
+    Dc = (V_c)/(APL) #the calculation of length of lipid hydrocarbon chains
+    Dh = (V_h + N_w*V_w)/APL #the calculation of length of lipid headgroup
+    qsq = q*q # q square 
+    drh = (SLD_h - SLD_w) #delta rho_H (the head contrast)
+    drt = (SLD_c - SLD_w) #delat rho_T  (the tail contrast)
+    qT = q*Dc
+    Pq = drh*(np.sin(q*(Dh + Dc))-np.sin(qT)) + drt*np.sin(qT)
+    Pq *= Pq 
+    Pq *=4.0/(qsq)
+    inten = 2*np.pi*Pq/qsq
+    inten /=2.0*(Dc +Dh)
+    return inten
+
+ 
+def random(): #the random function which can generate random number for the vriable parameters
+    """Return a random parameter set for the model."""
+    APL = np.random.uniform(1, 500) 
+    N_w = np.random.uniform(0, 100)
+    pars = dict(
+        APL = APL,
+        N_w = N_w
+    )
+    return pars  
+
+

@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Elliptical Cylinder | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/15/">Elliptical Cylinder</a></li>
+</ol>
+<h1>Elliptical Cylinder</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p># pylint: disable=line-too-long </p>
+<p> </p>
+<p>    Elliptical cylinder geometry $a = r_\text{minor}$    and $\nu = r_\text{major} / r_\text{minor}$ is the *axis_ratio*. </p>
+<p> The function calculated is </p>
+<p> $$  I(\vec q)=\frac{1}{V_\text{cyl}}\int{d\psi}\int{d\phi}\int{ p(\theta,\phi,\psi)F^2(\vec q,\alpha,\psi)\sin(\alpha)d\alpha} <br/>$$<br/>with the functions </p>
+<p> $$  F(q,\alpha,\psi) = 2\frac{J_1(a)\sin(b)}{ab} <br/>$$<br/>where </p>
+<p> $$  a = qr'\sin(\alpha) <br/>$$<br/>    b = q\frac{L}{2}\cos(\alpha) </p>
+<p>     r'=\frac{r_{minor}}{\sqrt{2}}\sqrt{(1+\nu^{2}) + (1-\nu^{2})cos(\psi)} </p>
+<p> </p>
+<p> and the angle $\psi$ is defined as the orientation of the major axis of the ellipse with respect to the vector $\vec q$. The angle $\alpha$ is the angle between the axis of the cylinder and $\vec q$. </p>
+<p> </p>
+<p> For 1D scattering, with no preferred orientation, the form factor is averaged over all possible orientations and normalized by the particle volume </p>
+<p> $$  P(q) = \text{scale}  &lt;F^2&gt; / V <br/>$$<br/>For 2d data the orientation of the particle is required, described using a different set of angles as in the diagrams below, for further details of the calculation and angular dispersions see `orientation`. </p>
+<p> </p>
+<p> </p>
+<p>     Note that the angles here are not the same as in the equations for the     scattering function. Rotation $\theta$, initially in the $xz$ plane, is     carried out first, then rotation $\phi$ about the $z$ axis, finally     rotation $\Psi$ is now around the axis of the cylinder. The neutron or     X-ray beam is along the $z$ axis. </p>
+<p> </p>
+<p>     Examples of the angles for oriented elliptical cylinders against the     detector plane, with $\Psi$ = 0. </p>
+<p> The $\theta$ and $\phi$ parameters to orient the cylinder only appear in the model when fitting 2d data. </p>
+<p> </p>
+<p> NB: The 2nd virial coefficient of the cylinder is calculated based on the averaged radius $(=\sqrt{r_\text{minor}^2 * \text{axis ratio}})$ and length values, and used as the effective radius for $S(Q)$ when $P(Q)*S(Q)$ is applied. </p>
+<p> </p>
+<p> Validation </p>
+<p> </p>
+<p> Validation of our code was done by comparing the output of the 1D calculation to the angular average of the output of the 2D calculation over all possible angles. </p>
+<p> In the 2D average, more binning in the angle $\phi$ is necessary to get the proper result. The following figure shows the results of the averaging by varying the number of angular bins. </p>
+<p> </p>
+<p>     The intensities averaged from 2D over different numbers of bins and angles. </p>
+<p> References </p>
+<p> </p>
+<p> #. L A Feigin and D I Svergun, *Structure Analysis by Small-Angle    X-Ray and Neutron Scattering*, Plenum, New York, (1987) [see table 3.4] #. L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:**  Richard Heenan - corrected equation in docs **Date:** December 21, 2016<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/715">elliptical_cylinder.py</a><br>
+<a href="/uploads/716">elliptical_cylinder.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/52/">Unified Power Rg</a></li>
+<li><a href="/uploads/735">unified_power_Rg.py</a></li>
+</ol>
+<h1>Unified Power Rg - unified_power_Rg.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+
+This model employs the empirical multiple level unified Exponential/Power-law
+fit method developed by Beaucage. Four functions are included so that 1, 2, 3,
+or 4 levels can be used. In addition a 0 level has been added which simply
+calculates
+
+.. math::
+
+    I(q) = \text{scale} / q + \text{background}
+
+The Beaucage method is able to reasonably approximate the scattering from
+many different types of particles, including fractal clusters, random coils
+(Debye equation), ellipsoidal particles, etc.
+
+The model works best for mass fractal systems characterized by Porod exponents
+between 5/3 and 3. It should not be used for surface fractal systems. Hammouda
+(2010) has pointed out a deficiency in the way this model handles the
+transitioning between the Guinier and Porod regimes and which can create
+artefacts that appear as kinks in the fitted model function.
+
+Also see the :ref:`guinier-porod` model.
+
+The empirical fit function is:
+
+.. math::
+
+    I(q) = \text{background}
+    + \sum_{i=1}^N \Bigl[
+        G_i \exp\Bigl(-\frac{q^2R_{gi}^2}{3}\Bigr)
+       + B_i \exp\Bigl(-\frac{q^2R_{g(i+1)}^2}{3}\Bigr)
+             \Bigl(\frac{1}{q_i^*}\Bigr)^{P_i} \Bigr]
+
+where
+
+.. math::
+
+    q_i^* = q \left[\operatorname{erf}
+            \left(\frac{q R_{gi}}{\sqrt{6}}\right)
+        \right]^{-3}
+
+
+For each level, the four parameters $G_i$, $R_{gi}$, $B_i$ and $P_i$ must
+be chosen.  Beaucage has an additional factor $k$ in the definition of
+$q_i^*$ which is ignored here.
+
+For example, to approximate the scattering from random coils (Debye equation),
+set $R_{gi}$ as the Guinier radius, $P_i = 2$, and $B_i = 2 G_i / R_{gi}$
+
+See the references for further information on choosing the parameters.
+
+For 2D data: The 2D scattering intensity is calculated in the same way as 1D,
+where the $q$ vector is defined as
+
+.. math::
+
+    q = \sqrt{q_x^2 + q_y^2}
+
+
+References
+----------
+
+#. G Beaucage, *J. Appl. Cryst.*, 28 (1995) 717-728
+#. G Beaucage, *J. Appl. Cryst.*, 29 (1996) 134-146
+#. B Hammouda, *Analysis of the Beaucage model*,
+   *J. Appl. Cryst.*, (2010), 43, 1474-1478
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:**
+"""
+
+from __future__ import division
+
+import numpy as np
+from numpy import inf, exp, sqrt, errstate
+from scipy.special import erf, gamma
+
+category = "shape-independent"
+name = "unified_power_Rg"
+title = "Unified Power Rg"
+description = """
+        The Beaucage model employs the empirical multiple level unified
+        Exponential/Power-law fit method developed by G. Beaucage. Four functions
+        are included so that 1, 2, 3, or 4 levels can be used.
+        """
+
+# pylint: disable=bad-whitespace, line-too-long
+parameters = [
+    ["level",     "",     1,      [1, 6], "", "Level number"],
+    ["rg[level]", "Ang",  15.8,   [0, inf], "", "Radius of gyration"],
+    ["power[level]", "",  4,      [-inf, inf], "", "Power"],
+    ["B[level]",  "1/cm", 4.5e-6, [-inf, inf], "", ""],
+    ["G[level]",  "1/cm", 400,    [0, inf], "", ""],
+    ]
+# pylint: enable=bad-whitespace, line-too-long
+
+def Iq(q, level, rg, power, B, G):
+    """Return I(q) for unified power Rg model."""
+    level = int(level + 0.5)
+    if level == 0:
+        with errstate(divide='ignore'):
+            return 1./q
+
+    with errstate(divide='ignore', invalid='ignore'):
+        result = np.zeros(q.shape, 'd')
+        for i in range(level):
+            exp_now = exp(-(q*rg[i])**2/3.)
+            pow_now = (erf(q*rg[i]/sqrt(6.))**3/q)**power[i]
+            if i &lt; level-1:
+                exp_next = exp(-(q*rg[i+1])**2/3.)
+            else:
+                exp_next = 1
+            result += G[i]*exp_now + B[i]*exp_next*pow_now
+
+    result[q == 0] = np.sum(G[:level])
+    return result
+
+Iq.vectorized = True
+
+def random():
+    """Return a random parameter set for the model."""
+    level = np.minimum(np.random.poisson(0.5) + 1, 6)
+    n = level
+    power = np.random.uniform(1.6, 3, n)
+    rg = 10**np.random.uniform(1, 5, n)
+    G = np.random.uniform(0.1, 10, n)**2 * 10**np.random.uniform(0.3, 3, n)
+    B = G * power / rg**power * gamma(power/2)
+    scale = 10**np.random.uniform(1, 4)
+    pars = dict(
+        #background=0,
+        scale=scale,
+        level=level,
+    )
+    pars.update(("power%d"%(k+1), v) for k, v in enumerate(power))
+    pars.update(("rg%d"%(k+1), v) for k, v in enumerate(rg))
+    pars.update(("B%d"%(k+1), v) for k, v in enumerate(B))
+    pars.update(("G%d"%(k+1), v) for k, v in enumerate(G))
+    return pars
+
+# multi-shell models want demo parameters
+demo = dict(
+    level=2,
+    rg=[15.8, 21],
+    power=[4, 2],
+    B=[4.5e-6, 0.0006],
+    G=[400, 3],
+    scale=1.,
+    background=0.,
+)
+</code>
+</pre>
+<a class="btn btn-default" href="/models/52/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/unified_power_Rg.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

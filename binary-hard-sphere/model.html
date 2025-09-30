@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Binary Hard Sphere | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/65/">Binary Hard Sphere</a></li>
+</ol>
+<h1>Binary Hard Sphere</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> The binary hard sphere model provides the scattering intensity, for binary mixture of hard spheres including hard sphere interaction between those particles, using rhw Percus-Yevick closure. The calculation is an exact multi-component solution that properly accounts for the 3 partial structure factors as follows: </p>
+<p> $$  I(q) = (1-x)f_1^2(q) S_{11}(q) + 2[x(1-x)]^{1/2} f_1(q)f_2(q)S_{12}(q) + x\,f_2^2(q)S_{22}(q) <br/>$$<br/>where $S_{ij}$ are the partial structure factors and $f_i$ are the scattering amplitudes of the particles. The subscript 1 is for the smaller particle and 2 is for the larger. The number fraction of the larger particle, ($x = n2/(n1+n2)$, where $n$ = the number density) is internally calculated based on the diameter ratio and the volume fractions. </p>
+<p> $$  \begin{align*} x = \frac{(\phi_2 / \phi)\alpha^3}{(1-(\phi_2/\phi) + (\phi_2/\phi) \alpha^3)} \\ \phi = \phi_1 + \phi_2 = \text{total volume fraction} \\ \alpha = R_1/R_2 = \text{size ratio} \end{align*} <br/>$$<br/>The 2D scattering intensity is the same as 1D, regardless of the orientation of the *q* vector which is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$</p>
+<p> **NOTE 1:** The volume fractions and the scattering contrasts are loosely correlated, so holding as many parameters fixed to known values during fitting will improve the robustness of the fit. </p>
+<p> **NOTE 2:** Since the calculation uses the Percus-Yevick closure, all of the limitations of that closure relation apply here. Specifically, one should be wary of results for (total) volume fractions greater than approximately 40%. Depending on the size ratios or number fractions, the limit on total volume fraction may be lower. </p>
+<p> **NOTE 3:** The heavy arithmetic operations also mean that at present the function is poorly behaved at very low qr.  In some cases very large qr may also be poorly behaved.  These should however be outside any useful region of qr. </p>
+<p> The code for this model is based originally on a c-library implementation by the NIST Center for Neutron Research (Kline, 2006). </p>
+<p> See the references for details. </p>
+<p> References </p>
+<p> </p>
+<p> #. N W Ashcroft and D C Langreth, *Physical Review*, 156 (1967) 685-692    [Errata found in *Phys. Rev.* 166 (1968) 934] </p>
+<p> #. S R Kline, *J Appl. Cryst.*, 39 (2006) 895 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** NIST IGOR/DANSE **Date:** pre 2010<br/>**Last Modified by:** Paul Butler **Date:** March 20, 2016<br/>**Last Reviewed by:** Paul Butler **Date:** March 20, 2016<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/791">binary_hard_sphere.py</a><br>
+<a href="/uploads/792">binary_hard_sphere.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

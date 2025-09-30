@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Superball | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/154/">Superball</a></li>
+</ol>
+<h1>Superball</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p># superball model # Note: model title and parameter table are inserted automatically Definition </p>
+<p> </p>
+<p> </p>
+<p>    Superball visualisation for varied values of the parameter p. </p>
+<p> This model calculates the scattering of a superball, which represents a cube with rounded edges. It can be used to describe nanoparticles that deviate from the perfect cube shape as it is often observed experimentally [#WetterskogSuperball]_. The shape is described by </p>
+<p> $$  x^{2p} + y^{2p} + z^{2p} \leq \biggl( \frac{a}{2} \biggr)^{2p} <br/>$$<br/>with $a$ the cube edge length of the superball and $p$ a parameter that describes the roundness of the edges. In the limiting cases $p=1$ the superball corresponds to a sphere with radius $R = a/2$ and for $p = \infty$ to a cube with edge length $a$. The exponent $p$ is related to $a$ and the face diagonal $d$ via </p>
+<p> $$ p = \frac{1}{1 + 2 \mathrm{log}_2 (a/d)}. <br/>$$</p>
+<p>     Cross-sectional view of a superball showing the principal axis length $a$,     the face-diagonal $d$ and the superball radius $R$. </p>
+<p> The oriented form factor is determined by solving </p>
+<p> $$ p_o(\vec{q}) =&amp; \int_{V} \mathrm{d} \vec{r} e^{i \vec{q} \cdot \vec{r}}\\ =&amp; \frac{a^3}{8} \int_{-1}^{1} \mathrm{d} x \int_{-\gamma}^{\gamma} \mathrm{d} y \int_{-\zeta}^{\zeta} \mathrm{d} z e^{i a (q_x x + q_y y + q_z z) / 2}\\ =&amp; \frac{a^2}{2 q_z} \int_{-1}^{1} \mathrm{d} x \int_{-\gamma}^{\gamma} \mathrm{d} y  e^{i a(q_x x + q_y y)/2} \sin(q_z a \zeta / 2), <br/>$$<br/>with </p>
+<p> $$ \gamma =&amp; \sqrt[2p]{1-x^{2p}}, \\ \zeta =&amp; \sqrt[2p]{1-x^{2p} -y^{2p}}. <br/>$$<br/>The integral can be transformed to </p>
+<p> $$ p_o(\vec{q}) = \frac{2 a^2}{q_z} \int_{0}^{1} \mathrm{d} x \, \cos \biggl(\frac{a q_x x}{2} \biggr) \int_{0}^{\gamma} \mathrm{d} y \, \cos \biggl( \frac{a q_y y}{2} \biggr) \sin \biggl( \frac{a q_z \zeta}{2} \biggr), <br/>$$<br/>which can be solved numerically. </p>
+<p> The orientational average is then obtained by calculating </p>
+<p> $$ P(q) = \int_0^{\tfrac{\pi}{2}} \mathrm{d} \varphi \int_0^{\tfrac{\pi}{2}} \mathrm{d} \theta \, \sin (\theta) | p_o(\vec{q}) |^2 <br/>$$<br/>with </p>
+<p> $$ \vec{q} = q \begin{pmatrix} \cos (\varphi) \sin (\theta)\\ \sin (\varphi) \sin(\theta)\\ \cos (\theta)\end{pmatrix} <br/>$$<br/>The implemented orientationally averaged superball model is then fully given by [#DresenSuperball]_ </p>
+<p> $$ I(q) = \mathrm{scale} (\Delta \rho)^2 P(q) + \mathrm{background}. <br/>$$</p>
+<p> FITTING NOTES ~~~~~~~~~~~~~ </p>
+<p> Validation </p>
+<p> </p>
+<p>     The code is validated by reproducing the spherical form factor implemented     in SasView for $p = 1$ and the parallelepiped form factor with $a = b = c$ for     $p = 1000$. The form factors match in the first order oscillation with a     precision in the order of $10^{-4}$. The agreement worsens for higher order     oscillations and beyond the third order oscillations a higher order Gauss     quadrature rule needs to be used to keep the agreement below $10^{-3}$.     This is however avoided in this implementation to keep the computation time     fast. </p>
+<p> References </p>
+<p> </p>
+<p> E. Wetterskog, A. Klapper, S. Disch, E. Josten, R. P. Hermann, U. Rücker, T. Brückel, L. Bergström and G. Salazar-Alvarez, *Nanoscale*, 8 (2016) 15571<br/> </p>
+<p> D. Dresen, A. Qdemat, S. Ulusoy, F. Mees, D. Zakutna, E. Wetterskog, E. Kentzinger, G. Salazar-Alvarez, S. Disch, *J. Phys. Chem. C* (2021), doi: 10.1021/acs.jpcc.1c06082<br/> </p>
+<p> Source </p>
+<p> </p>
+<p> `superball.py &lt;https://github.com/SasView/sasmodels/blob/master/sasmodels/models/superball.py&gt;`_ </p>
+<p> `superball.c &lt;https://github.com/SasView/sasmodels/blob/master/sasmodels/models/superball.c&gt;`_ </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** Dominique Dresen **Date:** March 27, 2019<br/>**Last Modified by:** Dominique Dresen **Date:** March 27, 2019<br/>**Last Reviewed by:** Dirk Honecker **Date:** November 05, 2021<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 8, 2023, 7:24 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 08 Sep 2023</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/776">superball.py</a><br>
+<a href="/uploads/777">superball.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

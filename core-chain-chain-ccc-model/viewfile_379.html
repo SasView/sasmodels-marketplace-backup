@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/103/">Core-Chain-Chain (CCC) Model</a></li>
+<li><a href="/uploads/379">core_chain_chain.py</a></li>
+</ol>
+<h1>Core-Chain-Chain (CCC) Model - core_chain_chain.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+
+This form factor describes scattering from spherical cores (nanoparticle, micellar, etc.) that have chains coming off normal from their surface. In the case of
+the Core-Chain-Chain (CCC) Model, these chains have two different regions of conformation, size, and scattering length density. The transition from region 1 (near
+the nanoparticle core, CPB) to region 2 (SDPB) is given by the parameter :math: `r_{c}`, which is the distance from the center of the nanoparticle to the junction point. See
+fig. 1 of reference 1 for a schematic of the geometry.
+
+The scattering intensity is the sum of 8 terms, and an incoherent background term :math: `B`. This model returns the following scattering intensity:
+.. math::
+	I(q) = scale 	imes left[ P_{core}(q) + N_{c}P_{CPB}(q) + N_{c}P_{SDPB}(q) +  2N_{c}F_{core}(q)j_{0}(qr_{core})F_{CPB}(q) + 2N_{c}F_{core}(q)j_{0}(qr_{c})F_{SDPB}(q) + N_{c}(N_{c} - 1)F_{CPB}(q)^{2}j_{0}(qr_{core})^2 +  N_{c}(N_{c} - 1)F_{SDPB}(q)^{2}j_{0}(qr_{c})^2 + N_{c}^{2}F_{CPB}(q)j_{0}(qr_{core})j_{0}(qr_{c})F_{SDPB}(q) ight] + B
+
+
+where :math: `N_{c} is the number of chains grafted to the nanoparticle, :math: `r_{core}` is the nanoparticle radius, and :math: `r_{c}` is the position of the junction between the CPB and
+SDPB regions. :math: `j_{0}(.)` is a spherical Bessel function. The terms :math: `P_{core}(q)`,  :math: `P_{CPB}(q)`, and :math: `P_{SDPB}(q)` are the form factors of the spherical core, polymer in the CPB region, and polymer in the SDPB
+region, respectively. :math: `F_{core}(q)`, :math: `F_{CPB}(q)`, and :math: `F_{SDPB}(q)` are the form factor amplitudes of the respective regions. For the nanoparticle core, these terms are related as:
+
+.. math::
+	P_{core}(q) = left| F_{core}(q) ight|^{2} = left| V_{core}(ho_{core} - ho_{solv})frac{3j_{1}(qr_{core})}{qr_{core}} ight|^{2}
+
+where :math: `ho_{core}` is the scattering length density of the nanoparticle core, :math: `ho_{solv}` is the scattering length density of the solvent/matrix, :math: `V_{core}` is the
+volume of the nanoparticle core, and :math: `j_{1}(.)` is a spherical Bessel function.
+
+Scattering from the CPB and SDPB regions is described by the form factor amplitudes and form factors of these regions. For a given region :math: `i`, these terms read:
+
+.. math::
+	P_{i}(q,N_{i}) = V_{i}^{2}(ho_{i} - ho_{solv})^{2} left[ frac{1}{
+u_{i} U_{i}^{1/2
+u_{i}}}gamma left( frac{1}{2
+u_{i}}, U_{i}ight) - frac{1}{
+u_{i} U_{i}^{1/
+u_{i}}}gamma left(frac{1}{
+u_{i}}, U_{i} ight) ight]
+
+and
+.. math::
+
+	F_{i}(q,N_{i}) = V_{i}(ho_{i} - ho_{solv})frac{1}{2
+u_{i} U_{i}^{1/2
+u_{i}}}gamma left( frac{1}{2
+u_{i}}, U_{i}ight)
+
+
+where :math: `N_{i}` is the degree of polymerization of the portion of polymer in region :math: `i`, :math: `V_{i}` is the volume of polymer in region :math: `i`, :math: `
+u_{i}` is the excluded volume parameter of the polymer in region :math: `i`, :math: `ho_{i}` is the scattering length density of polymer in region :math: `i`, :math: `U_{i} = q^{2} b^{2} N_{i}^{2
+u_{i}}/6`, :math: `b` is the polymer's Kuhn length, and :math: `gamma` is the lower incomplete gamma function.
+
+
+References
+----------
+
+1. Y. Wei, Y. Xu, A. Faraone, and M. J. A. Hore, "Local Structure and Relaxation Dynamics in the Brush of Polymer-Grafted Silica Nanoparticles", ACS Macro Letters, 7, 699-704 (2018)
+
+Authorship and Verification
+----------------------------
+
+* **Author:** Michael J. A. Hore **Date:** 13 Mar 2018
+"""
+
+import numpy as np  # type: ignore
+from numpy import pi, inf, power, errstate
+from scipy.special import gammainc, gamma, j0, j1
+
+name = "core_chain_chain"
+title = "Spherically symmetric core with grafted polymer chains having two different conformations."
+description = """
+"""
+category = "shape:sphere"
+
+structure_factor = True
+
+#             [ "name",       "units",         default, [lower, upper], "type",   "description"],
+parameters = [["sld",         "1e-6/Ang^2",    3.5,     [-inf, inf],    "sld",    "Core scattering length density"],
+              ["sld1",        "1e-6/Ang^2",    1.0,     [-inf, inf],    "sld",    "Chain region 1 scattering length density"],
+              ["sld2",        "1e-6/Ang^2",    1.0,     [-inf, inf],    "sld",    "Chain region 2 scattering length density"],
+              ["sld_solvent", "1e-6/Ang^2",    4.4,     [-inf, inf],    "sld",    "Solvent scattering length density"],
+              ["radius",      "Ang",           60,      [0, inf],       "volume", "Core radius"],
+              ["rc",          "Ang",           100,     [0, inf],       "volume", "Cutoff distance between region 1 and region 2"],
+              ["poly_sig",    "chains/nm^2",   0.50,    [0, inf],       "",       "Polymer grafting density"],
+              ["rg1",         "Ang",           40,      [1, inf],       "volume", "Radius of gyration of chain in region 1"],
+              ["rg2",         "Ang",           40,      [1, inf],       "volume", "Radius of gyration of chain in region 2"],
+              ["nu1",         "None",          0.50,    [0.25, 1.0],    "",       "Excluded volume parameter of chain in region 1"],
+              ["nu2",         "None",          0.50,    [0.25, 1.0],    "",       "Excluded volume parameter of chain in region 2"],
+              ["v1",          "Ang^3",         30,      [0, inf]   ,    "volume", "Volume of polymer in region 1"],
+              ["v2",          "Ang^3",         30,      [0, inf]   ,    "volume", "Volume of polymer in region 2"],
+             ]
+
+def Iq(q,
+       sld,
+       sld1,
+       sld2,
+       sld_solvent,
+       radius,
+       rc,
+       poly_sig,
+       rg1,
+       rg2,
+       nu1,
+       nu2,
+       v1,
+       v2):
+    """
+    :param q:              Input q-value
+    :param sld:		   Core scattering length density
+    :param sld1:           Chain region 1 scattering length density
+    :param sld2:           Chain region 2 scattering length density
+    :param sld_solvent:    Solvent scattering length density
+    :param radius:         Core radius
+    :param rc:             Cutoff distance between region 1 and region 2
+    :param poly_sig:       Polymer grafting density
+    :param rg1:            Radius of gyration of chain in region 1
+    :param rg2:            Radius of gyration of chain in region 2
+    :param nu1:            Excluded volume parameter of chain in region 1
+    :param nu2:            Excluded volume parameter of chain in region 2
+    :param v1:             Volume of polymer in region 1
+    :param v2:             Volume of polymer in region 2
+    :return:               Calculated intensity
+    """
+
+    # Number of grafted chains per core:
+    Ng = poly_sig * 4.00 * pi * (0.1 * radius) * (0.1 * radius)
+
+    # Volume of core regions:
+    Vcore      = 4.0/3.0 * pi * radius**3
+    Vtotal     = Vcore + Ng * (v1 + v2)
+
+    # One over excl. vol. parm.:
+    onu1  = 1.0 / nu1
+    o2nu1 = 1.0 / 2.0 / nu1
+    onu2  = 1.0 / nu2
+    o2nu2 = 1.0 / 2.0 / nu2
+
+    # Propagator function:
+    E1 = j0(q*(radius+rg1))
+    E2 = j0(q*(rc+rg2))
+
+    # Polymer size variable
+    Usub1 = (q*rg1)**2 * (2.0*nu1 + 1.0) * (2.0*nu1 + 2.0) / 6.0
+    Usub2 = (q*rg2)**2 * (2.0*nu2 + 1.0) * (2.0*nu2 + 2.0) / 6.0
+
+    # Form factor amplitude of core-shell sphere:
+    with errstate(divide='ignore'):
+        Fs = 3.0*(sld - sld_solvent)*Vcore*j1(q*radius)/(q*radius) 
+
+
+    # Form factor amplitude of the polymer:
+    with errstate(divide='ignore'):
+        Fp1 = o2nu1*power(Usub1, -o2nu1) * gamma(o2nu1) * gammainc(o2nu1, Usub1) 
+        Fp2 = o2nu2*power(Usub2, -o2nu2) * gamma(o2nu2) * gammainc(o2nu2, Usub2) 
+
+
+    # Form factor of the polymer (Pp(q) is not simply Fp(q)^2!!):
+    with errstate(divide='ignore'):
+        Pp1 = onu1 * power(Usub1, -o2nu1)*gamma(o2nu1)*gammainc(o2nu1, Usub1) - onu1 * power(Usub1, -onu1)*gamma(onu1)*gammainc(onu1,Usub1)
+        Pp2 = onu2 * power(Usub2, -o2nu2)*gamma(o2nu2)*gammainc(o2nu2, Usub2) - onu2 * power(Usub2, -onu2)*gamma(onu2)*gammainc(onu2,Usub2)
+
+    # Combine all terms to form intensity:
+    #
+    # Term 1: Core-shell particle:
+    inten = Fs * Fs
+
+    # Term 2: Polymer 1
+    inten = inten + Ng * (sld1 - sld_solvent) * (sld1 - sld_solvent) * v1 * v1 * Pp1
+
+    # Term 3: Polymer 2
+    inten = inten + Ng * (sld2 - sld_solvent) * (sld2 - sld_solvent) * v2 * v2 * Pp2
+
+    # Term 4: Particle/polymer 1 crossterm:
+    inten = inten + 2.0 * Ng * v1 * (sld1 - sld_solvent) * Fs * E1 * Fp1
+
+    # Term 5: Particle/polymer 2 crossterm:
+    inten = inten + 2.0 * Ng * v2 * (sld2 - sld_solvent) * Fs * E2 * Fp2
+
+    # Term 6: Polymer 1/polymer 1 crossterm:
+    inten = inten + Ng * (Ng - 1) * v1 * v1 * (sld1 - sld_solvent) * (sld1 - sld_solvent) * Fp1 * E1 * E1 * Fp1
+
+    # Term 7: Polymer 2/polymer 2 crossterm:
+    inten = inten + Ng * (Ng - 1) * v2 * v2 * (sld2 - sld_solvent) * (sld2 - sld_solvent) * Fp2 * E2 * E2 * Fp2
+
+    # Term 8: Polymer 1/polymer 2 crossterm:
+    inten = inten + Ng * Ng * v1 * v2 * (sld1 - sld_solvent) * (sld2 - sld_solvent) * Fp1 * E1 * E2 * Fp2
+
+    with errstate(divide='ignore'):
+        # Convert SLDs to A^-2, and convert intensity to cm^-1. Normalize by particle volume.
+        inten = inten * 1.0e-6 * 1.0e-6 * 1.0e8 / Vtotal
+
+    return inten
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+# Effective Radius for S(Q). This is only an estimation.
+def ER(radius, rc, rg1, rg2, v1, v2):
+    """Effective radius of a core-chain-chain sphere."""
+    eff_rad = radius + rg1 + rg2
+    return eff_rad
+
+# Test and validation
+demo = dict(scale = 1, background = 0, sld=6.9, sld1=1.5, sld2=3.8, sld_solvent=5.88, radius=60, rc=180, poly_sig=0.5, rg1=105,rg2=50,nu1=0.8,nu2=0.6,v1=4400,v2=580)
+tests = [[0.01, 155.66117003], [0.1, 1.38459492]]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/103/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/core_chain_chain.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

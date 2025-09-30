@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Dab | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/39/">Dab</a></li>
+</ol>
+<h1>Dab</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Calculates the scattering from a randomly distributed, two-phase system based on the Debye-Anderson-Brumberger (DAB) model for such systems. The two-phase system is characterized by a single length scale, the correlation length, which is a measure of the average spacing between regions of phase 1 and phase 2. **The model also assumes smooth interfaces between the phases** and hence exhibits Porod behavior $(I \sim q^{-4})$ at large $q$, $(qL \gg 1)$. </p>
+<p> The DAB model is ostensibly a development of the earlier Debye-Bueche model. </p>
+<p> Definition </p>
+<p> </p>
+<p> $$  I(q) = \text{scale}\cdot\frac{L^3}{(1 + (q\cdot L)^2)^2} + \text{background} <br/>$$<br/>where scale is </p>
+<p> $$ \text{scale} = 8 \pi \phi (1-\phi) \Delta\rho^2 <br/>$$<br/>and the parameter $L$ is the correlation length. </p>
+<p> For 2D data the scattering intensity is calculated in the same way as 1D, where the $q$ vector is defined as </p>
+<p> $$ q = \sqrt{q_x^2 + q_y^2} <br/>$$</p>
+<p> References </p>
+<p> </p>
+<p> #. P Debye, H R Anderson, H Brumberger, *Scattering by an Inhomogeneous Solid.    II. The Correlation Function and its Application*,    *J. Appl. Phys.*, 28(6) (1957) 679 #. P Debye, A M Bueche, *Scattering by an Inhomogeneous Solid*,    *J. Appl. Phys.*, 20 (1949) 518 </p>
+<p> Source </p>
+<p> </p>
+<p> `dab.py &lt;https://github.com/SasView/sasmodels/blob/master/sasmodels/models/dab.py&gt;`_ </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:** Steve King &amp; Peter Parker **Date:** September 09, 2013<br/>**Source added by :** Steve King **Date:** March 25, 2019<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/759">dab.py</a><br>
+<a href="/uploads/760">dab.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

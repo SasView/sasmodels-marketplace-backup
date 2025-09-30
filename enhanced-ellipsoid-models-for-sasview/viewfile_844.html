@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/ellipsoid/">Ellipsoid</a></li>
+<li><a href="/models/163/">Enhanced Ellipsoid Models for SasView</a></li>
+<li><a href="/uploads/844">ellipsoid_high_res.c</a></li>
+</ol>
+<h1>Enhanced Ellipsoid Models for SasView - ellipsoid_high_res.c</h1>
+<pre>
+    <code>static double
+form_volume(double radius_polar, double radius_equatorial)
+{
+    return M_4PI_3*radius_polar*radius_equatorial*radius_equatorial;
+}
+
+static double
+radius_from_volume(double radius_polar, double radius_equatorial)
+{
+    return cbrt(radius_polar*radius_equatorial*radius_equatorial);
+}
+
+static double
+radius_from_curvature(double radius_polar, double radius_equatorial)
+{
+    // Trivial cases
+    if (radius_polar == radius_equatorial) return radius_polar;
+    if (radius_polar * radius_equatorial == 0.)  return 0.;
+
+    // see equation (26) in A.Isihara, J.Chem.Phys. 18(1950)1446-1449
+    const double ratio = (radius_polar &lt; radius_equatorial
+                          ? radius_polar / radius_equatorial
+                          : radius_equatorial / radius_polar);
+    const double e1 = sqrt(1.0 - ratio*ratio);
+    const double b1 = 1.0 + asin(e1) / (e1 * ratio);
+    const double bL = (1.0 + e1) / (1.0 - e1);
+    const double b2 = 1.0 + 0.5 * ratio * ratio / e1 * log(bL);
+    const double delta = 0.75 * b1 * b2;
+    const double ddd = 2.0 * (delta + 1.0) * radius_polar * radius_equatorial * radius_equatorial;
+    return 0.5 * cbrt(ddd);
+}
+
+static double
+radius_effective(int mode, double radius_polar, double radius_equatorial)
+{
+    switch (mode) {
+    default:
+    case 1: // average curvature
+        return radius_from_curvature(radius_polar, radius_equatorial);
+    case 2: // equivalent volume sphere
+        return radius_from_volume(radius_polar, radius_equatorial);
+    case 3: // min radius
+        return (radius_polar &lt; radius_equatorial ? radius_polar : radius_equatorial);
+    case 4: // max radius
+        return (radius_polar &gt; radius_equatorial ? radius_polar : radius_equatorial);
+    }
+}
+
+
+
+static void
+integrand_ellipsoid(
+    const double u,
+    const double q,
+    double radius_polar,
+    double radius_equatorial,
+    double* res1,
+    double* res2){
+
+    // Using ratio v = Rp/Re, we can implement the form given in Guinier (1955)
+    //     i(h) = int_0^pi/2 Phi^2(h a sqrt(cos^2 + v^2 sin^2) cos dT
+    //          = int_0^pi/2 Phi^2(h a sqrt((1-sin^2) + v^2 sin^2) cos dT
+    //          = int_0^pi/2 Phi^2(h a sqrt(1 + sin^2(v^2-1)) cos dT
+    // u-substitution of
+    //     u = sin, du = cos dT
+    //     i(h) = int_0^1 Phi^2(h a sqrt(1 + u^2(v^2-1)) du
+
+    const double v_square_minus_one = square(radius_polar/radius_equatorial) - 1.0;
+    const double r = radius_equatorial*sqrt(1.0 + u*u*v_square_minus_one);
+    const double f = sas_3j1x_x(q*r);
+
+    *res1 = f;
+    *res2 = f * f;
+}
+
+void integrate_ellipsoid(
+    const double a,
+    const double b,
+    const double q,
+    double radius_polar,
+    double radius_equatorial,
+    double* res1,
+    double* res2
+    ){
+
+
+    const double A = radius_equatorial;
+    const double B = radius_polar;
+
+    int expo = (int)(eval_poly(log2m(max(limits[0][0],min(limits[0][1], q))), log2m(max(limits[1][0],min(limits[1][1], A))), log2m(max(limits[2][0],min(limits[2][1], B)))) + 1);
+    int n = (int)(pow(2, max(1, min(15, expo))));
+
+    double *xg, *wg;
+    get_gauss_points(n, &amp;xg, &amp;wg);
+
+    // Perform the integration
+    *res1 = 0;
+    *res2 = 0;
+
+    for (int i = 0; i &lt; n; i++){
+        double t1, t2;
+        integrand_ellipsoid(a + (b - a) * 0.5 * (xg[i] + 1), q, radius_polar, radius_equatorial, &amp;t1, &amp;t2);
+        *res1 += t1 * wg[i];
+        *res2 += t2 * wg[i];
+    }
+
+    *res1 *= (b - a) * 0.5;
+    *res2 *= (b - a) * 0.5;
+
+
+}
+
+
+static void
+Fq(double q,
+    double *F1,
+    double *F2,
+    double sld,
+    double sld_solvent,
+    double radius_polar,
+    double radius_equatorial)
+{
+
+
+    double total_F1, total_F2;
+    integrate_ellipsoid(0, 1, q, radius_polar, radius_equatorial, &amp;total_F1, &amp;total_F2);
+
+    const double s = (sld - sld_solvent) * form_volume(radius_polar, radius_equatorial);
+    *F1 = 1e-2 * s * total_F1;
+    *F2 = 1e-4 * s * s * total_F2;
+}
+
+static double
+Iqac(double qab, double qc,
+    double sld,
+    double sld_solvent,
+    double radius_polar,
+    double radius_equatorial)
+{
+    const double qr = sqrt(square(radius_equatorial*qab) + square(radius_polar*qc));
+    const double f = sas_3j1x_x(qr);
+    const double s = (sld - sld_solvent) * form_volume(radius_polar, radius_equatorial);
+
+    return 1.0e-4 * square(f * s);
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/163/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/ellipsoid_high_res.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

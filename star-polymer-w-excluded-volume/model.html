@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Star Polymer w/ Excluded Volume | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/102/">Star Polymer w/ Excluded Volume</a></li>
+</ol>
+<h1>Star Polymer w/ Excluded Volume</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model describes scattering from a star-branched polymer where the arms of the polymer may have excluded volume, i.e., they need not be Gaussian chains.</p>
+<p>Under this model, the form factor of the star polymer with $f$ arms having degree of polymerization $N$ is given by</p>
+<p>$$<br/>P_{star}(q) = \frac{1}{f^{2}} \left[ fP_{sb}(q,N) + f(f-1)P_{ib}(q,N) \right]<br/>$$<br/>$P_{sb}(q,N)$ is the single branch/arm form factor, given by:<br/>$$<br/>P_{sb}(q,N) = \frac{1}{\nu U^{1/2\nu}}\gamma\left( \frac{1}{2v}, U \right) - \frac{1}{\nu U^{1/\nu}}\gamma\left( \frac{1}{\nu}, U\right)<br/>$$<br/>where $\nu$ is the excluded volume parameter, $U = q^{2}b^{2}N^{2\nu}/6$ and $b$ is the Kuhn length. The interbranch/arm form factor is given by:<br/>$$<br/>P_{ib}(q,N) = 2P_{sb}(q,2N) - P_{sb}(q,N)<br/>$$</p>
+<p>The final scattering intensity that this model gives is<br/>$$<br/>I(q) = scale \times (\rho_{P} - \rho_{S})^{2}P_{star}(q) + B<br/>$$<br/>where $\rho_{P}$ and $\rho_{S}$ are the scattering length densities of the polymer and solvent, respectively, and $B$ is the incoherent background.</p>
+<p>-----<br/>References</p>
+<p>1. B. Hammouda, "Form Factors for Branched Polymers with Excluded Volume", J. of Research of NIST, 121, 139-164 (2016).</p>
+<p>2. X. Lang, W. R. Lenart, J. E. P. Sun, B. Hammouda, and M. J. A. Hore, "Interaction and Conformation of Aqueous Poly(N-isopropylacrylamide) (PNIPAM) Star Polymers below the LCST", Macromolecules, 50, 2145-2154 (2017).</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Star Polymer w/ Excluded Volume',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 0.00380887},{x: 0.0106939, y: 0.0037487},{x: 0.0208878, y: 0.00358827},{x: 0.0310816, y: 0.00335153},{x: 0.0412755, y: 0.00307024},{x: 0.0514694, y: 0.00277619},{x: 0.0616633, y: 0.00249502},{x: 0.0718571, y: 0.00224327},{x: 0.082051, y: 0.00202849},{x: 0.0922449, y: 0.00185136},{x: 0.102439, y: 0.00170839},{x: 0.112633, y: 0.00159424},{x: 0.122827, y: 0.00150333},{x: 0.13302, y: 0.00143069},{x: 0.143214, y: 0.00137218},{x: 0.153408, y: 0.00132461},{x: 0.163602, y: 0.00128551},{x: 0.173796, y: 0.00125303},{x: 0.18399, y: 0.00122578},{x: 0.194184, y: 0.0012027},{x: 0.204378, y: 0.00118299},{x: 0.214571, y: 0.00116602},{x: 0.224765, y: 0.0011513},{x: 0.234959, y: 0.00113846},{x: 0.245153, y: 0.00112718},{x: 0.255347, y: 0.00111723},{x: 0.265541, y: 0.0011084},{x: 0.275735, y: 0.00110053},{x: 0.285929, y: 0.00109349},{x: 0.296122, y: 0.00108717},{x: 0.306316, y: 0.00108146},{x: 0.31651, y: 0.0010763},{x: 0.326704, y: 0.00107161},{x: 0.336898, y: 0.00106734},{x: 0.347092, y: 0.00106345},{x: 0.357286, y: 0.00105988},{x: 0.36748, y: 0.0010566},{x: 0.377673, y: 0.00105359},{x: 0.387867, y: 0.00105081},{x: 0.398061, y: 0.00104824},{x: 0.408255, y: 0.00104586},{x: 0.418449, y: 0.00104365},{x: 0.428643, y: 0.0010416},{x: 0.438837, y: 0.00103969},{x: 0.449031, y: 0.00103791},{x: 0.459224, y: 0.00103624},{x: 0.469418, y: 0.00103469},{x: 0.479612, y: 0.00103323},{x: 0.489806, y: 0.00103186},{x: 0.5, y: 0.00103057},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/17/">mjahore</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Aug. 22, 2018, 7:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/378">star_excl_vol.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

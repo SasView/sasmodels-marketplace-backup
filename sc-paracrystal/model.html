@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Sc Paracrystal | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/paracrystal/">Paracrystal</a></li>
+<li><a href="/models/47/">Sc Paracrystal</a></li>
+</ol>
+<h1>Sc Paracrystal</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> Calculates the scattering from a **simple cubic lattice** with paracrystalline distortion. Thermal vibrations are considered to be negligible, and the size of the paracrystal is infinitely large. Paracrystalline distortion is assumed to be isotropic and characterized by a Gaussian distribution. </p>
+<p> The scattering intensity $I(q)$ is calculated as </p>
+<p> $$  I(q) = \frac{\text{scale}}{V_p} V_\text{lattice} P(q) Z(q) + \text{background} <br/>$$<br/>where *scale* is the volume fraction of crystal in the sample volume, $V_\text{lattice}$ is the volume fraction of spheres in the crystal, $V_p$ is the volume of the primary particle, $P(q)$ is the form factor of the sphere (normalized), and $Z(q)$ is the paracrystalline structure factor for a simple cubic structure. </p>
+<p> .. note::     At this point the GUI does not return $V_\text{lattice}$ separately so that     the user will need to calculate it from the equation given and the     appropriate returned parameters. </p>
+<p> .. warning::     As per the equations below, this model will return I(q)=0 for all q if the     distortion factor is equal to 0. The model is not meant to support perfect     crystals. </p>
+<p> </p>
+<p>     Simple cubic (SC) lattice taken from reference [#Matsuoka1987]_. </p>
+<p> Following the derivation from reference [#Matsuoka1987]_, as corrected in reference [#Matsuoka1990]_, and based on the above figure, the primitive unit cell vectors are $\vec{a_1},\vec{a_2}$, and $\vec{a_3}$ which in this case are the same as the conventional unit cell vectors ($\vec{b_1}$, $\vec{b_2}$, and $\vec{b_3}$) so that </p>
+<p> $$ \vec{a_1} = \vec{b_1} = a \hat{\textbf{x}} \\ \vec{a_2} = \vec{b_2} = a \hat{\textbf{y}} \\ \vec{a_3} = \vec{b_3} = a \hat{\textbf{z}}. <br/>$$</p>
+<p> where $a$ is the lattice parameter which is also in this case the nearest neighbor distance $D$. </p>
+<p> The volume fraction ($V_{lattice}$) of spherical particles with radius $R$ sitting on the sc lattice is then given by: </p>
+<p> $$ V_{lattice} = \frac{4/3 \pi R^3}{D^3} <br/>$$<br/>Now, continuing to follow [#Matsuoka1987]_, the structure (lattice) factor $Z(\vec{q})$ for a 3D paracrystal can be written as: </p>
+<p> $$ Z(\vec{q}) = \prod_{k=1}^{3}Z_k(\vec{q}) <br/>$$<br/>with </p>
+<p> $$ Z_k(\vec{q}) = \frac{1-|F_k|^2}{1-2|F_k|\cos(\vec{a_k}\cdot\vec{q})+|F_k|^2} <br/>$$<br/>and where $F_k(\vec{q})$ is the structure factor of the primitive unit cell defined as: </p>
+<p> $$ F_k(\vec{q}) = e^{-\frac{1}{2} \Delta a^2_k q^2} \times e^{-i\vec{q}\cdot\vec{a_k}}. <br/>$$<br/>Here, $\vec{a_k}$ are the primitive unit cell vectors $\vec{a_1}$, $\vec{a_2}$, and $\vec{a_3}$. Furthermore, $\Delta a_k$ is the isotropic distortion of the lattice point from its ideal position and can be defined by a constant factor $g=\Delta a / |\vec{a_1}| = \Delta a / |\vec{a_2}| = \Delta a / |\vec{a_3}|=\Delta a/D$. </p>
+<p> Finally, assuming the definitions presented in this document, the authors of reference [#Matsuoka1987]_ have derived the lattice factors which, substituting $D$ for the lattice parameter $a$, are given by: </p>
+<p> $$ Z_1(q,\theta,\phi)=[1-e^{-q^2\Delta a^2}]/\{1-2e^{-\frac{1}{2}q^2\Delta a^2}\cos(-qD \sin\theta \cos\phi ) + e^{-q^2\Delta a^2}\}\\ Z_2(q,\theta,\phi)=[1-e^{-q^2\Delta a^2}]/\{1-2e^{-\frac{1}{2}q^2\Delta a^2}\cos(qD \sin\theta \sin\phi) + e^{-q^2\Delta a^2}\}\\ Z_3(q,\theta,\phi)=[1-e^{-q^2\Delta a^2}]/\{1-2e^{-\frac{1}{2}q^2\Delta a^2}\cos(qD \cos\theta) + e^{-q^2\Delta a^2}\}.\\ <br/>$$</p>
+<p> Finally, the position of the Bragg peaks for the sc lattice are indexed by (reduced q-values): </p>
+<p> $$ \frac{qa}{2\pi}=\frac{qD}{2\pi} = \sqrt{h^2+k^2+l^2} <br/>$$<br/>where for a simple cubic lattice there are **no** selection rules for h, k, l so that all permutations of them give constructive interference. Thus the peak positions correspond to (just the first 5) </p>
+<p> $$  \begin{align*} q/q_0 \quad &amp; \quad 1 &amp; \sqrt{2} \quad &amp; \quad  \sqrt{3} \quad &amp; \sqrt{4} \quad &amp; \quad \sqrt{5}\quad \\ Indices \quad &amp; (100) &amp; \quad (110) \quad &amp; \quad (111) &amp; (200) \quad &amp; \quad (210) \end{align*} <br/>$$<br/>.. note:: </p>
+<p>   The calculation of $Z(q)$ is a double numerical integral that must be   carried out with a high density of points to properly capture the sharp   peaks of the paracrystalline scattering. So be warned that the calculation   is slow. Fitting of any experimental data must be resolution smeared for   any meaningful fit. This makes a triple integral which may be very slow.   If a double-precision GPU with OpenCL support is available this may improve   the speed of the calculation. </p>
+<p> The 2D (Anisotropic model) is based on the reference below where *I(q)* is approximated for 1d scattering. Thus the scattering pattern for 2D may not be accurate particularly at low $q$. For general details of the calculation and angular dispersions for oriented particles see `orientation`. Note that we are not responsible for any incorrectness of the 2D model computation. </p>
+<p> </p>
+<p>     Orientation of the crystal with respect to the scattering plane, when     $\theta = \phi = 0$ the $c$ axis is along the beam direction (the $z$ axis). </p>
+<p> Reference </p>
+<p> </p>
+<p> .. [#Matsuoka1987] Hideki Matsuoka et. al. *Physical Review B*, 36 (1987)    1754-1765 (Original Paper) .. [#Matsuoka1990] Hideki Matsuoka et. al. *Physical Review B*, 41 (1990)    3854-3856 (Corrections to FCC and BCC lattice structure calculation) </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** NIST IGOR/DANSE **Date:** pre 2010<br/>**Last Modified by:** Paul Butler **Date:** Oct 27, 2022<br/>**Last Reviewed by:** Jonathan Gaudet **Date:** Nov 2, 2022<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Paracrystal</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/748">sc_paracrystal.py</a><br>
+<a href="/uploads/749">sc_paracrystal.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,260 @@
+# Note: model title and parameter table are inserted automatically
+r"""
+This model (Tan et al. J. Appl. Cryst. 2022) provides the scattering intensity, $I(q)$, for a lyotropic lamellar phase, randomly distributed in solution in the presence of a co-solvent which partitions into the lamellar phase. The lamellar phase structure is considered here as three layers; a core layer centered on the lamellar phase midpoint and excluding the primary solvent, and two symmetric outer layers (solvent-exposed
+and solvent-containing). The co-solvent is permitted to partition into both layers of the lamellar phase.
+
+This model describes the lamellar phase structure and co-solvent partitioning. The model is intended to be used with input parameters including; the molecular volume and  bound coherent scattering length of the molecules comprising the lamellar structure, along with those of the primary solvent and co-solvent. The user is also required to enter the molar concentration of the constituent molecules.
+
+The variable parameters are intended to be the APL, the average area per amphiphile (lipid) molecule at the core/outer layer interface, the n_W, the number of solvent (water) molecules residing in the outer layer of the bilayer, Kp, the partition constant, and P_s, the co-solvent localization constant which defines the fraction of the co-solvent located in the core layer.
+
+This model is adapted from the lamellar_APL_Nw model in Tan et al. (2021) and earlier models (Nagle and Wiener, 1988) and the fitting function lamellar_hg (Nallet 1993) and (Berghausen 2001).
+
+Note that the model can be applied with other combinations of input parameters/assumptions; and is ideally applied as a simultaneous fit to datasets with multiple independent measurements; such as neutron contrast variation strategies.
+
+
+Definition
+----------
+
+
+The scattering intensity $I(q)$ is
+
+
+.. math::
+
+
+    P(q) = \frac{4}{q^2}
+        \left\lbrace
+            \Delta \rho_H
+            \left[\sin[q(\delta_H + \delta_T)\ - \sin(q\delta_T)\right]
+            + \Delta\rho_T\sin(q\delta_T)
+        \right\rbrace^2
+
+
+where $\delta_T$ is $length_{tail}$, $\delta_H$ is $length_{head}$,
+$\Delta\rho_H$ is the head contrast ($sld_{head} - sld_{solvent}$),
+and $\Delta\rho_T$ is tail contrast ($sld_{tail} - sld_{solvent}$),
+$\length_tail$ equals $(V_c+P_sV_sN_s)/APL$,
+$\length_head$ equals $(V_h+N_wV_w+(1-P_s)V_sN_s)/APL$,
+$\sld_head$ equals $(B_h+N_wB_w+(1-P_s)B_sN_s)/(V_h+N_wV_w+(1-P_s)V_sN_s)$,
+$\sld_tails equals $(B_c+P_sB_sN_s)/(V_c+P_sV_sN_s)$. Where $V_h$, $V_c$, $V_w$, $V_s$ are the molecular volume of lipid hydrophilic headgroup, hydrophobic tails, solvent(water), co-sovlent. And $N_w$, $N_s$ are the solvent and co-solvent molecules partitioning in lipid in a per lipid basis.
+
+
+The total thickness of the lamellar sheet is $\delta_H + \delta_T + \delta_T + \delta_H$.
+Note that in a non aqueous solvent the chemical "head" group may be the
+"Tail region" and vice-versa.
+
+
+The 2D scattering intensity is calculated in the same way as 1D, where
+the $q$ vector is defined as
+
+
+.. math:: $q = \sqrt{q_x^2 + q_y^2}$
+
+
+
+References
+----------
+
+
+>[#] Tan, L., Smith, M. D., Scott, H. L., Yahya, A., Elkins, J. G., Katsaras, J., ... & Nickels, J. D. (2022). Modeling the partitioning of amphiphilic molecules and co-solvents in biomembranes. Journal of Applied Crystallography, 55(6).
+>[#] Tan, L., Elkins, J. G., Davison, B. H., Kelley, E. G., & Nickels, J. (2021). Implementation of a self-consistent slab model of bilayer structure in the SasView suite. Journal of Applied Crystallography, 54(1), 363-370.
+>[#] Nagle, J., & Wiener, M. (1988). Structure of fully hydrated bilayer dispersions. Biochimica et Biophysica Acta (BBA)-Biomembranes, 942(1), 1-10
+>[#] F Nallet, R Laversanne, and D Roux, *J. Phys. II France*, 3, (1993) 487-502
+>[#] J Berghausen, J Zipfel, P Lindner, W Richtering, *J. Phys. Chem. B*, 105, (2001) 11081-11088
+
+
+Authorship and Verification
+----------------------------
+
+
+* **Author: Luoxi Tan, Micholas Dean Smith, Haden L. Scott, Ahmad Yahya, James G. Elkins, John Katsaras, Hugh M O'Neill, Sai Venkatesh Pingali, Jeremy C. Smith, Brian H Davison, Jonathan D. Nickels
+"""
+
+import numpy as np
+from numpy import inf
+
+name = "lamellar_Slab_APL_Partition"
+title = "Random lamellar phase with Head and Tail Groups"
+description = """\
+    [Random lamellar phase with Head and Tail Groups]
+        I(q)= 2*pi*P(q)/(2(H+T)*q^(2)), where
+        P(q)= see manual
+        layer thickness =(H+T+T+H) = 2(Head+Tail)
+        SLD_c = Tail scattering length density
+        SLD_h = Head scattering length density
+        SLD_s = Solvent scattering length density
+        background = incoherent background
+        scale = scale factor
+        B_h = Bound coherent scattering length of lipid headgroup
+        B_c = Bound coherent scattering length of lipid tails
+        B_w = Bound coherent scattering length of water
+        B_s = Bound coherent scattering length of co-solvent
+        APL = Average area per lipid
+        V_w = Molecular volume of water
+        V_h = Molecular volume of lipid headgroup
+        V_c = Molecular volume of lipid tails
+        V_s = Molecular volume of co-solvent
+        N_w = Number molecules of water molecule partitioned into bilayer region
+        N_s = Number molecules of co-solvent molecule partitioned into bilayer region
+        Dc = Average length of lipid tail
+        Dh = Average length of lipid headgroup
+        C_w = Concentration of solvent in the system
+        C_s = Concentration of co-solvent in the system
+        C_L = Concentration of lipid in the system
+        Kp = Partition coefficient
+        P_s = The fraction of partitioned co-solvent in hydrophobic core
+"""
+category = "shape:lamellae"
+
+# pylint: disable=bad-whitespace, line-too-long
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [
+    [
+        "B_h",
+        "1e-5*Ang",
+        58,
+        [-inf, inf],
+        "volume",
+        "Bound coherent scattering length of lipid headgroup",
+    ],
+    [
+        "B_c",
+        "1e-5*Ang",
+        -9.05984,
+        [-inf, inf],
+        "volume",
+        "Bound coherent scattering length of lipid tails",
+    ],
+    [
+        "B_w",
+        "1e-5*Ang",
+        19.145,
+        [-inf, inf],
+        "volume",
+        "Bound coherent scattering length of water",
+    ],
+    [
+        "B_s",
+        "1e-5*Ang",
+        19.145,
+        [-inf, inf],
+        "volume",
+        "Bound coherent scattering length of co-solvent",
+    ],
+    ["V_s", "Ang^3", 20, [1, inf], "volume", "Molecular volume of co-solvent"],
+    ["V_w", "Ang^3", 30.4, [0, inf], "volume", "Molecular volume of water"],
+    ["V_h", "Ang^3", 211, [0, inf], "volume", "Molecular volume of lipid headgroup"],
+    ["V_c", "Ang^3", 896.608, [0, inf], "volume", "Molecular volume of lipid tails"],
+    ["C_w", "mol/L", 53, [0, inf], "volume", "Concentration of solvent in the system"],
+    [
+        "C_s",
+        "mol/L",
+        0.49,
+        [0, inf],
+        "volume",
+        "Concentration of co-solvent in the system",
+    ],
+    ["C_L", "mol/L", 0.029, [0, inf], "volume", "Concentration of lipid in the system"],
+    ["Kp", "None", 19, [0, inf], "volume", "Partition coefficient"],
+    [
+        "P_s",
+        "None",
+        0.6,
+        [0, 1],
+        "volume",
+        "The fraction of partitioned co-solvent in hydrophobic core",
+    ],
+    ["APL", "Ang^2", 60, [0, inf], "volume", "Average area per lipid"],
+    [
+        "N_w",
+        "None",
+        20,
+        [0, inf],
+        "sld",
+        "Number molecules of water molecule partitioned into bilayer region",
+    ],
+]
+
+
+# pylint: enable=bad-whitespace, line-too-long
+
+
+# No volume normalization despite having a volume parameter
+# This should perhaps be volume normalized?
+
+
+def Iq(
+    q,
+    B_h=58,
+    B_c=-9.05984,
+    B_w=19.145,
+    B_s=-5.06,
+    V_s=152,
+    V_w=30.4,
+    V_h=211,
+    V_c=896.608,
+    C_w=55,
+    C_s=0.49,
+    C_L=0.029,
+    Kp=19,
+    P_s=0.6,
+    APL=60,
+    N_w=20,
+):
+    Nw_total = C_w / C_L
+    Ns_total = C_s / C_L
+    N_s = (
+        1
+        / (2 * (-1 + Kp) * V_s)
+        * (
+            -Ns_total * V_s
+            + N_w * V_w
+            - Nw_total * V_w
+            - Kp * (V_c + V_h - Ns_total * V_s + N_w * V_w)
+            + (
+                4 * (-1 + Kp) * Kp * Ns_total * V_s * (V_c + V_h + N_w * V_w)
+                + (
+                    Ns_total * V_s
+                    + (-N_w + Nw_total) * V_w
+                    + Kp * (V_c + V_h - Ns_total * V_s + N_w * V_w)
+                )
+                ** 2
+            )
+            ** 0.5
+        )
+    )
+    SLD_h = (B_h + N_w * B_w + (1 - P_s) * N_s * B_s) / (
+        V_h + N_w * V_w + (1 - P_s) * N_s * V_s
+    )  # the calculation of sld of headgroup
+    SLD_c = (B_c + P_s * N_s * B_s) / (
+        V_c + P_s * N_s * V_s
+    )  # the calculation of sld of tail
+    SLD_s = (B_w * (Nw_total - N_w) + B_s * (Ns_total - N_s)) / (
+        V_w * (Nw_total - N_w) + V_s * (Ns_total - N_s)
+    )  # the calculation of sld of the surrounding bulk solvent
+    Dc = (V_c + P_s * N_s * V_s) / (
+        APL
+    )  # the calculation of length of lipid hydrocarbon chains
+    Dh = (
+        V_h + N_w * V_w + (1 - P_s) * N_s * V_s
+    ) / APL  # the calculation of length of lipid headgroup
+    qsq = q * q  # q square
+    drh = SLD_h - SLD_s  # delta rho_H (the head contrast)
+    drt = SLD_c - SLD_s  # delat rho_T  (the tail contrast)
+    qT = q * Dc
+    Pq = drh * (np.sin(q * (Dh + Dc)) - np.sin(qT)) + drt * np.sin(qT)
+    Pq *= Pq
+    Pq *= 4.0 / (qsq)
+    inten = 2 * np.pi * Pq / qsq
+    inten /= 2.0 * (Dc + Dh)
+    return inten
+
+
+def random():  # the random function which can generate random number for the vriable parameters
+    """Return a random parameter set for the model."""
+    APL = np.random.uniform(1, 500)
+    P_s = np.random.uniform(0, 1)
+    N_w = np.random.uniform(0, 100)
+    Kp = np.random.uniform(0, 100)
+    pars = dict(APL=APL, P_s=P_s, N_w=N_w, Kp=Kp)
+    return pars

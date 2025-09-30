@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lamellar | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/lamellae/">Lamellae</a></li>
+<li><a href="/models/46/">Lamellar</a></li>
+</ol>
+<h1>Lamellar</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Polydispersity in the bilayer thickness can be applied from the GUI. </p>
+<p> Definition </p>
+<p> </p>
+<p> The scattering intensity $I(q)$ for dilute, randomly oriented, "infinitely large" sheets or lamellae is </p>
+<p> $$  I(q) = \text{scale}\frac{2\pi P(q)}{q^2\delta} + \text{background} <br/>$$</p>
+<p> The form factor is </p>
+<p> $$  P(q) = \frac{2\Delta\rho^2}{q^2}(1-\cos(q\delta)) = \frac{4\Delta\rho^2}{q^2}\sin^2\left(\frac{q\delta}{2}\right) <br/>$$<br/>where $\delta$ is the total layer thickness and $\Delta\rho$ is the scattering length density difference. </p>
+<p> This is the limiting form for a spherical shell of infinitely large radius. Note that the division by $\delta$ means that $scale$ in sasview is the volume fraction of sheet, $\phi = S\delta$ where $S$ is the area of sheet per unit volume. $S$ is half the Porod surface area per unit volume of a thicker layer (as that would include both faces of the sheet). </p>
+<p> The 2D scattering intensity is calculated in the same way as 1D, where the $q$ vector is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$</p>
+<p> References </p>
+<p> </p>
+<p> #. F Nallet, R Laversanne, and D Roux, *J. Phys. II France*, 3, (1993) 487-502 #. J Berghausen, J Zipfel, P Lindner, W Richtering,    *J. Phys. Chem. B*, 105, (2001) 11081-11088 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:**<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Lamellae</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/806">lamellar.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

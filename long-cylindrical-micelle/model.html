@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Long Cylindrical Micelle | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/159/">Long Cylindrical Micelle</a></li>
+</ol>
+<h1>Long Cylindrical Micelle</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Form factor of long-cylinder micelle based on J. Appl. Cryst. (2000). 33, 637±640 (Section 5 equation 15-19)</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Long Cylindrical Micelle',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.001, y: 1009486282665.696},{x: 0.001047452236000633, y: 1009373532120.464},{x: 0.001097156186702727, y: 1009249841010.714},{x: 0.0011492187010037, y: 1009114149212.676},{x: 0.001203751698020068, y: 1008965294178.921},{x: 0.001260872407680681, y: 1008802001104.017},{x: 0.001320703622736631, y: 1008622872158.423},{x: 0.001383373962729621, y: 1008426374704.949},{x: 0.001449018150486198, y: 1008210828404.692},{x: 0.001517777301732271, y: 1007974391111.52},{x: 0.001589799228450475, y: 1007715043445.757},{x: 0.001665238756632532, y: 1007430571928.834},{x: 0.001744258059109661, y: 1007118550551.146},{x: 0.001827027004176539, y: 1006776320635.426},{x: 0.001913723520758254, y: 1006400968847.495},{x: 0.00200453398090524, y: 1005989303195.335},{x: 0.002099653600438444, y: 1005537826846.203},{x: 0.002199286858606028, y: 1005042709580.039},{x: 0.002303647937653695, y: 1004499756685.769},{x: 0.00241296118325361, y: 1003904375095.615},{x: 0.002527461586781727, y: 1003251536541.265},{x: 0.002647395290480231, y: 1002535737505.221},{x: 0.002773020116591064, y: 1001750955731.001},{x: 0.002904606121598046, y: 1000890603047.866},{x: 0.003042436176769003, y: 999947474259.7513},{x: 0.00318680657624591, y: 998913691845.0421},{x: 0.003338027673990301, y: 997780646214.5715},{x: 0.003496424550953137, y: 996538931280.8811},{x: 0.003662337713903373, y: 995178275103.8262},{x: 0.003836123827417535, y: 993687465397.6097},{x: 0.004018156480603808, y: 992054269714.2925},{x: 0.004208826990208894, y: 990265350161.3273},{x: 0.00440854524183412, y: 988306172568.2727},{x: 0.004617740571069101, y: 986160910094.2772},{x: 0.004836862686437171, y: 983812341366.9419},{x: 0.00506638263613665, y: 981241743369.6514},{x: 0.005306793820656116, y: 978428779453.7848},{x: 0.005558613053440591, y: 975351383050.7971},{x: 0.00582238167188866, y: 971985637904.3308},{x: 0.006098666701068882, y: 968305655942.5092},{x: 0.006388062072657206, y: 964283454274.9557},{x: 0.006691189901715635, y: 959888833238.1794},{x: 0.007008701824056899, y: 955089257938.5183},{x: 0.007341280397070116, y: 949849746366.0646},{x: 0.007689640567018716, y: 944132767889.2827},{x: 0.008054531205964931, y: 937898156801.5419},{x: 0.008436736721624843, y: 931103046590.7783},{x: 0.008837078743614602, y: 923701831753.641},{x: 0.009256417889712782, y: 915646165285.0657},{x: 0.009695655615935914, y: 906885001448.2471},{x: 0.01015573615440418, y: 897364695066.7134},{x: 0.01063764854316313, y: 887029170368.0999},{x: 0.0111424287523251, y: 875820174323.1238},{x: 0.01167116191110068, y: 863677631418.9006},{x: 0.01222498464050783, y: 850540118814.05},{x: 0.01280508749677333, y: 836345482742.0148},{x: 0.01341271753067898, y: 821031618715.4908},{x: 0.01404918096835459, y: 804537439343.9297},{x: 0.01471584601928056, y: 786804054150.6484},{x: 0.01541414581753645, y: 767776185335.8098},{x: 0.01614558150261837, y: 747403841563.1158},{x: 0.01691172544644807, y: 725644268048.1593},{x: 0.01771422463351085, y: 702464184901.1562},{x: 0.01855480420138843, y: 677842316150.1653},{x: 0.01943527114929827, y: 651772198408.6338},{x: 0.02035751822261107, y: 624265240006.3253},{x: 0.0213235279816976, y: 595353977890.7897},{x: 0.02233537706385123, y: 565095450219.6951},{x: 0.02339524064744823, y: 533574567132.1343},{x: 0.02450539712794256, y: 500907321092.387},{x: 0.02566823301574694, y: 467243632648.9592},{x: 0.02688624806652941, y: 432769579792.3378},{x: 0.02816206065495395, y: 397708713153.4084},{x: 0.02949841340341698, y: 362322120677.6787},{x: 0.03089817907788017, y: 326906881746.3129},{x: 0.03236436676347357, y: 291792551563.5809},{x: 0.03390012833314499, y: 257335353104.0626},{x: 0.03550876522326114, y: 223909837667.2011},{x: 0.03719373553072642, y: 191897916555.384},{x: 0.03895866144687558, y: 161675372133.8336},{x: 0.04080733704412151, y: 133596225726.4955},{x: 0.04274373643209657, y: 107975660223.4085},{x: 0.04477202230082128, y: 85072539485.12276},{x: 0.04689655486926548, y: 65072889704.26958},{x: 0.04912190125853851, y: 48075948440.04684},{x: 0.0514528453098585, y: 34084473571.9047},{x: 0.05389439786840601, y: 23000868457.83853},{x: 0.05645180755516963, y: 14630275607.2076},{x: 0.0591305720499399, y: 8691120160.226883},{x: 0.06193644990970612, y: 4832713887.847191},{x: 0.06487547294786289, y: 2658599742.308874},{x: 0.0679539592008376, y: 1753516706.821585},{x: 0.07117852651001318, y: 1711382998.219861},{x: 0.07455610674814366, y: 2161641530.679762},{x: 0.078093960720845, y: 2791645350.378616},{x: 0.08179969377519472, y: 3363282447.628718},{x: 0.08568127214899482, y: 3722479535.485885},{x: 0.08974704009584344, y: 3800436140.541594},{x: 0.0940057378228297, y: 3605599056.279083},{x: 0.0984665202794123, y: 3206019290.888688},{x: 0.1031389768378721, y: 2703410655.525916},{x: 0.1080331519076468, y: 2202968261.519465},{x: 0.1131595665278607, y: 1785765974.46248},{x: 0.1185292409844701, y: 1491433211.606006},{x: 0.1241537185006411, y: 1316238800.601745},{x: 0.1300450900512898, y: 1225991498.883841},{x: 0.1362160203551272, y: 1176995755.701284},{x: 0.1426797751000857, y: 1135234585.965345},{x: 0.1494502494606524, y: 1085819127.379008},{x: 0.1565419979684128, y: 1030385618.624995},{x: 0.1639702658000205, y: 976529648.0451044},{x: 0.1717510215498498, y: 927452169.6259115},{x: 0.1799009915577831, y: 879241276.1042496},{x: 0.188437695865931, y: 826917253.7496611},{x: 0.1973794858815769, y: 772321374.4054576},{x: 0.2067455838273131, y: 724575099.7088202},{x: 0.2165561240631755, y: 690792298.1095612},{x: 0.2268321963696039, y: 665544998.4775965},{x: 0.2375958912842763, y: 632045766.5172627},{x: 0.2488703475902785, y: 578626805.820495},{x: 0.2606798020576923, y: 515125697.6142487},{x: 0.2730496415455322, y: 467038263.7808621},{x: 0.2860064575760392, y: 447290459.3861004},{x: 0.2995781034986424, y: 436765928.571766},{x: 0.3137937543664824, y: 404751270.3209439},{x: 0.3286839696542054, y: 351384066.0871904},{x: 0.3442807589518618, y: 310646379.3251924},{x: 0.360617650776123, y: 299383527.4510163},{x: 0.3777297646467455, y: 288779944.2456898},{x: 0.3956538865832264, y: 254371867.0243046},{x: 0.4144285481839419, y: 220595569.1869093},{x: 0.4340941094577661, y: 210385073.4564688},{x: 0.4546928455862407, y: 199017862.261361},{x: 0.4762690378027989, y: 172671929.8477063},{x: 0.4988690685844118, y: 156511081.419966},{x: 0.5225415213602953, y: 148889348.8193554},{x: 0.547337284952014, y: 131994132.9596275},{x: 0.5733096629695033, y: 119228291.9130186},{x: 0.6005144883981757, y: 111445722.1353568},{x: 0.6290102436234454, y: 99505886.07277678},{x: 0.6588581861506815, y: 91172768.187517},{x: 0.6901224802908528, y: 83584168.88199355},{x: 0.7228703350949566, y: 75484358.8167294},{x: 0.75717214883374, y: 69459914.04748721},{x: 0.7931016603333051, y: 63016058.62080439},{x: 0.8307361074919352, y: 57700068.23171495},{x: 0.8701563933188907, y: 52581424.77500742},{x: 0.9114472598521185, y: 48089651.88929567},{x: 0.9546974703287516, y: 43717588.29842484},{x: 1.0, y: 40181421.80846509},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/55/">kiranvad</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>March 8, 2024, 4:04 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/824">longcylinder_micelle.py</a><br/>
+</td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

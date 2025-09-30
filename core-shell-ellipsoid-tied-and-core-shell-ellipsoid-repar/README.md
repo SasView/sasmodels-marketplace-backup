@@ -1,0 +1,13 @@
+# core_shell_ellipsoid_tied and core_shell_ellipsoid_repar
+
+Two methods, both requiring sasview v5,  to produce a core_shell_ellipsoid with solvent in the shell. Parameters include the dry_shell / core volume ratio, the local fraction of solvent in the shell, and the sld of the dry shell. Values for these parameters may often be fairly easy to estimate from molecular formulae, then the solvent content of the shell may be adjusted by fitting or more likely by trial and error around an expected value. The shell thickness has to be calculated as the solution of a cubic equation, "on the fly". Sorry there is currently no easy way to return the value of the shell thickness, or the scattering length density of the wet shell, back to the user! The shell thickness may be (tediously) logged every time the solver is called by printing to the sasview log file. core_shell_ellipsoid_repar simply uses the reparameterize method, new to sasiew 5, on the default core_shell_ellipsoid model. (For a simpler example see the documentation in the sasview help for "plugin models".) core_shell_ellipsoid_tied is a more traditional rewrite of the default model. Both versions include a number of unit tests Both use cubic_solve_reparam3.c to solve the cubic equation. Many thanks to Paul Kienzle for setting up reparameterize, and much other help here.
+
+Two methods, both requiring sasview v5,  to produce a core_shell_ellipsoid with solvent in the shell. Parameters include the dry_shell / core volume ratio, the local fraction of solvent in the shell, and the sld of the dry shell. Values for these parameters may often be fairly easy to estimate from molecular formulae, then the solvent content of the shell may be adjusted by fitting or more likely by trial and error around an expected value. The shell thickness has to be calculated as the solution of a cubic equation, "on the fly". Sorry there is currently no easy way to return the value of the shell thickness, or the scattering length density of the wet shell, back to the user! The shell thickness may be (tediously) logged every time the solver is called by printing to the sasview log file.
+
+core_shell_ellipsoid_repar simply uses the reparameterize method, new to sasiew 5, on the default core_shell_ellipsoid model. (For a simpler example see the documentation in the sasview help for "plugin models".)
+
+core_shell_ellipsoid_tied is a more traditional rewrite of the default model. Both versions include a number of unit tests Both use cubic_solve_reparam3.c to solve the cubic equation.
+
+Many thanks to Paul Kienzle for setting up reparameterize, and much other help here.
+
+Source: https://marketplace.sasview.org/models/139/

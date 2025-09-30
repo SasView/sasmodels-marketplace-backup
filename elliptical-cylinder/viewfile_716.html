@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/15/">Elliptical Cylinder</a></li>
+<li><a href="/uploads/716">elliptical_cylinder.c</a></li>
+</ol>
+<h1>Elliptical Cylinder - elliptical_cylinder.c</h1>
+<pre>
+    <code>static double
+form_volume(double radius_minor, double r_ratio, double length)
+{
+    return M_PI * radius_minor * radius_minor * r_ratio * length;
+}
+
+static double
+radius_from_excluded_volume(double radius_minor, double r_ratio, double length)
+{
+    const double r_equiv = sqrt(radius_minor*radius_minor*r_ratio);
+    return 0.5*cbrt(0.75*r_equiv*(2.0*r_equiv*length + (r_equiv + length)*(M_PI*r_equiv + length)));
+}
+
+static double
+radius_from_volume(double radius_minor, double r_ratio, double length)
+{
+    const double volume_ellcyl = form_volume(radius_minor,r_ratio,length);
+    return cbrt(volume_ellcyl/M_4PI_3);
+}
+
+static double
+radius_from_min_dimension(double radius_minor, double r_ratio, double hlength)
+{
+    const double rad_min = (r_ratio &gt; 1.0 ? radius_minor : r_ratio*radius_minor);
+    return (rad_min &lt; hlength ? rad_min : hlength);
+}
+
+static double
+radius_from_max_dimension(double radius_minor, double r_ratio, double hlength)
+{
+    const double rad_max = (r_ratio &lt; 1.0 ? radius_minor : r_ratio*radius_minor);
+    return (rad_max &gt; hlength ? rad_max : hlength);
+}
+
+static double
+radius_from_diagonal(double radius_minor, double r_ratio, double length)
+{
+    const double radius_max = (r_ratio &gt; 1.0 ? radius_minor*r_ratio : radius_minor);
+    return sqrt(radius_max*radius_max + 0.25*length*length);
+}
+
+static double
+radius_effective(int mode, double radius_minor, double r_ratio, double length)
+{
+    switch (mode) {
+    default:
+    case 1: // equivalent cylinder excluded volume
+        return radius_from_excluded_volume(radius_minor, r_ratio, length);
+    case 2: // equivalent volume sphere
+        return radius_from_volume(radius_minor, r_ratio, length);
+    case 3: // average radius
+        return 0.5*radius_minor*(1.0 + r_ratio);
+    case 4: // min radius
+        return (r_ratio &gt; 1.0 ? radius_minor : r_ratio*radius_minor);
+    case 5: // max radius
+        return (r_ratio &lt; 1.0 ? radius_minor : r_ratio*radius_minor);
+    case 6: // equivalent circular cross-section
+        return sqrt(radius_minor*radius_minor*r_ratio);
+    case 7: // half length
+        return 0.5*length;
+    case 8: // half min dimension
+        return radius_from_min_dimension(radius_minor,r_ratio,0.5*length);
+    case 9: // half max dimension
+        return radius_from_max_dimension(radius_minor,r_ratio,0.5*length);
+    case 10: // half diagonal
+        return radius_from_diagonal(radius_minor,r_ratio,length);
+    }
+}
+
+static void
+Fq(double q, double *F1, double *F2, double radius_minor, double r_ratio, double length,
+   double sld, double solvent_sld)
+{
+    // orientational average limits
+    const double va = 0.0;
+    const double vb = 1.0;
+    // inner integral limits
+    const double vaj=0.0;
+    const double vbj=M_PI;
+
+    const double radius_major = r_ratio * radius_minor;
+    const double rA = 0.5*(square(radius_major) + square(radius_minor));
+    const double rB = 0.5*(square(radius_major) - square(radius_minor));
+
+    //initialize integral
+    double outer_sum_F1 = 0.0;
+    double outer_sum_F2 = 0.0;
+    for(int i=0;i&lt;GAUSS_N;i++) {
+        //setup inner integral over the ellipsoidal cross-section
+        const double cos_val = ( GAUSS_Z[i]*(vb-va) + va + vb )/2.0;
+        const double sin_val = sqrt(1.0 - cos_val*cos_val);
+        //const double arg = radius_minor*sin_val;
+        double inner_sum_F1 = 0.0;
+        double inner_sum_F2 = 0.0;
+        for(int j=0;j&lt;GAUSS_N;j++) {
+            const double theta = ( GAUSS_Z[j]*(vbj-vaj) + vaj + vbj )/2.0;
+            const double r = sin_val*sqrt(rA - rB*cos(theta));
+            const double be = sas_2J1x_x(q*r);
+            inner_sum_F1 += GAUSS_W[j] * be;
+            inner_sum_F2 += GAUSS_W[j] * be * be;
+        }
+        //now calculate the value of the inner integral
+        inner_sum_F1 *= 0.5*(vbj-vaj);
+        inner_sum_F2 *= 0.5*(vbj-vaj);
+
+        //now calculate outer integral
+        const double si = sas_sinx_x(q*0.5*length*cos_val);
+        outer_sum_F1 += GAUSS_W[i] * inner_sum_F1 * si;
+        outer_sum_F2 += GAUSS_W[i] * inner_sum_F2 * si * si;
+    }
+    // correct limits and divide integral by pi
+    outer_sum_F1 *= 0.5*(vb-va)/M_PI;
+    outer_sum_F2 *= 0.5*(vb-va)/M_PI;
+
+    // scale by contrast and volume, and convert to to 1/cm units
+    const double volume = form_volume(radius_minor, r_ratio, length);
+    const double contrast = sld - solvent_sld;
+    const double s = contrast*volume;
+    *F1 = 1.0e-2*s*outer_sum_F1;
+    *F2 = 1.0e-4*s*s*outer_sum_F2;
+}
+
+
+static double
+Iqabc(double qa, double qb, double qc,
+     double radius_minor, double r_ratio, double length,
+     double sld, double solvent_sld)
+{
+    // Compute:  r = sqrt((radius_major*cos_nu)^2 + (radius_minor*cos_mu)^2)
+    // Given:    radius_major = r_ratio * radius_minor
+    const double qr = radius_minor*sqrt(square(r_ratio*qb) + square(qa));
+    const double be = sas_2J1x_x(qr);
+    const double si = sas_sinx_x(qc*0.5*length);
+    const double fq = be * si;
+    const double contrast = sld - solvent_sld;
+    const double volume = form_volume(radius_minor, r_ratio, length);
+    return 1.0e-4 * square(contrast * volume * fq);
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/15/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/elliptical_cylinder.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

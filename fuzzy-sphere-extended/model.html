@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>fuzzy_sphere_extended | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/156/">fuzzy_sphere_extended</a></li>
+</ol>
+<h1>fuzzy_sphere_extended</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition<br/>----------<br/>This model expands the fuzzy sphere model to include the high q contributions<br/>associated with density fluctuations from self-avoiding random walk polymers.<br/>The scattering intensity $I(q)$ is given as<br/> <br/>    $I(q) = \text{scale} \times V (\Delta \rho)^2 (P_{fs}(q) + P_{b}(q))$</p>
+<p>Where $P_{fs} = A(q)^2$ is the fuzzy sphere form factor.</p>
+<p> <br/>    $A(q) = \frac{3\left[\sin(qR) - qR \cos(qR)\right]}{(qR)^3}<br/>           \exp\left(\frac{-(\sigma_\text{fuzzy}q)^2}{2}\right)$</p>
+<p>The $P_{b}(q)$ term accounts for the density fluctuations of polymer chains<br/>within a 'blob' of radius, $\xi$ (i.e., the correlation length of the density<br/>fluctuations), and is given by</p>
+<p> <br/>    $P_b(q) = \frac{a_b}{\mu q_b} \frac{\sin(\mu \arctan(q_b))}{(1+q_b^2)^{\mu/2}}$<br/>    $\mu = \nu^{-1}-1$<br/>    $q_b = \frac{q\xi}{\left[\text{erf}\left(\frac{qR_g}{\sqrt{6}}\right)\right]^3}$</p>
+<p>Where $\nu$ is the Flory-Huggins parameter, $R_g$ is the radius of gyration of<br/>the polymer chain, and $a_b$ is the relative amplitude of $P_b(q)$ to $P_{fs}(q)$.</p>
+<p>References<br/>----------<br/>1. S Rathgeber, M Monkenbusch, M Kreitschmann, V Urban, A Brulet,<br/>    J Chem Phys, 117 (2002) 4047-4062<br/>2. M Stieger, J. S Pedersen, P Lindner, W Richtering,<br/>   Langmuir, 20 (2004) 7283-7292</p>
+<p>Authorship and Verification<br/>---------------------------</p>
+<p>* **Author: Kush J Patel** --- **Date:** 2024-01-17</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/51/">kushj.patel</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Jan. 19, 2024, 9:53 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/821">fuzzy_sphere_extended.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Magnetic vortex in a disc
+
+This model describes the approximated scattering of a magnetic vortex in a flat ferromagnetic cylinders made of isotropic material [Metlov2016]. The circular cylinder with radius $R$ and length $L$ is assumed thin enough so that the magnetization vector $\mathbf{M}(r)$ only depends on the radial coordinates $r$. The parameter $b$ describes the vortex-center displacement. The value of the parameter $b$ is proportional to $M_Z/M_S= 2b/3$, which is valid under the assumptions of $b << 1$. In the vortex state considered here, the magnetization is always tangential to the boundary  i.e. the magnetic charges are distributed over the disc radius. The signature of the vortex core has been neglected, numerical solutions for the highly inhomogeneous core region can be found in the SI of [Metlov2016]. [Metlov2016] K.L. Metlov and A. Michels, Sci. Reports 6, 25055 (2016)
+
+This model describes the approximated scattering of a magnetic vortex in a flat ferromagnetic cylinders made of isotropic material [Metlov2016]. The circular cylinder with radius $R$ and length $L$ is assumed thin enough so that the magnetization vector $\mathbf{M}(r)$ only depends on the radial coordinates $r$. The parameter $b$ describes the vortex-center displacement. The value of the parameter $b$ is proportional to $M_Z/M_S= 2b/3$, which is valid under the assumptions of $b << 1$. In the vortex state considered here, the magnetization is always tangential to the boundary  i.e. the magnetic charges are distributed over the disc radius. The signature of the vortex core has been neglected, numerical solutions for the highly inhomogeneous core region can be found in the SI of [Metlov2016].
+
+[Metlov2016] K.L. Metlov and A. Michels, Sci. Reports 6, 25055 (2016)
+
+Source: https://marketplace.sasview.org/models/142/

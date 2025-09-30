@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/40/">Star Polymer</a></li>
+<li><a href="/uploads/769">star_polymer.py</a></li>
+</ol>
+<h1>Star Polymer - star_polymer.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+
+Calcuates the scattering from a simple star polymer with f equal Gaussian coil
+arms. A star being defined as a branched polymer with all the branches
+emanating from a common central (in the case of this model) point.  It is
+derived as a special case of on the Benoit model for general branched
+polymers\ [#Benoit1953]_ as also used by Richter *et al.*\ [#Richter1989]_
+
+For a star with $f$ arms the scattering intensity $I(q)$ is calculated as
+
+.. math::
+
+    I(q) = \frac{2}{fv^2}\left[ v-1+\exp(-v)+\frac{f-1}{2}
+           \left[ 1-\exp(-v)\right]^2\right]
+
+where
+
+.. math:: v=\frac{uf}{(3f-2)}
+
+and
+
+.. math:: u = \left\langle R_{g}^2\right\rangle q^2
+
+contains the square of the ensemble average radius-of-gyration of the full
+polymer while v contains the radius of gyration of a single arm $R_{arm}$.
+The two are related as:
+
+.. math:: R_{arm}^2 = \frac{f}{3f-2} R_{g}^2
+
+Note that when there is only one arm, $f = 1$, the Debye Gaussian coil
+equation is recovered.
+
+.. note::
+   Star polymers in solutions tend to have strong interparticle and osmotic
+   effects. Thus the Benoit equation may not work well for many real cases.
+   A newer model for star polymer incorporating excluded volume has been
+   developed by Li et al in arXiv:1404.6269 [physics.chem-ph].  Also, at small
+   $q$ the scattering, i.e. the Guinier term, is not sensitive to the number of
+   arms, and hence 'scale' here is simply $I(q=0)$ as described for the
+   :ref:`mono-gauss-coil` model, using volume fraction $\phi$ and volume V
+   for the whole star polymer.
+
+References
+----------
+
+.. [#Benoit1953] H Benoit *J. Polymer Science*, 11, 507-510 (1953)
+.. [#Richter1989] D Richter, B. Farago, J. S. Huang, L. J. Fetters,
+   B Ewen *Macromolecules*, 22, 468-472 (1989)
+
+Authorship and Verification
+----------------------------
+
+* **Author:** Kieran Campbell **Date:** July 24, 2012
+* **Last Modified by:** Paul Butler **Date:** Auguts 26, 2017
+* **Last Reviewed by:** Ziang Li and Richard Heenan **Date:** May 17, 2017
+"""
+
+import numpy as np
+from numpy import inf
+
+name = "star_polymer"
+title = "Star polymer model with Gaussian statistics"
+description = """
+        Benoit 'Star polymer with Gaussian statistics'
+        with
+        P(q) = 2/{fv^2} * (v - (1-exp(-v)) + {f-1}/2 * (1-exp(-v))^2)
+        where
+        - v = u^2f/(3f-2)
+        - u = &lt;R_g^2&gt;q^2, where &lt;R_g^2&gt; is the ensemble average radius of
+        gyration squared of the entire polymer
+        - f is the number of arms on the star
+        - the radius of gyration of an arm is given b
+        Rg_arm^2 = R_g^2 * f/(3f-2)
+        """
+category = "shape-independent"
+single = False
+# pylint: disable=bad-whitespace, line-too-long
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [["rg_squared", "Ang^2", 100.0, [0.0, inf], "", "Ensemble radius of gyration SQUARED of the full polymer"],
+              ["arms",    "",      3,   [1.0, 6.0], "", "Number of arms in the model"],
+             ]
+# pylint: enable=bad-whitespace, line-too-long
+
+source = ["star_polymer.c"]
+
+def random():
+    """Return a random parameter set for the model."""
+    pars = dict(
+        #background=0,
+        scale=10**np.random.uniform(1, 4),
+        rg_squared=10**np.random.uniform(1, 8),
+        arms=np.random.uniform(1, 6),
+    )
+    return pars
+
+tests = [[{'rg_squared': 2.0,
+           'arms':    3.3,
+          }, 0.5, 0.851646091108],
+
+         [{'rg_squared':    1.0,
+           'arms':       2.0,
+           'background': 1.8,
+          }, 1.0, 2.53575888234],
+        ]
+# 23Mar2016  RKH edited docs, would this better use rg not rg^2 ? Numerical noise at extremely small q.rg
+</code>
+</pre>
+<a class="btn btn-default" href="/models/40/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/star_polymer.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

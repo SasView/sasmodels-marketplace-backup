@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/45/">Polymer Excl Volume</a></li>
+<li><a href="/uploads/714">polymer_excl_volume.py</a></li>
+</ol>
+<h1>Polymer Excl Volume - polymer_excl_volume.py</h1>
+<pre>
+    <code>r"""
+This model describes the scattering from polymer chains subject to excluded
+volume effects and has been used as a template for describing mass fractals.
+
+Definition
+----------
+
+The form factor was originally presented in the following integral form
+(Benoit, 1957)
+
+.. math::
+
+    P(Q)=2\int_0^{1}dx(1-x)exp\left[-\frac{Q^2a^2}{6}n^{2v}x^{2v}\right]
+
+where $\nu$ is the excluded volume parameter
+(which is related to the Porod exponent $m$ as $\nu=1/m$ ),
+$a$ is the statistical segment length of the polymer chain,
+and $n$ is the degree of polymerization.
+
+This integral was put into an almost analytical form as follows
+(Hammouda, 1993)
+
+.. math::
+
+    P(Q)=\frac{1}{\nu U^{1/2\nu}}
+    \left\{
+        \gamma\left(\frac{1}{2\nu},U\right) -
+        \frac{1}{U^{1/2\nu}}\gamma\left(\frac{1}{\nu},U\right)
+    \right\}
+
+and later recast as (for example, Hore, 2013; Hammouda &amp; Kim, 2017)
+
+.. math::
+
+    P(Q)=\frac{1}{\nu U^{1/2\nu}}\gamma\left(\frac{1}{2\nu},U\right) -
+    \frac{1}{\nu U^{1/\nu}}\gamma\left(\frac{1}{\nu},U\right)
+
+where $\gamma(x,U)$ is the incomplete gamma function
+
+.. math::
+
+    \gamma(x,U)=\int_0^{U}dt\ \exp(-t)t^{x-1}
+
+and the variable $U$ is given in terms of the scattering vector $Q$ as
+
+.. math::
+
+    U=\frac{Q^2a^2n^{2\nu}}{6} = \frac{Q^2R_{g}^2(2\nu+1)(2\nu+2)}{6}
+
+The two analytic forms are equivalent. In the 1993 paper
+
+.. math::
+
+    \frac{1}{\nu U^{1/2\nu}}
+
+has been factored out.
+
+**SasView implements the 1993 expression**.
+
+The square of the radius-of-gyration is defined as
+
+.. math::
+
+    R_{g}^2 = \frac{a^2n^{2\nu}}{(2\nu+1)(2\nu+2)}
+
+.. note::
+    This model applies only in the mass fractal range (ie, $5/3&lt;=m&lt;=3$)
+    and **does not apply** to surface fractals ($3&lt;m&lt;=4$).
+    It also does not reproduce the rigid rod limit (m=1) because it assumes
+    chain flexibility from the outset. It may cover a portion of the
+    semi-flexible chain range ($1&lt;m&lt;5/3$).
+
+A low-Q expansion yields the Guinier form and a high-Q expansion yields the
+Porod form which is given by
+
+.. math::
+
+    P(Q\rightarrow \infty) = \frac{1}{\nu U^{1/2\nu}}\Gamma\left(
+    \frac{1}{2\nu}\right) - \frac{1}{\nu U^{1/\nu}}\Gamma\left(
+    \frac{1}{\nu}\right)
+
+Here $\Gamma(x) = \gamma(x,\infty)$ is the gamma function.
+
+The asymptotic limit is dominated by the first term
+
+.. math::
+
+    P(Q\rightarrow \infty)
+       \sim \frac{1}{\nu U^{1/2\nu}}\Gamma\left(\frac{1}{2\nu}\right) =
+    \frac{m}{\left(QR_{g}\right)^m}
+       \left[\frac{6}{(2\nu +1)(2\nu +2)} \right]^{m/2} \Gamma (m/2)
+
+The special case when $\nu=0.5$ (or $m=1/\nu=2$ ) corresponds to Gaussian
+chains for which the form factor is given by the familiar Debye function.
+
+.. math::
+
+    P(Q) = \frac{2}{Q^4R_{g}^4} \left[\exp(-Q^2R_{g}^2) - 1 + Q^2R_{g}^2 \right]
+
+For 2D data: The 2D scattering intensity is calculated in the same way as 1D,
+where the $q$ vector is defined as
+
+.. math::
+
+    q = \sqrt{q_x^2 + q_y^2}
+
+
+References
+----------
+
+#. H Benoit, *Comptes Rendus*, 245 (1957) 2244-2247
+#. B Hammouda, *SANS from Homogeneous Polymer Mixtures - A Unified Overview*,
+   *Advances in Polym. Sci.* 106 (1993) 87-133
+#. M Hore et al, *Co-Nonsolvency of Poly(N-isopropylacrylamide) in Deuterated
+   Water/Ethanol Mixtures*, *Macromolecules* 46 (2013) 7894-7901
+#. B Hammouda &amp; M-H Kim, *The empirical core-chain model*,
+   *Journal of Molecular Liquids* 247 (2017) 434-440
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:**
+"""
+
+import numpy as np
+from numpy import inf, power, errstate
+from scipy.special import gammainc, gamma
+
+name = "polymer_excl_volume"
+title = "Polymer Excluded Volume model"
+description = """Compute the scattering intensity from polymers with excluded
+                volume effects.
+                rg:         radius of gyration
+                porod_exp:  Porod exponent
+              """
+category = "shape-independent"
+
+# pylint: disable=bad-whitespace, line-too-long
+#   ["name", "units", default, [lower, upper], "type", "description"],
+parameters = [
+    ["rg",        "Ang", 60.0, [0, inf], "", "Radius of Gyration"],
+    ["porod_exp", "",     3.0, [0, inf], "", "Porod exponent"],
+]
+# pylint: enable=bad-whitespace, line-too-long
+
+
+def Iq(q, rg=60.0, porod_exp=3.0):
+    """
+    :param q:         Input q-value (float or [float, float])
+    :param rg:        Radius of gyration
+    :param porod_exp: Porod exponent
+    :return:          Calculated intensity
+    """
+    usub = (q*rg)**2 * (2.0/porod_exp + 1.0) * (2.0/porod_exp + 2.0)/6.0
+    with errstate(divide='ignore', invalid='ignore'):
+        upow = power(usub, -0.5*porod_exp)
+        # Note: scipy gammainc is "regularized", being gamma(s,x)/Gamma(s),
+        # so need to scale by Gamma(s) to recover gamma(s, x).
+        result = (porod_exp*upow *
+                  (gamma(0.5*porod_exp)*gammainc(0.5*porod_exp, usub) -
+                   upow*gamma(porod_exp)*gammainc(porod_exp, usub)))
+    result[q &lt;= 0] = 1.0
+
+    return result
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+def random():
+    """Return a random parameter set for the model."""
+    rg = 10**np.random.uniform(0, 4)
+    porod_exp = np.random.uniform(1e-3, 6)
+    scale = 10**np.random.uniform(1, 5)
+    pars = dict(
+        #background=0,
+        scale=scale,
+        rg=rg,
+        porod_exp=porod_exp,
+    )
+    return pars
+
+tests = [
+    # Accuracy tests based on content in test/polyexclvol_default_igor.txt
+    [{'rg': 60, 'porod_exp': 3.0}, 0.001, 0.999801],
+    [{'rg': 60, 'porod_exp': 3.0}, 0.105363, 0.0172751],
+    [{'rg': 60, 'porod_exp': 3.0, 'background': 0.0}, 0.665075, 6.56261e-05],
+
+    # Additional tests with larger range of parameters
+    [{'rg': 10, 'porod_exp': 4.0}, 0.1, 0.724436675809],
+    [{'rg': 2.2, 'porod_exp': 22.0, 'background': 100.0}, 5.0, 100.0],
+    [{'rg': 1.1, 'porod_exp': 1, 'background': 10.0, 'scale': 1.25},
+     20000., 10.0000712097]
+    ]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/45/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/polymer_excl_volume.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/156/">fuzzy_sphere_extended</a></li>
+<li><a href="/uploads/821">fuzzy_sphere_extended.py</a></li>
+</ol>
+<h1>fuzzy_sphere_extended - fuzzy_sphere_extended.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+This model expands the fuzzy sphere model to include the high q contributions
+associated with density fluctuations from self-avoiding random walk polymers.
+The scattering intensity $I(q)$ is given as
+
+..math::
+    
+    I(q) = \text{scale} \times V (\Delta \rho)^2 (P_{fs}(q) + P_{b}(q))
+
+
+Where $P_{fs} = A(q)^2$ is the fuzzy sphere form factor.
+
+..math::
+    
+    A(q) = \frac{3\left[\sin(qR) - qR \cos(qR)\right]}{(qR)^3}
+           \exp\left(\frac{-(\sigma_\text{fuzzy}q)^2}{2}\right)
+
+
+The $P_{b}(q)$ term accounts for the density fluctuations of polymer chains
+within a 'blob' of radius, $\xi$ (i.e., the correlation length of the density
+fluctuations), and is given by
+
+..math::
+    
+    P_b(q) = \frac{a_b}{\mu q_b} \frac{\sin(\mu \arctan(q_b))}{(1+q_b^2)^{\mu/2}}
+    \mu = \nu^{-1}-1
+    q_b = \frac{q\xi}{\left[\text{erf}\left(\frac{qR_g}{\sqrt{6}}\right)\right]^3}
+
+
+Where $\nu$ is the Flory-Huggins parameter, $R_g$ is the radius of gyration of
+the polymer chain, and $a_b$ is the relative amplitude of $P_b(q)$ to $P_{fs}(q)$.
+
+References
+----------
+#. S Rathgeber, M Monkenbusch, M Kreitschmann, V Urban, A Brulet,
+    *J Chem Phys*, 117 (2002) 4047-4062
+#. M Stieger, J. S Pedersen, P Lindner, W Richtering,
+   *Langmuir*, 20 (2004) 7283-7292
+
+
+Authorship and Verification
+---------------------------
+
+* **Author: Kush J Patel** --- **Date:** 2024YYY-01m-17d
+* **Last Modified by:** --- **Date:** 2024YYY-01m-17d
+* **Last Reviewed by:** --- **Date:** 2024YYY-01m-17d
+"""
+
+from sasmodels.special import *
+from numpy import inf, arctan
+from scipy.special import erf
+
+name = "fuzzy_sphere_extended"
+title = "User model for fuzzy_sphere_extended"
+description = """"""
+
+parameters = [ 
+#   ["name", "units", default, [lower, upper], "type", "description"],
+    ['sld', '1e-6/Ang^2', 3.0, [-inf, inf], 'sld', ''],    
+    ['sld_solv', '1e-6/Ang^2', 1.0, [-inf, inf], 'sld', ''],
+    ['R_sphere', 'Ang', 50.0, [0, inf], 'volume', ''],
+    ['sig_fuzzy', 'Ang', 10.0, [0, inf], 'volume', ''],
+    ['rel_amp', '', 0.01, [0, inf], '', ''],
+    ['Rg', 'Ang', 30.0, [0, inf], 'volume', ''],
+    ['FloryHuggins', '', 0.6, [-inf, inf], '', ''],
+    ['corr_len', 'Ang', 15.0, [0, inf], 'volume', ''],
+    ]
+def Iq(x, sld, sld_solv, R, sig_fuzzy, rel_amp, Rg, FloryHuggins, corr_len):
+    """Absolute scattering"""
+    q = x
+    mu = (FloryHuggins**-1)-1
+    qb = q*corr_len/(erf(q*Rg/sqrt(6)))**3
+
+    Pb = rel_amp/(mu*qb) * sin(mu*arctan(qb)) / (1+qb**2)**(mu/2)
+    
+    A = (3*(sin(q*R) - q*R*cos(q*R))/(q*R)**3)*exp(-((sig_fuzzy*q)**2)/2)
+    
+    sld_sqdiff = (sld - sld_solv)**2
+    V = 4/3*pi*R**3
+    
+    y = sld_sqdiff*V*(Pb + A**2)*1e-4
+    
+    return y
+## uncomment the following if Iq works for vector x
+#Iq.vectorized = True
+
+#def Iqxy(x, y, sld_solv, sld, rel_amp, R, sig_fuzzy, Rg, FH, corr_len):
+#    """Absolute scattering of oriented particles."""
+#    ...
+#    return oriented_form(x, y, args)
+## uncomment the following if Iqxy works for vector x, y
+#Iqxy.vectorized = True
+</code>
+</pre>
+<a class="btn btn-default" href="/models/156/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/fuzzy_sphere_extended.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

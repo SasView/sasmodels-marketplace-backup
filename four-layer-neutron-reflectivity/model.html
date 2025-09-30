@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Four layer neutron reflectivity | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/other/">Other</a></li>
+<li><a href="/models/89/">Four layer neutron reflectivity</a></li>
+</ol>
+<h1>Four layer neutron reflectivity</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Calculates specular reflectivity for upto 4 slab-like layers on a substrate. Follows Parratt formulism[1]:<br/> <br/>    \[<br/>    R_n=\frac{r_{n,n+1}+R_{n+1}\exp{2id_{n+1}k_{z,n+1}}}{1+r_{n.n+1}R_{n+1}\exp{2id_{n+1}k_{z,n+1}}} \]<br/> <br/>    Each layer is characterised by: scattering lenght density [A^-2], Thickness [A], and Roughness[A].<br/> <br/>    SLD of capping medium can be set. As can SLD and roughness of substrate.<br/> <br/>    Effect of roughness follows Nevot and Croce[2]. e.g.<br/>    \[<br/>        r_{ij}=\frac{k_i-k_j}{k_i+k_j}\exp -2k_ik_j\sigma^2\]<br/> <br/>        where $r_{ij}$ is the fresnel reflection term between layers $i$ and $j$, and $sigma$ is the roughness of this interface.</p>
+<p>    Validation<br/>    ----------<br/> <br/>    Validation of the code was done by comparing the output of the model to the output of the online neutron reflectivity calculator produced by NIST (https://www.ncnr.nist.gov/instruments/magik/calculators/reflectivity-calculator.html). The NIST software uses an alternative method to generate the relfectivity (Abeles). This model appears to match the NIST one well.<br/> <br/> <br/> <br/>    References<br/>    ----------<br/> <br/>    [1] "Surface Studies of Solids by Total Refiection of X-Rays", L. G. Parratt, Physical Review, V95(2), 1954, pp 359-369.<br/>    [2] L. Nevot and P. Croce, Appl. Phys. 15, 761 1980.</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Four layer neutron reflectivity',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0001, y: 1.0},{x: 0.000498008, y: 1.0},{x: 0.000896016, y: 1.0},{x: 0.00129402, y: 1.0},{x: 0.00169203, y: 1.0},{x: 0.00209004, y: 1.0},{x: 0.00248805, y: 1.0},{x: 0.00288606, y: 1.0},{x: 0.00328406, y: 1.0},{x: 0.00368207, y: 1.0},{x: 0.00408008, y: 1.0},{x: 0.00447809, y: 1.0},{x: 0.0048761, y: 1.0},{x: 0.0052741, y: 1.0},{x: 0.00567211, y: 1.0},{x: 0.00607012, y: 1.0},{x: 0.00646813, y: 1.0},{x: 0.00686614, y: 1.0},{x: 0.00726414, y: 1.0},{x: 0.00766215, y: 1.0},{x: 0.00806016, y: 1.0},{x: 0.00845817, y: 1.0},{x: 0.00885618, y: 1.0},{x: 0.00925418, y: 1.0},{x: 0.00965219, y: 1.0},{x: 0.0100502, y: 1.0},{x: 0.0104482, y: 0.999989},{x: 0.0108462, y: 0.99997},{x: 0.0112442, y: 0.999934},{x: 0.0116422, y: 0.999858},{x: 0.0120402, y: 0.999695},{x: 0.0124382, y: 0.999321},{x: 0.0128363, y: 0.998398},{x: 0.0132343, y: 0.995896},{x: 0.0136323, y: 0.988169},{x: 0.0140303, y: 0.959369},{x: 0.0144283, y: 0.821644},{x: 0.0148263, y: 0.237786},{x: 0.0152243, y: 0.102013},{x: 0.0156223, y: 0.297828},{x: 0.0160203, y: 0.311823},{x: 0.0164183, y: 0.219584},{x: 0.0168163, y: 0.0945041},{x: 0.0172143, y: 0.018075},{x: 0.0176124, y: 0.0200759},{x: 0.0180104, y: 0.0594972},{x: 0.0184084, y: 0.0917555},{x: 0.0188064, y: 0.0996601},{x: 0.0192044, y: 0.0845308},{x: 0.0196024, y: 0.0561785},{x: 0.0200004, y: 0.0274086},{x: 0.0203984, y: 0.00894935},{x: 0.0207964, y: 0.0049104},{x: 0.0211944, y: 0.0120824},{x: 0.0215924, y: 0.023488},{x: 0.0219904, y: 0.0326777},{x: 0.0223884, y: 0.0360061},{x: 0.0227865, y: 0.0328865},{x: 0.0231845, y: 0.02506},{x: 0.0235825, y: 0.0155321},{x: 0.0239805, y: 0.00740651},{x: 0.0243785, y: 0.00282944},{x: 0.0247765, y: 0.00238185},{x: 0.0251745, y: 0.00514654},{x: 0.0255725, y: 0.0093319},{x: 0.0259705, y: 0.0130675},{x: 0.0263685, y: 0.0150164},{x: 0.0267665, y: 0.0146582},{x: 0.0271645, y: 0.0122725},{x: 0.0275625, y: 0.00871511},{x: 0.0279606, y: 0.0050811},{x: 0.0283586, y: 0.00234738},{x: 0.0287566, y: 0.00109287},{x: 0.0291546, y: 0.00137523},{x: 0.0295526, y: 0.00278893},{x: 0.0299506, y: 0.00465982},{x: 0.0303486, y: 0.00628786},{x: 0.0307466, y: 0.0071525},{x: 0.0311446, y: 0.00702984},{x: 0.0315426, y: 0.00600943},{x: 0.0319406, y: 0.00442599},{x: 0.0323386, y: 0.00273572},{x: 0.0327367, y: 0.00137495},{x: 0.0331347, y: 0.000639782},{x: 0.0335327, y: 0.000618586},{x: 0.0339307, y: 0.00119167},{x: 0.0343287, y: 0.00209059},{x: 0.0347267, y: 0.00299157},{x: 0.0351247, y: 0.00361129},{x: 0.0355227, y: 0.00377827},{x: 0.0359207, y: 0.00346484},{x: 0.0363187, y: 0.00277766},{x: 0.0367167, y: 0.00191436},{x: 0.0371147, y: 0.00110122},{x: 0.0375127, y: 0.000529574},{x: 0.0379108, y: 0.000307762},{x: 0.0383088, y: 0.000440293},{x: 0.0387068, y: 0.00083729},{x: 0.0391048, y: 0.00134843},{x: 0.0395028, y: 0.00180932},{x: 0.0399008, y: 0.00208628},{x: 0.0402988, y: 0.0021081},{x: 0.0406968, y: 0.0018782},{x: 0.0410948, y: 0.0014663},{x: 0.0414928, y: 0.000984102},{x: 0.0418908, y: 0.000552255},{x: 0.0422888, y: 0.00026812},{x: 0.0426869, y: 0.000182356},{x: 0.0430849, y: 0.000289841},{x: 0.0434829, y: 0.00053603},{x: 0.0438809, y: 0.000835643},{x: 0.0442789, y: 0.00109755},{x: 0.0446769, y: 0.00124877},{x: 0.0450749, y: 0.00125154},{x: 0.0454729, y: 0.00110984},{x: 0.0458709, y: 0.000864752},{x: 0.0462689, y: 0.000580854},{x: 0.0466669, y: 0.000327772},{x: 0.0470649, y: 0.000161947},{x: 0.0474629, y: 0.000113227},{x: 0.047861, y: 0.000179352},{x: 0.048259, y: 0.000329118},{x: 0.048657, y: 0.000512684},{x: 0.049055, y: 0.000675766},{x: 0.049453, y: 0.000773761},{x: 0.049851, y: 0.000782244},{x: 0.050249, y: 0.000701529},{x: 0.050647, y: 0.000554663},{x: 0.051045, y: 0.000379879},{x: 0.051443, y: 0.000219811},{x: 0.051841, y: 0.000110405},{x: 0.052239, y: 7.23295e-05},{x: 0.0526371, y: 0.000106873},{x: 0.0530351, y: 0.000197037},{x: 0.0534331, y: 0.000313163},{x: 0.0538311, y: 0.00042132},{x: 0.0542291, y: 0.000492122},{x: 0.0546271, y: 0.000507756},{x: 0.0550251, y: 0.000465594},{x: 0.0554231, y: 0.000377764},{x: 0.0558211, y: 0.000267086},{x: 0.0562191, y: 0.000160629},{x: 0.0566171, y: 8.26579e-05},{x: 0.0570151, y: 4.87549e-05},{x: 0.0574131, y: 6.25145e-05},{x: 0.0578112, y: 0.000115456},{x: 0.0582092, y: 0.000189956},{x: 0.0586072, y: 0.000264259},{x: 0.0590052, y: 0.000318169},{x: 0.0594032, y: 0.000337957},{x: 0.0598012, y: 0.000319339},{x: 0.0601992, y: 0.000267905},{x: 0.0605972, y: 0.000197095},{x: 0.0609952, y: 0.000124351},{x: 0.0613932, y: 6.65388e-05},{x: 0.0617912, y: 3.58006e-05},{x: 0.0621892, y: 3.68424e-05},{x: 0.0625873, y: 6.62377e-05},{x: 0.0629853, y: 0.00011379},{x: 0.0633833, y: 0.000165483},{x: 0.0637813, y: 0.000207186},{x: 0.0641793, y: 0.000228152},{x: 0.0645773, y: 0.000223454},{x: 0.0649753, y: 0.000194836},{x: 0.0653733, y: 0.000149878},{x: 0.0657713, y: 9.97644e-05},{x: 0.0661693, y: 5.6313e-05},{x: 0.0665673, y: 2.90208e-05},{x: 0.0669653, y: 2.28626e-05},{x: 0.0673633, y: 3.73341e-05},{x: 0.0677614, y: 6.6903e-05},{x: 0.0681594, y: 0.00010267},{x: 0.0685574, y: 0.000134757},{x: 0.0689554, y: 0.000154794},{x: 0.0693534, y: 0.000157884},{x: 0.0697514, y: 0.000143601},{x: 0.0701494, y: 0.00011583},{x: 0.0705474, y: 8.15701e-05},{x: 0.0709454, y: 4.90295e-05},{x: 0.0713434, y: 2.55479e-05},{x: 0.0717414, y: 1.58424e-05},{x: 0.0721394, y: 2.09996e-05},{x: 0.0725375, y: 3.8415e-05},{x: 0.0729355, y: 6.26402e-05},{x: 0.0733335, y: 8.68786e-05},{x: 0.0737315, y: 0.000104725},{x: 0.0741295, y: 0.000111711},{x: 0.0745275, y: 0.000106287},{x: 0.0749255, y: 9.00425e-05},{x: 0.0753235, y: 6.71372e-05},{x: 0.0757215, y: 4.31463e-05},{x: 0.0761195, y: 2.36181e-05},{x: 0.0765175, y: 1.27196e-05},{x: 0.0769155, y: 1.22929e-05},{x: 0.0773135, y: 2.15315e-05},{x: 0.0777116, y: 3.73207e-05},{x: 0.0781096, y: 5.51234e-05},{x: 0.0785076, y: 7.01642e-05},{x: 0.0789056, y: 7.86066e-05},{x: 0.0793036, y: 7.84385e-05},{x: 0.0797016, y: 6.9864e-05},{x: 0.0800996, y: 5.51354e-05},{x: 0.0804976, y: 3.78951e-05},{x: 0.0808956, y: 2.22145e-05},{x: 0.0812936, y: 1.15788e-05},{x: 0.0816916, y: 8.06865e-06},{x: 0.0820896, y: 1.19266e-05},{x: 0.0824876, y: 2.15943e-05},{x: 0.0828857, y: 3.41857e-05},{x: 0.0832837, y: 4.6259e-05},{x: 0.0836817, y: 5.46831e-05},{x: 0.0840797, y: 5.73823e-05},{x: 0.0844777, y: 5.37871e-05},{x: 0.0848757, y: 4.48939e-05},{x: 0.0852737, y: 3.29428e-05},{x: 0.0856717, y: 2.08085e-05},{x: 0.0860697, y: 1.12695e-05},{x: 0.0864677, y: 6.33731e-06},{x: 0.0868657, y: 6.80667e-06},{x: 0.0872637, y: 1.21239e-05},{x: 0.0876618, y: 2.05896e-05},{x: 0.0880598, y: 2.98296e-05},{x: 0.0884578, y: 3.74051e-05},{x: 0.0888558, y: 4.14081e-05},{x: 0.0892538, y: 4.08973e-05},{x: 0.0896518, y: 3.60781e-05},{x: 0.0900498, y: 2.81953e-05},{x: 0.0904478, y: 1.91791e-05},{x: 0.0908458, y: 1.11429e-05},{x: 0.0912438, y: 5.86125e-06},{x: 0.0916418, y: 4.35644e-06},{x: 0.0920398, y: 6.68759e-06},{x: 0.0924378, y: 1.19838e-05},{x: 0.0928359, y: 1.8701e-05},{x: 0.0932339, y: 2.50292e-05},{x: 0.0936319, y: 2.93444e-05},{x: 0.0940299, y: 3.05922e-05},{x: 0.0944279, y: 2.85157e-05},{x: 0.0948259, y: 2.36787e-05},{x: 0.0952239, y: 1.72887e-05},{x: 0.0956219, y: 1.08737e-05},{x: 0.0960199, y: 5.89626e-06},{x: 0.0964179, y: 3.4028e-06},{x: 0.0968159, y: 3.79013e-06},{x: 0.0972139, y: 6.74082e-06},{x: 0.097612, y: 1.13344e-05},{x: 0.09801, y: 1.62989e-05},{x: 0.098408, y: 2.03357e-05},{x: 0.098806, y: 2.24347e-05},{x: 0.099204, y: 2.21046e-05},{x: 0.099602, y: 1.94673e-05},{x: 0.1, y: 1.51985e-05},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/16/">simonm</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Dec. 15, 2017, 4:27 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Other</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/366">multi_reflec.c</a><br>
+<a href="/uploads/367">multi_reflec.py</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

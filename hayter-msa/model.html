@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Hayter Msa | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/31/">Hayter Msa</a></li>
+</ol>
+<h1>Hayter Msa</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p># Note: model title and parameter table are inserted automatically Calculates the interparticle structure factor for a system of charged, spheroidal, objects in a dielectric medium [1,2]. When combined with an appropriate form factor $P(q)$, this allows for inclusion of the interparticle interference effects due to screened Coulombic repulsion between the charged particles. </p>
+<p> .. note:: </p>
+<p>    This routine only works for charged particles! If the charge is set    to zero the routine may self-destruct! For uncharged particles use    the `hardsphere` $S(q)$ instead. The upper limit for the charge    is limited to 200e to avoid numerical instabilities. </p>
+<p> .. note:: </p>
+<p>    Earlier versions of SasView did not incorporate the so-called    $\beta(q)$ ("beta") correction [3] for polydispersity and non-sphericity.    This is only available in SasView versions 5.0 and higher. </p>
+<p> The salt concentration is used to compute the ionic strength of the solution which in turn is used to compute the Debye screening length. There is no provision for entering the ionic strength directly. **At present the counterions are assumed to be monovalent**, though it should be possible to simulate the effect of multivalent counterions by increasing the salt concentration. </p>
+<p> Over the range 0 - 100 C the dielectric constant $\kappa$ of water may be approximated with a maximum deviation of 0.01 units by the empirical formula [4] </p>
+<p> $$  \kappa = 87.740 - 0.40008 T + 9.398x10^{-4} T^2 - 1.410x10^{-6} T^3 <br/>$$<br/>where $T$ is the temperature in celsius. </p>
+<p> In SasView the effective radius may be calculated from the parameters used in the form factor $P(q)$ that this $S(q)$ is combined with. </p>
+<p> The computation uses a Taylor series expansion at very small rescaled $qR$, to avoid some serious rounding error issues, this may result in a minor artefact in the transition region under some circumstances. </p>
+<p> For 2D data, the scattering intensity is calculated in the same way as 1D, where the $q$ vector is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$</p>
+<p> References </p>
+<p> </p>
+<p> #. J B Hayter and J Penfold, *Molecular Physics*, 42 (1981) 109-118 </p>
+<p> #. J P Hansen and J B Hayter, *Molecular Physics*, 46 (1982) 651-656 </p>
+<p> #. M Kotlarchyk and S-H Chen, *J. Chem. Phys.*, 79 (1983) 2461-2469 </p>
+<p> #. C G Malmberg and A A Maryott, *J. Res. Nat. Bureau Standards*, 56 (1956) 2641 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:** Steve King **Date:** March 28, 2019<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Structure Factor</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/698">hayter_msa.py</a><br>
+<a href="/uploads/699">hayter_msa.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

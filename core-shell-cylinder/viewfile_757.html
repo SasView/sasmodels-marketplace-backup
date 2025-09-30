@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/1/">Core Shell Cylinder</a></li>
+<li><a href="/uploads/757">core_shell_cylinder.py</a></li>
+</ol>
+<h1>Core Shell Cylinder - core_shell_cylinder.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+
+The output of the 2D scattering intensity function for oriented core-shell
+cylinders is given by Kline [#Kline2006]_. The form factor is normalized
+by the particle volume. Note that in this model the shell envelops the entire
+core so that besides a "sleeve" around the core, the shell also provides two
+flat end caps of thickness = shell thickness. In other words the length of the
+total cylinder is the length of the core cylinder plus twice the thickness of
+the shell. If no end caps are desired one should use the
+:ref:`core-shell-bicelle` and set the thickness of the end caps (in this case
+the "thick_face") to zero.
+
+.. math::
+
+    I(q,\alpha) = \frac{\text{scale}}{V_s} F^2(q,\alpha).sin(\alpha) + \text{background}
+
+where
+
+.. math::
+
+    F(q,\alpha) = &amp;\ (\rho_c - \rho_s) V_c
+           \frac{\sin \left( q \tfrac12 L\cos\alpha \right)}
+                {q \tfrac12 L\cos\alpha}
+           \frac{2 J_1 \left( qR\sin\alpha \right)}
+                {qR\sin\alpha} \\
+         &amp;\ + (\rho_s - \rho_\text{solv}) V_s
+           \frac{\sin \left( q \left(\tfrac12 L+T\right) \cos\alpha \right)}
+                {q \left(\tfrac12 L +T \right) \cos\alpha}
+           \frac{ 2 J_1 \left( q(R+T)\sin\alpha \right)}
+                {q(R+T)\sin\alpha}
+
+and
+
+.. math::
+
+    V_s = \pi (R + T)^2 (L + 2T)
+
+and $\alpha$ is the angle between the axis of the cylinder and $\vec q$,
+$V_s$ is the total volume (i.e. including both the core and the outer shell),
+$V_c$ is the volume of the core, $L$ is the length of the core,
+$R$ is the radius of the core, $T$ is the thickness of the shell, $\rho_c$
+is the scattering length density of the core, $\rho_s$ is the scattering
+length density of the shell, $\rho_\text{solv}$ is the scattering length
+density of the solvent, and *background* is the background level.  The outer
+radius of the shell is given by $R+T$ and the total length of the outer
+shell is given by $L+2T$. $J_1$ is the first order Bessel function.
+
+.. _core-shell-cylinder-geometry:
+
+.. figure:: img/core_shell_cylinder_geometry.jpg
+
+    Core shell cylinder schematic.
+
+To provide easy access to the orientation of the core-shell cylinder, we
+define the axis of the cylinder using two angles $\theta$ and $\phi$.
+(see :ref:`cylinder model &lt;cylinder-angle-definition&gt;`)
+
+NB: The 2nd virial coefficient of the cylinder is calculated based on
+the radius and 2 length values, and used as the effective radius for
+$S(q)$ when $P(q) \cdot S(q)$ is applied.
+
+The $\theta$ and $\phi$ parameters are not used for the 1D output.
+
+Reference
+---------
+
+See also Livsey [#Livsey1987]_ and Onsager [#Onsager1949]_.
+
+.. [#Livsey1987] I Livsey, *J. Chem. Soc., Faraday Trans. 2*, 83 (1987) 1445-1452
+
+.. [#Kline2006] S R Kline, *J Appl. Cryst.*, 39 (2006) 895
+
+.. [#Onsager1949] L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659
+
+Authorship and Verification
+----------------------------
+
+* **Author:** NIST IGOR/DANSE **Date:** pre 2010
+* **Last Modified by:** Paul Kienzle **Date:** Aug 8, 2016
+* **Last Reviewed by:** Richard Heenan **Date:** March 18, 2016
+"""
+
+import numpy as np
+from numpy import pi, inf, sin, cos
+
+name = "core_shell_cylinder"
+title = "Right circular cylinder with a core-shell scattering length density profile."
+description = """
+P(q,alpha)= scale/Vs*f(q)^(2) + background,
+      where: f(q)= 2(sld_core - solvant_sld)
+        * Vc*sin[qLcos(alpha/2)]
+        /[qLcos(alpha/2)]*J1(qRsin(alpha))
+        /[qRsin(alpha)]+2(sld_shell-sld_solvent)
+        *Vs*sin[q(L+T)cos(alpha/2)][[q(L+T)
+        *cos(alpha/2)]*J1(q(R+T)sin(alpha))
+        /q(R+T)sin(alpha)]
+
+    alpha:is the angle between the axis of
+        the cylinder and the q-vector
+    Vs: the volume of the outer shell
+    Vc: the volume of the core
+    L: the length of the core
+        sld_shell: the scattering length density of the shell
+    sld_solvent: the scattering length density of the solvent
+    background: the background
+    T: the thickness
+        R+T: is the outer radius
+     L+2T: The total length of the outershell
+    J1: the first order Bessel function
+     theta: axis_theta of the cylinder
+     phi: the axis_phi of the cylinder
+"""
+category = "shape:cylinder"
+
+#             ["name", "units", default, [lower, upper], "type", "description"],
+parameters = [["sld_core", "1e-6/Ang^2", 4, [-inf, inf], "sld",
+               "Cylinder core scattering length density"],
+              ["sld_shell", "1e-6/Ang^2", 4, [-inf, inf], "sld",
+               "Cylinder shell scattering length density"],
+              ["sld_solvent", "1e-6/Ang^2", 1, [-inf, inf], "sld",
+               "Solvent scattering length density"],
+              ["radius", "Ang", 20, [0, inf], "volume",
+               "Cylinder core radius"],
+              ["thickness", "Ang", 20, [0, inf], "volume",
+               "Cylinder shell thickness"],
+              ["length", "Ang", 400, [0, inf], "volume",
+               "Cylinder length"],
+              ["theta", "degrees", 60, [-360, 360], "orientation",
+               "cylinder axis to beam angle"],
+              ["phi", "degrees", 60, [-360, 360], "orientation",
+               "rotation about beam"],
+             ]
+
+source = ["lib/polevl.c", "lib/sas_J1.c", "lib/gauss76.c", "core_shell_cylinder.c"]
+have_Fq = True
+radius_effective_modes = [
+    "excluded volume", "equivalent volume sphere", "outer radius", "half outer length",
+    "half min outer dimension", "half max outer dimension", "half outer diagonal",
+    ]
+
+def random():
+    """Return a random parameter set for the model."""
+    outer_radius = 10**np.random.uniform(1, 4.7)
+    # Use a distribution with a preference for thin shell or thin core
+    # Avoid core,shell radii &lt; 1
+    radius = np.random.beta(0.5, 0.5)*(outer_radius-2) + 1
+    thickness = outer_radius - radius
+    length = np.random.uniform(1, 4.7)
+    pars = dict(
+        radius=radius,
+        thickness=thickness,
+        length=length,
+    )
+    return pars
+
+q = 0.1
+# april 6 2017, rkh add unit tests, NOT compared with any other calc method, assume correct!
+qx = q*cos(pi/6.0)
+qy = q*sin(pi/6.0)
+tests = [
+    [{}, 0.075, 10.8552692237],
+    [{}, (qx, qy), 0.444618752741],
+]
+del qx, qy  # not necessary to delete, but cleaner
+</code>
+</pre>
+<a class="btn btn-default" href="/models/1/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/core_shell_cylinder.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Hollow Cylinder | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/56/">Hollow Cylinder</a></li>
+</ol>
+<h1>Hollow Cylinder</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> This model provides the form factor, $P(q)$, for a monodisperse hollow right angle circular cylinder (rigid tube) where the The inside and outside of the hollow cylinder are assumed to have the same SLD and the form factor is thus normalized by the volume of the tube (i.e. not by the total cylinder volume). </p>
+<p> $$  P(q) = \text{scale} \left&lt;F^2\right&gt;/V_\text{shell} + \text{background} <br/>$$<br/>where the averaging $\left&lt;\ldots\right&gt;$ is applied only for the 1D calculation. If Intensity is given on an absolute scale, the scale factor here is the volume fraction of the shell.  This differs from the `core-shell-cylinder` in that, in that case, scale is the volume fraction of the entire cylinder (core+shell). The application might be for a bilayer which wraps into a hollow tube and the volume fraction of material is all in the shell, whereas the `core-shell-cylinder` model might be used for a cylindrical micelle where the tails in the core have a different SLD than the headgroups (in the shell) and the volume fraction of material comes fromm the whole cyclinder.  NOTE: the hollow_cylinder represents a tube whereas the core_shell_cylinder includes a shell layer covering the ends (end caps) as well. </p>
+<p> </p>
+<p> The 1D scattering intensity is calculated in the following way (Guinier, 1955) </p>
+<p> $$  P(q)           = (\text{scale})V_\text{shell}\Delta\rho^2 \int_0^{1}\Psi^2 \left[q_z, R_\text{outer}(1-x^2)^{1/2}, R_\text{core}(1-x^2)^{1/2}\right] \left[\frac{\sin(qHx)}{qHx}\right]^2 dx \\ \Psi[q,y,z]    = \frac{1}{1-\gamma^2} \left[ \Lambda(qy) - \gamma^2\Lambda(qz) \right] \\ \Lambda(a)     = 2 J_1(a) / a \\ \gamma         = R_\text{core} / R_\text{outer} \\ V_\text{shell} = \pi \left(R_\text{outer}^2 - R_\text{core}^2 \right)L \\ J_1(x)         = (\sin(x)-x\cdot \cos(x)) / x^2 <br/>$$<br/>where *scale* is a scale factor, $H = L/2$ and $J_1$ is the 1st order Bessel function. </p>
+<p> **NB**: The 2nd virial coefficient of the cylinder is calculated based on the outer radius and full length, which give an the effective radius for structure factor $S(q)$ when $P(q) \cdot S(q)$ is applied. </p>
+<p> In the parameters,the *radius* is $R_\text{core}$ while *thickness* is $R_\text{outer} - R_\text{core}$. </p>
+<p> To provide easy access to the orientation of the core-shell cylinder, we define the axis of the cylinder using two angles $\theta$ and $\phi$ (see `cylinder model &lt;cylinder-angle-definition&gt;`). </p>
+<p> References </p>
+<p> </p>
+<p> #. L A Feigin and D I Svergun, *Structure Analysis by Small-Angle X-Ray and    Neutron Scattering*, Plenum Press, New York, (1987) #. L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** NIST IGOR/DANSE **Date:** pre 2010<br/>**Last Modified by:** Paul Butler **Date:** September 06, 2018<br/>**Last Reviewed by:** Paul Butler **Date:** September 06, 2018<br/>    (corrected VR calculation) </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/692">hollow_cylinder.py</a><br>
+<a href="/uploads/693">hollow_cylinder.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

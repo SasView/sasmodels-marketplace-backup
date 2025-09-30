@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/28/">Stickyhardsphere</a></li>
+<li><a href="/uploads/706">stickyhardsphere.py</a></li>
+</ol>
+<h1>Stickyhardsphere - stickyhardsphere.py</h1>
+<pre>
+    <code># Note: model title and parameter table are inserted automatically
+r"""
+Calculates the interparticle structure factor for a hard sphere fluid
+with a narrow, attractive, potential well. Unlike the :ref:`squarewell`
+model, here a perturbative solution of the Percus-Yevick closure
+relationship is used. The strength of the attractive well is described
+in terms of "stickiness" as defined below.
+
+The perturbation parameter (perturb), $\tau$, should be fixed between 0.01
+and 0.1 and the "stickiness", $\epsilon$, allowed to vary to adjust the
+interaction strength. The "stickiness" is defined in the equation below and
+is a function of both the perturbation parameter and the interaction
+strength. $\epsilon$ and $\tau$ are defined in terms of the hard sphere
+diameter $(\sigma = 2 R)$, the width of the square well, $\Delta$ (having the
+same units as $R$\ ), and the depth of the well, $U_o$, in units of $kT$.
+From the definition, it is clear that smaller $\epsilon$ means a stronger
+attraction.
+
+.. math::
+
+    \epsilon     &amp;= \frac{1}{12\tau} \exp(u_o / kT) \\
+    \tau &amp;= \Delta / (\sigma + \Delta)
+
+where the interaction potential is
+
+.. math::
+
+    U(r) = \begin{cases}
+        \infty &amp; r &lt; \sigma \\
+        -U_o   &amp; \sigma \leq r \leq \sigma + \Delta \\
+        0      &amp; r &gt; \sigma + \Delta
+        \end{cases}
+
+The Percus-Yevick (PY) closure is used for this calculation, and is an
+adequate closure for an attractive interparticle potential. The solution
+has been compared to Monte Carlo simulations for a square well fluid, with
+good agreement.
+
+The true particle volume fraction, $\phi$, is not equal to $h$ which appears
+in most of reference [1]. The two are related in equation (24). Reference
+[1] also describes the relationship between this perturbative solution and
+the original sticky hard sphere (or "adhesive sphere") model of Baxter [2].
+
+.. note::
+
+   The calculation can go haywire for certain combinations of the input
+   parameters, producing unphysical solutions. In this case errors are
+   reported to the command window and $S(q)$ is set to -1 (so it will
+   disappear on a log-log plot!).
+
+   Use tight bounds to keep the parameters to values that you know are
+   physical (test them), and keep nudging them until the optimization
+   does not hit the constraints.
+
+.. note::
+
+   Earlier versions of SasView did not incorporate the so-called
+   $\beta(q)$ ("beta") correction [3] for polydispersity and non-sphericity.
+   This is only available in SasView versions 5.0 and higher.
+
+In SasView the effective radius may be calculated from the parameters
+used in the form factor $P(q)$ that this $S(q)$ is combined with.
+
+For 2D data the scattering intensity is calculated in the same way
+as 1D, where the $q$ vector is defined as
+
+.. math::
+
+    q = \sqrt{q_x^2 + q_y^2}
+
+
+References
+----------
+
+#. S V G Menon, C Manohar, and K S Rao,
+   *J. Chem. Phys.*, 95(12) (1991) 9186-9190
+
+#. R J Baxter, *J. Chem. Phys.*, 49 (1968), 2770-2774
+
+#. M Kotlarchyk and S-H Chen, *J. Chem. Phys.*, 79 (1983) 2461-2469
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:** Steve King **Date:** March 27, 2019
+"""
+
+# TODO: refactor so that we pull in the old sansmodels.c_extensions
+
+import numpy as np
+from numpy import inf
+
+name = "stickyhardsphere"
+title = "'Sticky' hard sphere structure factor with Percus-Yevick closure"
+description = """\
+    [Sticky hard sphere structure factor, with Percus-Yevick closure]
+        Interparticle structure factor S(Q) for a hard sphere fluid
+    with a narrow attractive well. Fits are prone to deliver non-
+    physical parameters; use with care and read the references in
+    the model documentation.The "beta(q)" correction is available
+    in versions 4.2.2 and higher.
+"""
+category = "structure-factor"
+structure_factor = True
+
+single = False
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [
+    #   [ "name", "units", default, [lower, upper], "type",
+    #     "description" ],
+    ["radius_effective", "Ang", 50.0, [0, inf], "volume",
+     "effective radius of hard sphere"],
+    ["volfraction", "", 0.2, [0, 0.74], "",
+     "volume fraction of hard spheres"],
+    ["perturb", "", 0.05, [0.01, 0.1], "",
+     "perturbation parameter, tau"],
+    ["stickiness", "", 0.20, [-inf, inf], "",
+     "stickiness, epsilon"],
+    ]
+
+source = ["stickyhardsphere.c"]    
+
+# No volume normalization despite having a volume parameter
+# This should perhaps be volume normalized?
+form_volume = """
+    return 1.0;
+    """
+
+def random():
+    """Return a random parameter set for the model."""
+    pars = dict(
+        scale=1, background=0,
+        radius_effective=10**np.random.uniform(1, 4.7),
+        volfraction=np.random.uniform(0.00001, 0.74),
+        perturb=10**np.random.uniform(-2, -1),
+        stickiness=np.random.uniform(0, 1),
+    )
+    return pars
+
+
+
+#
+tests = [
+    [{'scale': 1.0, 'background': 0.0, 'radius_effective': 50.0,
+      'perturb': 0.05, 'stickiness': 0.2, 'volfraction': 0.1,
+      'radius_effective_pd': 0},
+     [0.001, 0.003], [1.09718, 1.087830]],
+    ]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/28/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/stickyhardsphere.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

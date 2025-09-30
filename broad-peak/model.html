@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Broad Peak | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/30/">Broad Peak</a></li>
+</ol>
+<h1>Broad Peak</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> This model calculates an empirical functional form for SAS data characterized by a broad scattering peak. Many SAS spectra are characterized by a broad peak even though they are from amorphous soft materials. For example, soft systems that show a SAS peak include copolymers, polyelectrolytes, multiphase systems, layered structures, etc. </p>
+<p> The d-spacing corresponding to the broad peak is a characteristic distance between the scattering inhomogeneities (such as in lamellar, cylindrical, or spherical morphologies, or for bicontinuous structures). </p>
+<p> The scattering intensity $I(q)$ is calculated as </p>
+<p> $$ I(q) = \frac{A}{q^n} + \frac{C}{1 + (|q - q_0|\xi)^m}^p + B <br/>$$<br/>Here the peak position is related to the d-spacing as $q_0 = 2\pi / d_0$. </p>
+<p> $A$ is the Porod law scale factor, $n$ the Porod exponent, $C$ is the Lorentzian scale factor, $m$ the exponent of $q$, $\xi$ the screening length, and $B$ the flat background. $p$ generalizes the model. With m = 2 and p = 1 the Lorentz model is obtained whereas for m = 2 and p = 2 the Broad-Peak model is identical to the Debye-Anderson-Brumberger (dab) model. </p>
+<p> For 2D data the scattering intensity is calculated in the same way as 1D, where the $q$ vector is defined as </p>
+<p> $$ q = \sqrt{q_x^2 + q_y^2} <br/>$$<br/>References </p>
+<p> </p>
+<p> None. </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** NIST IGOR/DANSE **Date:** pre 2010<br/>**Last Modified by:** Dirk Honecker **Date:** May 28, 2021<br/>**Last Reviewed by:** Richard Heenan **Date:** March 21, 2016<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/700">broad_peak.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Onion | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/73/">Onion</a></li>
+</ol>
+<h1>Onion</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model provides the form factor, $P(q)$, for a multi-shell sphere where the scattering length density (SLD) of each shell is described by an exponential, linear, or constant function. The form factor is normalized by the volume of the sphere where the SLD is not identical to the SLD of the solvent. We currently provide up to 9 shells with this model. </p>
+<p> .. note:: </p>
+<p>     *radius* represents the core radius $r_0$ and *thickness[k]* represents     the thickness of the shell, $r_{k+1} - r_k$. </p>
+<p> Definition </p>
+<p> </p>
+<p> The 1D scattering intensity is calculated in the following way </p>
+<p> $$  P(q) = [f]^2 / V_\text{particle} <br/>$$<br/>where </p>
+<p> $$  \begin{align*} f = f_\text{core} + \left(\sum_{\text{shell}=1}^N f_\text{shell}\right) + f_\text{solvent} \end{align*} <br/>$$<br/>The shells are spherically symmetric with particle density $\rho(r)$ and constant SLD within the core and solvent, so </p>
+<p> $$  \begin{align*} f_\text{core} = 4\pi\int_0^{r_\text{core}} \rho_\text{core} \frac{\sin(qr)}{qr}\, r^2\,\mathrm{d}r = 3\rho_\text{core} V(r_\text{core}) \frac{j_1(qr_\text{core})}{qr_\text{core}} \\ f_\text{shell} = 4\pi\int_{r_{\text{shell}-1}}^{r_\text{shell}} \rho_\text{shell}(r)\frac{\sin(qr)}{qr}\,r^2\,\mathrm{d}r \\ f_\text{solvent} = 4\pi\int_{r_N}^\infty \rho_\text{solvent}\frac{\sin(qr)}{qr}\,r^2\,\mathrm{d}r = -3\rho_\text{solvent}V(r_N)\frac{j_1(q r_N)}{q r_N} \end{align*} <br/>$$<br/>where the spherical Bessel function $j_1$ is </p>
+<p> $$  j_1(x) = \frac{\sin(x)}{x^2} - \frac{\cos(x)}{x} <br/>$$<br/>and the volume is $V(r) = \frac{4\pi}{3}r^3$. </p>
+<p> The volume of the particle is determined by the radius of the outer shell, so $V_\text{particle} = V(r_N)$. </p>
+<p> Now consider the SLD of a shell defined by </p>
+<p> $$  \rho_\text{shell}(r) = \begin{cases} B\exp\left(A(r-r_{\text{shell}-1})/\Delta t_\text{shell}\right) + C &amp; \mbox{for } A \neq 0 \\ \rho_\text{in} = \text{constant} &amp; \mbox{for } A = 0 \end{cases} <br/>$$<br/>An example of a possible SLD profile is shown below where $\rho_\text{in}$ and $\Delta t_\text{shell}$ stand for the SLD of the inner side of the $k^\text{th}$ shell and the thickness of the $k^\text{th}$ shell in the equation above, respectively. </p>
+<p> </p>
+<p>     Example of an onion model profile. </p>
+<p> </p>
+<p> **Exponential SLD profiles** ($A &gt; 0$ or $A &lt; 0$): </p>
+<p> $$  f_\text{shell} = 4 \pi \int_{r_{\text{shell}-1}}^{r_\text{shell}} \left[ B\exp \left(A (r - r_{\text{shell}-1}) / \Delta t_\text{shell} \right) + C \right] \frac{\sin(qr)}{qr}\,r^2\,\mathrm{d}r \\ = 3BV(r_\text{shell}) e^A h(\alpha_\text{out},\beta_\text{out}) - 3BV(r_{\text{shell}-1}) h(\alpha_\text{in},\beta_\text{in}) + 3CV(r_{\text{shell}}) \frac{j_1(\beta_\text{out})}{\beta_\text{out}} - 3CV(r_{\text{shell}-1}) \frac{j_1(\beta_\text{in})}{\beta_\text{in}} <br/>$$<br/>where </p>
+<p> $$  \begin{align*} B=\frac{\rho_\text{out} - \rho_\text{in}}{e^A-1} &amp; C = \frac{\rho_\text{in}e^A - \rho_\text{out}}{e^A-1} \\ \alpha_\text{in} = A\frac{r_{\text{shell}-1}}{\Delta t_\text{shell}} &amp; \alpha_\text{out} = A\frac{r_\text{shell}}{\Delta t_\text{shell}} \\ \beta_\text{in} = qr_{\text{shell}-1} &amp; \beta_\text{out} = qr_\text{shell} \end{align*} <br/>$$<br/>and </p>
+<p>  $$  h(x,y) = \frac{x \sin(y) - y\cos(y)}{(x^2+y^2)y} - \frac{(x^2-y^2)\sin(y) - 2xy\cos(y)}{(x^2+y^2)^2y} <br/>$$</p>
+<p> </p>
+<p> **Linear SLD profile** ($A \sim 0$): </p>
+<p> For small $A$, say, $A = -0.0001$, the function converges to that of of a linear SLD profile with </p>
+<p>      $\rho_\text{shell}(r) \approx A(r-r_{\text{shell}-1})/\Delta t_\text{shell})+B$, </p>
+<p> which is equivalent to </p>
+<p> $$  \begin{align*} f_\text{shell} = 3 V(r_\text{shell}) \frac{\Delta\rho_\text{shell}}{\Delta t_\text{shell}} \left[\frac{ 2 \cos(qr_\text{out}) + qr_\text{out} \sin(qr_\text{out}) }{ (qr_\text{out})^4 }\right] \\ &amp;{} -3 V(r_\text{shell}) \frac{\Delta\rho_\text{shell}}{\Delta t_\text{shell}} \left[\frac{ 2\cos(qr_\text{in}) +qr_\text{in}\sin(qr_\text{in}) }{ (qr_\text{in})^4 }\right] \\ &amp;{} +3\rho_\text{out}V(r_\text{shell}) \frac{j_1(qr_\text{out})}{qr_\text{out}} -3\rho_\text{in}V(r_{\text{shell}-1}) \frac{j_1(qr_\text{in})}{qr_\text{in}} \end{align*} <br/>$$</p>
+<p> **Constant SLD** ($A = 0$): </p>
+<p> When $A = 0$ the exponential function has no dependence on the radius (meaning $\rho_\text{out}$ is ignored in this case) and becomes flat. We set the constant to $\rho_\text{in}$ for convenience, and thus the form factor contributed by the shells is </p>
+<p> $$  f_\text{shell} = 3\rho_\text{in}V(r_\text{shell}) \frac{j_1(qr_\text{out})}{qr_\text{out}} - 3\rho_\text{in}V(r_{\text{shell}-1}) \frac{j_1(qr_\text{in})}{qr_\text{in}} <br/>$$<br/>The 2D scattering intensity is the same as $P(q)$ above, regardless of the orientation of the $q$ vector which is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$<br/>NB: The outer most radius is used as the effective radius for $S(q)$ when $P(q) S(q)$ is applied. </p>
+<p> References </p>
+<p> </p>
+<p> #. L A Feigin and D I Svergun, *Structure Analysis by Small-Angle X-Ray and    Neutron Scattering*, Plenum Press, New York, 1987. </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:** Steve King **Date:** March 28, 2019<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/784">onion.py</a><br>
+<a href="/uploads/785">onion.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

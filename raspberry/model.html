@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Raspberry | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/74/">Raspberry</a></li>
+</ol>
+<h1>Raspberry</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> The figure below shows a schematic of a large droplet surrounded by several smaller particles forming a structure similar to that of Pickering emulsions. </p>
+<p> </p>
+<p>     Schematic of the raspberry model </p>
+<p> In order to calculate the form factor of the entire complex, the self-correlation of the large droplet, the self-correlation of the particles, the correlation terms between different particles and the cross terms between large droplet and small particles all need to be calculated. </p>
+<p> Consider two infinitely thin shells of radii $R_1$ and $R_2$ separated by distance $r$. The general structure of the equation is then the form factor of the two shells multiplied by the phase factor that accounts for the separation of their centers. </p>
+<p> $$  S(q) = \frac{\sin(qR_1)}{qR_1}\frac{\sin(qR_2)}{qR_2}\frac{\sin(qr)}{qr} <br/>$$<br/>In this case, the large droplet and small particles are solid spheres rather than thin shells. Thus the two terms must be integrated over $R_L$ and $R_S$ respectively using the weighting function of a sphere. We then obtain the functions for the form of the two spheres: </p>
+<p> $$  \Psi_L = \int_0^{R_L}(4\pi R^2_L)\frac{\sin(qR_L)}{qR_L}dR_L = \frac{3[\sin(qR_L)-qR_L\cos(qR_L)]}{(qR_L)^2} <br/>$$<br/>$$  \Psi_S = \int_0^{R_S}(4\pi R^2_S)\frac{\sin(qR_S)}{qR_S}dR_S = \frac{3[\sin(qR_S)-qR_L\cos(qR_S)]}{(qR_S)^2} <br/>$$<br/>The cross term between the large droplet and small particles is given by: </p>
+<p> $$ S_{LS} = \Psi_L\Psi_S\frac{\sin(q(R_L+\delta R_S))}{q(R_L+\delta\ R_S)} <br/>$$<br/>and the self term between small particles is given by: </p>
+<p> $$ S_{SS} = \Psi_S^2\biggl[\frac{\sin(q(R_L+\delta R_S))}{q(R_L+\delta\ R_S)} \biggr]^2 <br/>$$<br/>The number of small particles per large droplet, $N_p$, is given by: </p>
+<p> $$  N_p = \frac{\phi_S\phi_\text{surface}V_L}{\phi_L V_S} <br/>$$<br/>where $\phi_S$ is the volume fraction of small particles in the sample, $\phi_\text{surface}$ is the fraction of the small particles that are adsorbed to the large droplets, $\phi_L$ is the volume fraction of large droplets in the sample, and $V_S$ and $V_L$ are the volumes of individual small particles and large droplets respectively. </p>
+<p> The form factor of the entire complex can now be calculated including the excess scattering length densities of the components $\Delta\rho_L$ and $\Delta\rho_S$, where $\Delta\rho_x = \left|\rho_x-\rho_\text{solvent}\right|$ : </p>
+<p> $$  P_{LS} = \frac{1}{M^2}\bigl[(\Delta\rho_L)^2V_L^2\Psi_L^2 +N_p(\Delta\rho_S)^2V_S^2\Psi_S^2 + N_p(1-N_p)(\Delta\rho_S)^2V_S^2S_{SS} + 2N_p\Delta\rho_L\Delta\rho_SV_LV_SS_{LS}\bigr] <br/>$$<br/>where M is the total scattering length of the whole complex : </p>
+<p> $$ M = \Delta\rho_LV_L + N_p\Delta\rho_SV_S <br/>$$<br/>In a real system, there will ususally be an excess of small particles such that some fraction remain unbound. Therefore the overall scattering intensity is given by: </p>
+<p> $$ I(Q) = I_{LS}(Q) + I_S(Q) = (\phi_L(\Delta\rho_L)^2V_L + \phi_S\phi_\text{surface}N_p(\Delta\rho_S)^2V_S)P_{LS} + \phi_S(1-\phi_\text{surface})(\Delta\rho_S)^2V_S\Psi_S^2 <br/>$$<br/>A useful parameter to extract is the fraction of the surface area of the large droplets that is covered by small particles. This can be calculated from the model parameters as: </p>
+<p> $$ \chi = \frac{4\phi_L\phi_\text{surface}(R_L+\delta R_S)}{\phi_LR_S} <br/>$$</p>
+<p> References </p>
+<p> </p>
+<p> #. K Larson-Smith, A Jackson, and D C Pozzo, *Small angle scattering model    for Pickering emulsions and raspberry particles*,    *Journal of Colloid and Interface Science*, 343(1) (2010) 36-41 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** Andrew Jackson **Date:** 2008<br/>**Last Modified by:** Andrew Jackson **Date:** March 20, 2016<br/>**Last Reviewed by:** Andrew Jackson **Date:** March 20, 2016<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/807">raspberry.py</a><br>
+<a href="/uploads/808">raspberry.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

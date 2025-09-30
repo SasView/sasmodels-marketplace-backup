@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Polymer Excl Volume | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/45/">Polymer Excl Volume</a></li>
+</ol>
+<h1>Polymer Excl Volume</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model describes the scattering from polymer chains subject to excluded volume effects and has been used as a template for describing mass fractals. </p>
+<p> Definition </p>
+<p> </p>
+<p> The form factor was originally presented in the following integral form (Benoit, 1957) </p>
+<p> $$  P(Q)=2\int_0^{1}dx(1-x)exp\left[-\frac{Q^2a^2}{6}n^{2v}x^{2v}\right] <br/>$$<br/>where $\nu$ is the excluded volume parameter (which is related to the Porod exponent $m$ as $\nu=1/m$ ), $a$ is the statistical segment length of the polymer chain, and $n$ is the degree of polymerization. </p>
+<p> This integral was put into an almost analytical form as follows (Hammouda, 1993) </p>
+<p> $$  P(Q)=\frac{1}{\nu U^{1/2\nu}} \left\{ \gamma\left(\frac{1}{2\nu},U\right) - \frac{1}{U^{1/2\nu}}\gamma\left(\frac{1}{\nu},U\right) \right\} <br/>$$<br/>and later recast as (for example, Hore, 2013; Hammouda &amp; Kim, 2017) </p>
+<p> $$  P(Q)=\frac{1}{\nu U^{1/2\nu}}\gamma\left(\frac{1}{2\nu},U\right) - \frac{1}{\nu U^{1/\nu}}\gamma\left(\frac{1}{\nu},U\right) <br/>$$<br/>where $\gamma(x,U)$ is the incomplete gamma function </p>
+<p> $$  \gamma(x,U)=\int_0^{U}dt\ \exp(-t)t^{x-1} <br/>$$<br/>and the variable $U$ is given in terms of the scattering vector $Q$ as </p>
+<p> $$  U=\frac{Q^2a^2n^{2\nu}}{6} = \frac{Q^2R_{g}^2(2\nu+1)(2\nu+2)}{6} <br/>$$<br/>The two analytic forms are equivalent. In the 1993 paper </p>
+<p> $$  \frac{1}{\nu U^{1/2\nu}} <br/>$$<br/>has been factored out. </p>
+<p> **SasView implements the 1993 expression**. </p>
+<p> The square of the radius-of-gyration is defined as </p>
+<p> $$  R_{g}^2 = \frac{a^2n^{2\nu}}{(2\nu+1)(2\nu+2)} <br/>$$<br/>.. note::     This model applies only in the mass fractal range (ie, $5/3&lt;=m&lt;=3$)     and **does not apply** to surface fractals ($3&lt;m&lt;=4$).     It also does not reproduce the rigid rod limit (m=1) because it assumes     chain flexibility from the outset. It may cover a portion of the     semi-flexible chain range ($1&lt;m&lt;5/3$). </p>
+<p> A low-Q expansion yields the Guinier form and a high-Q expansion yields the Porod form which is given by </p>
+<p> $$  P(Q\rightarrow \infty) = \frac{1}{\nu U^{1/2\nu}}\Gamma\left( \frac{1}{2\nu}\right) - \frac{1}{\nu U^{1/\nu}}\Gamma\left( \frac{1}{\nu}\right) <br/>$$<br/>Here $\Gamma(x) = \gamma(x,\infty)$ is the gamma function. </p>
+<p> The asymptotic limit is dominated by the first term </p>
+<p> $$  P(Q\rightarrow \infty) \sim \frac{1}{\nu U^{1/2\nu}}\Gamma\left(\frac{1}{2\nu}\right) = \frac{m}{\left(QR_{g}\right)^m} \left[\frac{6}{(2\nu +1)(2\nu +2)} \right]^{m/2} \Gamma (m/2) <br/>$$<br/>The special case when $\nu=0.5$ (or $m=1/\nu=2$ ) corresponds to Gaussian chains for which the form factor is given by the familiar Debye function. </p>
+<p> $$  P(Q) = \frac{2}{Q^4R_{g}^4} \left[\exp(-Q^2R_{g}^2) - 1 + Q^2R_{g}^2 \right] <br/>$$<br/>For 2D data: The 2D scattering intensity is calculated in the same way as 1D, where the $q$ vector is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$</p>
+<p> References </p>
+<p> </p>
+<p> #. H Benoit, *Comptes Rendus*, 245 (1957) 2244-2247 #. B Hammouda, *SANS from Homogeneous Polymer Mixtures - A Unified Overview*,    *Advances in Polym. Sci.* 106 (1993) 87-133 #. M Hore et al, *Co-Nonsolvency of Poly(N-isopropylacrylamide) in Deuterated    Water/Ethanol Mixtures*, *Macromolecules* 46 (2013) 7894-7901 #. B Hammouda &amp; M-H Kim, *The empirical core-chain model*,    *Journal of Molecular Liquids* 247 (2017) 434-440 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:**<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/714">polymer_excl_volume.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/32/">Stacked Disks</a></li>
+<li><a href="/uploads/766">stacked_disks.c</a></li>
+</ol>
+<h1>Stacked Disks - stacked_disks.c</h1>
+<pre>
+    <code>static double
+stacked_disks_kernel(
+    double qab,
+    double qc,
+    double halfheight,
+    double thick_layer,
+    double radius,
+    int n_stacking,
+    double sigma_dnn,
+    double core_sld,
+    double layer_sld,
+    double solvent_sld,
+    double d)
+
+{
+    // q is the q-value for the calculation (1/A)
+    // radius is the core radius of the cylinder (A)
+    // *_sld are the respective SLD's
+    // halfheight is the *Half* CORE-LENGTH of the cylinder = L (A)
+    // zi is the dummy variable for the integration (x in Feigin's notation)
+
+    const double besarg1 = radius*qab;
+    //const double besarg2 = radius*qab;
+
+    const double sinarg1 = halfheight*qc;
+    const double sinarg2 = (halfheight+thick_layer)*qc;
+
+    const double be1 = sas_2J1x_x(besarg1);
+    //const double be2 = sas_2J1x_x(besarg2);
+    const double be2 = be1;
+    const double si1 = sas_sinx_x(sinarg1);
+    const double si2 = sas_sinx_x(sinarg2);
+
+    const double dr1 = core_sld - solvent_sld;
+    const double dr2 = layer_sld - solvent_sld;
+    const double area = M_PI*radius*radius;
+    const double totald = 2.0*(thick_layer + halfheight);
+
+    const double t1 = area * (2.0*halfheight) * dr1 * si1 * be1;
+    const double t2 = area * dr2 * (totald*si2 - 2.0*halfheight*si1) * be2;
+
+    double pq = square(t1 + t2);
+
+    // loop for the structure factor S(q)
+    double qd_cos_alpha = d*qc;
+    //d*cos_alpha is the projection of d onto q (in other words the component
+    //of d that is parallel to q.
+    double debye_arg = -0.5*square(qd_cos_alpha*sigma_dnn);
+    double sq=0.0;
+    for (int kk=1; kk&lt;n_stacking; kk++) {
+        sq += (n_stacking-kk) * cos(qd_cos_alpha*kk) * exp(debye_arg*kk);
+    }
+    // end of loop for S(q)
+    sq = 1.0 + 2.0*sq/n_stacking;
+
+    return pq * sq * n_stacking;
+    // volume normalization should be per disk not per stack but form_volume
+    // is per stack so correct here for now.  Could change form_volume but
+    // if one ever wants to use P*S we need the ER based on the total volume
+}
+
+
+static double
+stacked_disks_1d(
+    double q,
+    double thick_core,
+    double thick_layer,
+    double radius,
+    int n_stacking,
+    double sigma_dnn,
+    double core_sld,
+    double layer_sld,
+    double solvent_sld)
+{
+/*    StackedDiscsX  :  calculates the form factor of a stacked "tactoid" of core shell disks
+like clay platelets that are not exfoliated
+*/
+    double summ = 0.0;    //initialize integral
+
+    double d = 2.0*thick_layer+thick_core;
+    double halfheight = 0.5*thick_core;
+
+    for(int i=0; i&lt;GAUSS_N; i++) {
+        double zi = (GAUSS_Z[i] + 1.0)*M_PI_4;
+        double sin_alpha, cos_alpha; // slots to hold sincos function output
+        SINCOS(zi, sin_alpha, cos_alpha);
+        double yyy = stacked_disks_kernel(q*sin_alpha, q*cos_alpha,
+                           halfheight,
+                           thick_layer,
+                           radius,
+                           n_stacking,
+                           sigma_dnn,
+                           core_sld,
+                           layer_sld,
+                           solvent_sld,
+                           d);
+        summ += GAUSS_W[i] * yyy * sin_alpha;
+    }
+
+    double answer = M_PI_4*summ;
+
+    //Convert to [cm-1]
+    return 1.0e-4*answer;
+}
+
+static double
+form_volume(
+    double thick_core,
+    double thick_layer,
+    double radius,
+    double fp_n_stacking)
+{
+    int n_stacking = (int)(fp_n_stacking + 0.5);
+    double d = 2.0 * thick_layer + thick_core;
+    return M_PI * radius * radius * d * n_stacking;
+}
+
+static double
+Iq(
+    double q,
+    double thick_core,
+    double thick_layer,
+    double radius,
+    double fp_n_stacking,
+    double sigma_dnn,
+    double core_sld,
+    double layer_sld,
+    double solvent_sld)
+{
+    int n_stacking = (int)(fp_n_stacking + 0.5);
+    return stacked_disks_1d(q,
+                    thick_core,
+                    thick_layer,
+                    radius,
+                    n_stacking,
+                    sigma_dnn,
+                    core_sld,
+                    layer_sld,
+                    solvent_sld);
+}
+
+
+static double
+Iqac(double qab, double qc,
+    double thick_core,
+    double thick_layer,
+    double radius,
+    double fp_n_stacking,
+    double sigma_dnn,
+    double core_sld,
+    double layer_sld,
+    double solvent_sld)
+{
+    int n_stacking = (int)(fp_n_stacking + 0.5);
+    double d = 2.0 * thick_layer + thick_core;
+    double halfheight = 0.5*thick_core;
+    double answer = stacked_disks_kernel(qab, qc,
+                     halfheight,
+                     thick_layer,
+                     radius,
+                     n_stacking,
+                     sigma_dnn,
+                     core_sld,
+                     layer_sld,
+                     solvent_sld,
+                     d);
+
+    //convert to [cm-1]
+    answer *= 1.0e-4;
+
+    return answer;
+}
+
+</code>
+</pre>
+<a class="btn btn-default" href="/models/32/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/stacked_disks.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/79/">Pringle</a></li>
+<li><a href="/uploads/696">pringle.py</a></li>
+</ol>
+<h1>Pringle - pringle.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+
+The form factor for this bent disc is essentially that of a hyperbolic
+paraboloid and calculated as
+
+.. math::
+
+    P(q) = (\Delta \rho )^2 V \int^{\pi/2}_0 d\psi \sin{\psi} sinc^2
+    \left( \frac{qd\cos{\psi}}{2} \right)
+    \left[ \left( S^2_0+C^2_0\right) + 2\sum_{n=1}^{\infty}
+     \left( S^2_n+C^2_n\right) \right]
+
+where
+
+.. math::
+
+    C_n = \frac{1}{r^2}\int^{R}_{0} r dr\cos(qr^2\alpha \cos{\psi})
+    J_n\left( qr^2\beta \cos{\psi}\right)
+    J_{2n}\left( qr \sin{\psi}\right)
+
+.. math::
+
+    S_n = \frac{1}{r^2}\int^{R}_{0} r dr\sin(qr^2\alpha \cos{\psi})
+    J_n\left( qr^2\beta \cos{\psi}\right)
+    J_{2n}\left( qr \sin{\psi}\right)
+
+and $\Delta\rho\text{ is }\rho_{pringle}-\rho_{solvent}$, $V$ is the volume of
+the disc, $\psi$ is the angle between the normal to the disc and the q vector,
+$d$ and $R$ are the "pringle" thickness and radius respectively, $\alpha$ and
+$\beta$ are the two curvature parameters, and $J_n$ is the n\ :sup:`th` order
+Bessel function of the first kind.
+
+.. figure:: img/pringles_fig1.png
+
+    Schematic of model shape (Graphic from Matt Henderson, matt@matthen.com)
+
+Reference
+---------
+
+#. Karen Edler, Universtiy of Bath, Private Communication. 2012.
+   Derivation by Stefan Alexandru Rautu.
+#. L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659
+
+Authorship and Verification
+----------------------------
+
+* **Author:** Andrew Jackson **Date:** 2008
+* **Last Modified by:** Wojciech Wpotrzebowski **Date:** March 20, 2016
+* **Last Reviewed by:** Andrew Jackson **Date:** September 26, 2016
+"""
+
+import numpy as np
+from numpy import inf
+
+name = "pringle"
+title = "The Pringle model provides the form factor, $P(q)$, for a 'pringle' \
+or 'saddle-shaped' disc that is bent in two directions."
+description = """\
+
+"""
+category = "shape:cylinder"
+
+# pylint: disable=bad-whitespace, line-too-long
+#   ["name", "units", default, [lower, upper], "type","description"],
+parameters = [
+    ["radius",      "Ang",         60.0,   [0, inf],    "volume", "Pringle radius"],
+    ["thickness",   "Ang",         10.0,   [0, inf],    "volume", "Thickness of pringle"],
+    ["alpha",       "",            0.001,  [-inf, inf], "volume", "Curvature parameter alpha"],
+    ["beta",        "",            0.02,   [-inf, inf], "volume", "Curvature paramter beta"],
+    ["sld", "1e-6/Ang^2",  1.0,    [-inf, inf], "sld", "Pringle sld"],
+    ["sld_solvent", "1e-6/Ang^2",  6.3,    [-inf, inf], "sld", "Solvent sld"]
+    ]
+# pylint: enable=bad-whitespace, line-too-long
+
+
+source = ["lib/polevl.c", "lib/sas_J0.c", "lib/sas_J1.c",
+          "lib/sas_JN.c", "lib/gauss76.c", "pringle.c"]
+radius_effective_modes = [
+    "equivalent cylinder excluded volume",
+    "equivalent volume sphere",
+    "radius"]
+
+def random():
+    """Return a random parameter set for the model."""
+    alpha, beta = 10**np.random.uniform(-1, 1, size=2)
+    radius = 10**np.random.uniform(1, 3)
+    thickness = 10**np.random.uniform(0.7, 2)
+    pars = dict(
+        radius=radius,
+        thickness=thickness,
+        alpha=alpha,
+        beta=beta,
+    )
+    return pars
+
+tests = [
+    [{'scale' : 1.0,
+      'radius': 60.0,
+      'thickness': 10.0,
+      'alpha': 0.001,
+      'beta': 0.02,
+      'sld': 1.0,
+      'sld_solvent': 6.3,
+      'background': 0.001,
+     }, 0.1, 9.87676],
+
+    [{'scale' : 1.0,
+      'radius': 60.0,
+      'thickness': 10.0,
+      'alpha': 0.001,
+      'beta': 0.02,
+      'sld': 1.0,
+      'sld_solvent': 6.3,
+      'background': 0.001,
+     }, 0.01, 290.56723],
+
+    [{'scale' : 1.0,
+      'radius': 60.0,
+      'thickness': 10.0,
+      'alpha': 0.001,
+      'beta': 0.02,
+      'sld': 1.0,
+      'sld_solvent': 6.3,
+      'background': 0.001,
+     }, 0.001, 317.40847],
+]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/79/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/pringle.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

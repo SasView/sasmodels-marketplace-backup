@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Core-Chain-Chain (CCC) Model | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/103/">Core-Chain-Chain (CCC) Model</a></li>
+</ol>
+<h1>Core-Chain-Chain (CCC) Model</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This form factor describes scattering from spherical cores (nanoparticle, micellar, etc.) that have chains coming off normal from their surface. In the case of<br/>the Core-Chain-Chain (CCC) Model, these chains have two different regions of conformation, size, and scattering length density. The transition from region 1 (near<br/>the nanoparticle core, CPB) to region 2 (SDPB) is given by the parameter $r_{c}$, which is the distance from the center of the nanoparticle to the junction point. See<br/>fig. 1 of reference 1 for a schematic of the geometry.</p>
+<p>The scattering intensity is the sum of 8 terms, and an incoherent background term $B$. This model returns the following scattering intensity:<br/>$$<br/>I(q) = \frac{scale}{(V_{core} + N_{c}V_{c})} \times \left[ P_{core}(q) + N_{c}P_{CPB}(q) + N_{c}P_{SDPB}(q) +  2N_{c}F_{core}(q)j_{0}(qr_{core})F_{CPB}(q) + 2N_{c}F_{core}(q)j_{0}(qr_{c})F_{SDPB}(q) + N_{c}(N_{c} - 1)F_{CPB}(q)^{2}j_{0}(qr_{core})^2 +  N_{c}(N_{c} - 1)F_{SDPB}(q)^{2}j_{0}(qr_{c})^2 + N_{c}^{2}F_{CPB}(q)j_{0}(qr_{core})j_{0}(qr_{c})F_{SDPB}(q) \right] + B<br/>$$</p>
+<p>where $N_{c}$ is the number of chains grafted to the nanoparticle, $r_{core}$ is the nanoparticle radius, and $r_{c}$ is the position of the junction between the CPB and<br/>SDPB regions. The terms $`P_{core}(q)$,  $P_{CPB}(q)$, and $P_{SDPB}(q)$ are the form factors of the spherical core, polymer in the CPB region, and polymer in the SDPB<br/>region, respectively. $F_{core}(q)$, $F_{CPB}(q)$, and $F_{SDPB}(q)$ are the form factor amplitudes of the respective regions. For the nanoparticle core, these terms are related as:</p>
+<p>$$<br/>    P_{core}(q) = \left| F_{core}(q) \right|^{2} = \left| V_{core}(\rho_{core} - \rho_{solv})\frac{3j_{1}(qr_{core})}{qr_{core}} \right|^{2}<br/>$$<br/>where $\rho_{core}$ is the scattering length density of the nanoparticle core, $\rho_{solv}$ is the scattering length density of the solvent/matrix, $V_{core}$ is the<br/>volume of the nanoparticle core, and $j_{1}(.)$ is a spherical Bessel function.</p>
+<p>Scattering from the CPB and SDPB regions is described by the form factor amplitudes and form factors of these regions. For a given region $i$, these terms read:</p>
+<p>$$<br/>P_{i}(q,N_{i}) = V_{i}^{2}(\rho_{i} - \rho_{solv})^{2} \left[ \frac{1}{\nu_{i} U_{i}^{1/2\nu_{i}}}\gamma \left( \frac{1}{2\nu_{i}}, U_{i}\right) - \frac{1}{\nu_{i} U_{i}^{1/\nu_{i}}}\gamma \left(\frac{1}{\nu_{i}}, U_{i} \right) \right]<br/>$$<br/>and<br/>$$<br/>F_{i}(q,N_{i}) = V_{i}(\rho_{i} - \rho_{solv})\frac{1}{2\nu_{i} U_{i}^{1/2\nu_{i}}}\gamma \left( \frac{1}{2\nu_{i}}, U_{i}\right)<br/>$$</p>
+<p>where $N_{i}$ is the degree of polymerization of the portion of polymer in region $i$, $V_{i}$ is the volume of polymer in region $i$, $\nu_{i}$ is the excluded volume parameter of the polymer in region $i$, $\rho_{i}$ is the scattering length density of polymer in region $i$, $U_{i} = q^{2} b^{2} N_{i}^{2\nu_{i}}/6$, $b$ is the polymer's Kuhn length, and $\gamma$ is the lower incomplete gamma function.</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Core-Chain-Chain (CCC) Model',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 174.855},{x: 0.0106939, y: 153.138},{x: 0.0208878, y: 107.986},{x: 0.0310816, y: 61.9817},{x: 0.0412755, y: 26.531},{x: 0.0514694, y: 6.4076},{x: 0.0616633, y: 0.144066},{x: 0.0718571, y: 1.07465},{x: 0.082051, y: 2.70711},{x: 0.0922449, y: 2.43952},{x: 0.102439, y: 1.04054},{x: 0.112633, y: 0.0883313},{x: 0.122827, y: 0.123122},{x: 0.13302, y: 0.552722},{x: 0.143214, y: 0.65871},{x: 0.153408, y: 0.359195},{x: 0.163602, y: 0.0524305},{x: 0.173796, y: 0.0232193},{x: 0.18399, y: 0.177292},{x: 0.194184, y: 0.258897},{x: 0.204378, y: 0.170939},{x: 0.214571, y: 0.0366916},{x: 0.224765, y: 0.00438201},{x: 0.234959, y: 0.0720199},{x: 0.245153, y: 0.125603},{x: 0.255347, y: 0.0958752},{x: 0.265541, y: 0.0269657},{x: 0.275735, y: 0.000489627},{x: 0.285929, y: 0.0328654},{x: 0.296122, y: 0.0686022},{x: 0.306316, y: 0.0595291},{x: 0.31651, y: 0.0205862},{x: 0.326704, y: 1.4469e-05},{x: 0.336898, y: 0.0158461},{x: 0.347092, y: 0.0399921},{x: 0.357286, y: 0.0394521},{x: 0.36748, y: 0.0164686},{x: 0.377673, y: 0.00035908},{x: 0.387867, y: 0.00787404},{x: 0.398061, y: 0.0246804},{x: 0.408255, y: 0.0274194},{x: 0.418449, y: 0.0133831},{x: 0.428643, y: 0.000832988},{x: 0.438837, y: 0.00388219},{x: 0.449031, y: 0.0157363},{x: 0.459224, y: 0.0196942},{x: 0.469418, y: 0.0110149},{x: 0.479612, y: 0.00122878},{x: 0.489806, y: 0.00183208},{x: 0.5, y: 0.0101663},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/17/">mjahore</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Aug. 23, 2018, 12:09 a.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/379">core_chain_chain.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

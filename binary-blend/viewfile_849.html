@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/124/">Binary Blend</a></li>
+<li><a href="/uploads/849">binary_blend.py</a></li>
+</ol>
+<h1>Binary Blend - binary_blend.py</h1>
+<pre>
+    <code>r"""
+
+Two-polymer RPA model with a flat background.
+
+Definition
+----------
+This model calculates the scattering from a two polymer
+blend using the Random Phase Approximation (RPA).
+
+This is a revision of the *binary_blend* model posted to the
+Marketplace in May 2020 following User feedback.
+
+.. note:: The two polymers are assumed to be monodisperse and incompressible.
+
+The scattered intensity $I(q)$ is calculated as[1,2]
+
+.. math::
+
+     frac {(rho_A - rho_B)^2}{N_Av I(q)} = text{scale} cdot
+     [frac {1}{phi_A n_A v_A P_A(q)} + frac {1}{phi_B n_B v_B P_B(q)} -
+     frac {2 chi_AB}{v_0}] + text{background}
+
+where $rho_i$ is the scattering length density, $phi_i$, is the volume
+fraction (such that $phi_A$ + $phi_B$ = 1), $n_i$ is the degree of
+polymerization (number of repeat units), $v_i$ is the molar specific volume
+of one *monomer*, and $P_i(q)$ is Debye's Gaussian coil form factor
+for polymer $i$, $N_Av$ is Avogadro's number, $chi_AB$ is the Flory-Huggins
+interaction parameter and $v_0$ is the reference volume,
+
+and
+
+.. math::
+
+     v_i = m_i / delta_i \
+     v_0 = sqrt(v_A \cdot v_B) \
+     Z = (q \cdot Rg_i)^2 \
+     P_i(q) = 2 \cdot [exp(-Z) + Z - 1] / Z^2 
+
+where $m_i$ is the molecular weight of a *repeat unit* (not of the polymer),
+$delta_i$ is the mass density, and $Rg_i$ is the radius of gyration of polymer $i$.
+
+.. note:: This model works best when as few parameters as possible are allowed
+          to optimize. Indeed, most parameters should be known *a priori* anyhow!
+          The calculation should also be exact, meaning the *scale* parameter
+          should be left at 1.
+
+.. note:: Tip: Try alternately optimizing $n_A$ &amp; $rg_A$ and $n_B$ &amp; $rg_B$ and
+          only then optimizing $chi_AB$.
+
+Acknowledgments
+----------------
+The author would like to thank James Cresswell and Richard Thompson for
+highlighting some issues with the model as it was originally coded.
+
+The molar specific volumes were being computed from the polymer molecular
+weight, not the weight of the repeat unit, meaning in most instances the
+values were grossly over-estimated, whilst the reference volume was fixed at
+a value which in most instances would have been too small. Both issues are
+corrected in this version of the model.
+
+References
+----------
+
+#.  Lapp, Picot &amp; Benoit, *Macromolecules*, (1985), 18, 2437-2441 (Appendix) 
+#.  Hammouda, *The SANS Toolbox*, Chapters 28, 29 &amp; 34 and Section H
+
+Authorship and Verification
+---------------------------
+
+* **Author:** Steve King **Date:** 07/05/2020
+* **Last Modified by:** Steve King **Date:** 12/09/2024
+* **Last Reviewed by:** **Date:**
+
+"""
+import numpy as np
+from numpy import inf
+
+name = "binary_blend"
+title = "Two-polymer RPA model"
+description = """
+    Evaluates a two-
+    polymer RPA model
+"""
+category = "shape-independent"
+structure_factor = False
+single = False
+
+#   ["name", "units", default, [lower, upper], "type","description"],
+#   lower limit for m_A/m_B set for CH repeat unit
+#   lower limit for n_A/n_B set for PS (see Macromolecules, 37(1), 2004, 161-166);
+#   could be reduced for more flexible polymers and vice versa
+#   lower limit for rg_A/rg_B set for C-C bond!
+parameters = [
+    ["chi_AB", "cm^3/mol", 0.001, [0, 100], "", "Flory interaction parameter"],
+    ["density_A", "g/cm^3", 1.05, [0.1, 3], "", "Mass density of A"],
+    ["density_B", "g/cm^3", 0.90, [0.1, 3], "", "Mass density of B"],
+    ["m_A", "g/mol", 112, [13, inf], "", "Mol weight of REPEAT A"],
+    ["m_B", "g/mol", 104, [13, inf], "", "Mol weight of REPEAT B"],
+    ["n_A", "", 465, [50, inf], "", "No. repeats of A"],
+    ["n_B", "", 501, [50, inf], "", "No. repeats of B"],
+    ["rg_A", "Ang", 59.3, [1.5, inf], "", "Radius of gyration of A"],
+    ["rg_B", "Ang", 59.3, [1.5, inf], "", "Radius of gyration of B"],
+    ["sld_A", "1e-6/Ang^2", 6.55, [-1, 7], "sld", "SLD of A"],
+    ["sld_B", "1e-6/Ang^2", 1.44, [-1, 7], "sld", "SLD of B"],
+    ["volfrac_A", "", 0.48, [0, 1], "", "Volume fraction of A"],
+]
+
+def Iq(q, chi_AB, density_A, density_B, m_A, m_B,
+    n_A, n_B, rg_A, rg_B, sld_A, sld_B, volfrac_A):
+
+    N_Av = 6.023E+23             # Avogadro number (mol^-1)
+    v_A = m_A / density_A        # Molar specific volume of A (cm^3 mol^-1)
+    v_B = m_B / density_B        # Molar specific volume of B (cm^3 mol^-1)
+    v_0 = np.sqrt(v_A * v_B)     # Reference volume (cm^3 mol^-1)
+
+    Z_A = (q * rg_A) * (q * rg_A)
+    Z_B = (q * rg_B) * (q * rg_B)
+
+    contrast = (sld_A - sld_B)   # Contrast (Ang^-2)
+
+    Pq_A = 2.0 * (np.exp(-1.0 * Z_A) - 1.0 + Z_A) / (Z_A * Z_A)
+    Pq_B = 2.0 * (np.exp(-1.0 * Z_B) - 1.0 + Z_B) / (Z_B * Z_B)
+
+    U_A = volfrac_A * n_A * v_A * Pq_A
+    U_B = (1.0 - volfrac_A) * n_B * v_B * Pq_B
+    chiterm = (2.0 * chi_AB) / v_0
+    prefactor = 1.0E+20 * (contrast * contrast) / N_Av
+    Inverse_Iq = (1.0 / prefactor) * ((1.0 / U_A) + (1.0 / U_B) - chiterm)
+    result = 1.0 / Inverse_Iq
+    return result
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+tests = [
+   [{'scale': 1.0, 'background' : 0.08, 'chi_AB': 0.0005, 'density_A': 1.05,
+     'density_B': 0.9, 'm_A': 112, 'm_B': 104, 'n_A' : 400, 'n_B' : 351,
+     'rg_A': 60, 'rg_B': 48, 'sld_A': 6.55, 'sld_B': 1.44, 'volfrac_A': 0.5},
+     [0.002009078240301904, 0.24943453429220586], [49.594719935513766, 0.5713619727360871]],
+   ]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/124/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/binary_blend.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

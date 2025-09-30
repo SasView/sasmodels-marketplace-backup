@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/161/">Enhanced Cylinder Models for SasView</a></li>
+<li><a href="/uploads/827">core_shell_bicelle_high_res.c</a></li>
+</ol>
+<h1>Enhanced Cylinder Models for SasView - core_shell_bicelle_high_res.c</h1>
+<pre>
+    <code>
+
+static double
+form_volume(double radius, double thick_rim, double thick_face, double length)
+{
+    return M_PI*square(radius+thick_rim)*(length+2.0*thick_face);
+}
+
+static double
+bicelle_kernel(double qab,
+    double qc,
+    double radius,
+    double thick_radius,
+    double thick_face,
+    double halflength,
+    double sld_core,
+    double sld_face,
+    double sld_rim,
+    double sld_solvent)
+{
+    const double dr1 = sld_core-sld_face;
+    const double dr2 = sld_rim-sld_solvent;
+    const double dr3 = sld_face-sld_rim;
+
+    const double vol1 = M_PI*square(radius)*2.0*(halflength);
+    const double vol2 = M_PI*square(radius+thick_radius)*2.0*(halflength+thick_face);
+    const double vol3 = M_PI*square(radius)*2.0*(halflength+thick_face);
+
+    const double be1 = sas_2J1x_x((radius)*qab);
+    const double be2 = sas_2J1x_x((radius+thick_radius)*qab);
+    const double si1 = sas_sinx_x((halflength)*qc);
+    const double si2 = sas_sinx_x((halflength+thick_face)*qc);
+
+    const double t = vol1*dr1*si1*be1 +
+                     vol2*dr2*si2*be2 +
+                     vol3*dr3*si2*be1;
+
+
+    return t;
+}
+
+
+
+
+static double
+radius_from_excluded_volume(double radius, double thick_rim, double thick_face, double length)
+{
+    const double radius_tot = radius + thick_rim;
+    const double length_tot = length + 2.0*thick_face;
+    return 0.5*cbrt(0.75*radius_tot*(2.0*radius_tot*length_tot + (radius_tot + length_tot)*(M_PI*radius_tot + length_tot)));
+}
+
+static double
+radius_from_volume(double radius, double thick_rim, double thick_face, double length)
+{
+    const double volume_bicelle = form_volume(radius,thick_rim,thick_face,length);
+    return cbrt(volume_bicelle/M_4PI_3);
+}
+
+static double
+radius_from_diagonal(double radius, double thick_rim, double thick_face, double length)
+{
+    const double radius_tot = radius + thick_rim;
+    const double length_tot = length + 2.0*thick_face;
+    return sqrt(radius_tot*radius_tot + 0.25*length_tot*length_tot);
+}
+
+static double
+radius_effective(int mode, double radius, double thick_rim, double thick_face, double length)
+{
+    switch (mode) {
+    default:
+    case 1: // equivalent cylinder excluded volume
+        return radius_from_excluded_volume(radius, thick_rim, thick_face, length);
+    case 2: // equivalent sphere
+        return radius_from_volume(radius, thick_rim, thick_face, length);
+    case 3: // outer rim radius
+        return radius + thick_rim;
+    case 4: // half outer thickness
+        return 0.5*length + thick_face;
+    case 5: // half diagonal
+        return radius_from_diagonal(radius,thick_rim,thick_face,length);
+    }
+}
+
+static double
+bicelle_kernel(double qab,
+    double qc,
+    double radius,
+    double thick_radius,
+    double thick_face,
+    double halflength,
+    double sld_core,
+    double sld_face,
+    double sld_rim,
+    double sld_solvent)
+{
+    const double dr1 = sld_core-sld_face;
+    const double dr2 = sld_rim-sld_solvent;
+    const double dr3 = sld_face-sld_rim;
+
+    const double vol1 = M_PI*square(radius)*2.0*(halflength);
+    const double vol2 = M_PI*square(radius+thick_radius)*2.0*(halflength+thick_face);
+    const double vol3 = M_PI*square(radius)*2.0*(halflength+thick_face);
+
+    const double be1 = sas_2J1x_x((radius)*qab);
+    const double be2 = sas_2J1x_x((radius+thick_radius)*qab);
+    const double si1 = sas_sinx_x((halflength)*qc);
+    const double si2 = sas_sinx_x((halflength+thick_face)*qc);
+
+    const double t = vol1*dr1*si1*be1 +
+                     vol2*dr2*si2*be2 +
+                     vol3*dr3*si2*be1;
+
+
+    return t;
+}
+
+static void
+integrand_core_shell_bicelle(double x, double q, double radius, double thick_radius, double thick_face, double halflength, double sld_core, double sld_face, double sld_rim, double sld_solvent, double* res1, double* res2, int n, int i){
+    double sin_theta, cos_theta;
+    get_sin_x(n, i, &amp;sin_theta);
+    get_cos_x(n, i, &amp;cos_theta);
+
+    const double form = bicelle_kernel(q*sin_theta, q*cos_theta, radius, thick_radius, thick_face, halflength, sld_core, sld_face, sld_rim, sld_solvent);
+    *res1 = form * sin_theta;
+    *res2 = form * form * sin_theta;
+}
+
+void integrate_core_shell_bicelle(
+    double a,
+    double b,
+    double q,
+    double radius,
+    double thick_radius,
+    double thick_face,
+    double halflength,
+    double sld_core,
+    double sld_face,
+    double sld_rim,
+    double sld_solvent,
+    double* res1,
+    double* res2
+    ){
+
+
+    const double A = q*halflength;
+    const double B = q*radius;
+    const double C = q*(halflength+thick_face);
+    const double D = q*(radius+thick_radius);
+
+    int expo = (int)(eval_poly(log2m(max(limits[0][0],min(limits[0][1], A))), log2m(max(limits[1][0],min(limits[1][1], B))), log2m(max(limits[2][0],min(limits[2][1], C))), log2m(max(limits[3][0],min(limits[3][1], D)))) + 1);
+    int n = (int)(pow(2, max(1, min(15, expo))));
+
+    double *xg, *wg;
+    get_gauss_points(n, &amp;xg, &amp;wg);
+
+    // Perform the integration
+    *res1 = 0;
+    *res2 = 0;
+
+    for (int i = 0; i &lt; n; i++){
+        double t1, t2;
+        integrand_core_shell_bicelle(a + (b - a) * 0.5 * (xg[i] + 1), q, radius, thick_radius, thick_face, halflength, sld_core, sld_face, sld_rim, sld_solvent, &amp;t1, &amp;t2, n, i);
+        *res1 += t1 * wg[i];
+        *res2 += t2 * wg[i];
+    }
+
+    *res1 *= (b - a) * 0.5;
+    *res2 *= (b - a) * 0.5;
+
+
+}
+
+
+static void
+Fq(double q,
+    double *F1,
+    double *F2,
+    double radius,
+    double thick_radius,
+    double thick_face,
+    double length,
+    double sld_core,
+    double sld_face,
+    double sld_rim,
+    double sld_solvent)
+{
+    // set up the integration end points
+    const double uplim = M_PI_2;
+    const double halflength = 0.5*length;
+    
+    double total_F1, total_F2;
+    integrate_core_shell_bicelle(0, uplim, q, radius, thick_radius, thick_face, halflength, sld_core, sld_face, sld_rim, sld_solvent, &amp;total_F1, &amp;total_F2);
+
+
+    *F1 = 1.0e-2*total_F1;
+    *F2 = 1.0e-4*total_F2;
+
+
+}
+
+
+static double
+Iqac(double qab, double qc,
+    double radius,
+    double thick_rim,
+    double thick_face,
+    double length,
+    double core_sld,
+    double face_sld,
+    double rim_sld,
+    double solvent_sld)
+{
+    double fq = bicelle_kernel(qab, qc, radius, thick_rim, thick_face,
+                           0.5*length, core_sld, face_sld, rim_sld,
+                           solvent_sld);
+    return 1.0e-4*fq*fq;
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/161/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/core_shell_bicelle_high_res.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

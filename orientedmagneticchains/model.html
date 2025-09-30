@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>OrientedMagneticChains | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/143/">OrientedMagneticChains</a></li>
+</ol>
+<h1>OrientedMagneticChains</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This plug-in model calculates oriented core-shell chains, with the option of <br/>adding a magnetic SLD to each layer. The chain scattering is the incoherent <br/>sum of a user-defined combination of singletons, dimers, trimers, <br/>quadramers, and pentamers. Note that no matter the numerical values <br/>selected for the amount of each chain type, the fraction of each will be <br/>normalized such that the sum of the chain type fractions is unity. A <br/>normalization radius parameter is also included that so that the scale will <br/>be equivalent to the volume fraction corresponding to that size of the <br/>nanoparticle (e.g. if the amount of iron oxide nanoparticle material in a <br/>solution is known, but the amount of surfactant is not, a normalization <br/>radius corresponding to the iron oxide radius will return a scale equal to <br/>the volume fraction of iron oxide in solution).</p>
+<p>The chains are preferentially oriented about the x-direction, with a Gaussian <br/>FWHM in degrees set by user-input sigma. From here, the user can choose <br/>the viewing angle w.r.t. the x-axis (0 degrees and 90 degrees would be <br/>common slices). Alternatively, the user can select the 2D View before <br/>plotting the model to see a 2D plot; plotting 2D after starting a 1D plot may <br/>result in having the 1D plot determined by the viewing angle be symmetrically <br/>rotated about 2D, which would is not physically correct.</p>
+<p>The magnetism of the chains comes in three varieties, selected using the <br/>parameter magnetic_orientation: 1 = core-shells with random magnetic <br/>alignment from particle-to-particle (but with a shared direction per core and <br/>shell), 2 = magnetic moments aligned along the chain axis, and 3 = magnetic <br/>moments aligned along the x-axis (regardless of chain orientation).<br/>The scattering amplitude form factor is calculated in same way as the core-shell <br/>sphere model (Guinier, 1955), and it is then multiplied by a complex structure <br/>factor that depends on chain length:<br/>$$  P(q) = \frac{\text{scale}}{V} F^2(q)*(\text{real \ phase}^2 + \text{img \ phase}^2) + \text{background}  $$<br/>where<br/>$$ \text{real \ phase} =  1.0 + \sum_{k=0}^{4} \sum_{n=0}^{k} cos(k*length*(Q_X*cos(\theta) + Q_Y*sin(\theta)*cos(\phi)) $$<br/>and<br/>$$    \text{img \ phase} =  0.0 + \sum_{k=0}^{4} \sum_{n=0}^{k} sin(k*length*(Q_X*cos(\theta) + Q_Y*sin(\theta)*cos(\phi)) $$<br/>and<br/>$$ F(q) = \frac{3}{V_s}\left[<br/>       V_c(\rho_c-\rho_s)\frac{\sin(qr_c)-qr_c\cos(qr_c)}{(qr_c)^3} +<br/>       V_s(\rho_s-\rho_\text{solv})\frac{\sin(qr_s)-qr_s\cos(qr_s)}{(qr_s)^3}<br/>       \right] $$.</p>
+<p>Here $V_s$ is the volume of the whole particle, $V_c$ is the volume of the<br/>core, $r_s$ = $radius$ + $thickness$ is the radius of the particle, $r_c$<br/>is the radius of the core, $\rho_c$ is the scattering length density of the<br/>core, $\rho_s$ is the scattering length density of the shell,<br/>$\rho_\text{solv}$, is the scattering length density of the solvent.</p>
+<p>Theta is the angle between Qx-Qy and the x-axis, and it is sampled in 2 degree <br/>increments in 45 steps. Phi is the rotation of the vector set by theta in a <br/>half-cone about the x-axis in 4 steps of 45 degrees (finer steps are possible, but <br/>would slow the code and don't noticeably affect the model).</p>
+<p>Please note, this model will soon be updated to include polarization analysis <br/>(currently unpolarized) and will include ability to change the orientation angle <br/>(now set to x). It will also include a fully randomly oriented option.</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/39/">krycket</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>May 21, 2021, 8:24 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/669">OrientedMagneticChains.py</a><br>
+<a href="/uploads/670">OrientedMagneticChains.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

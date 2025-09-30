@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/68/">Hardsphere</a></li>
+<li><a href="/uploads/719">hardsphere.c</a></li>
+</ol>
+<h1>Hardsphere - hardsphere.c</h1>
+<pre>
+    <code>double Iq(double q, double radius_effective, double volfraction)
+{
+      double D,A,B,G,X,X2,X4,S,C,FF,HARDSPH;
+      // these are c compiler instructions, can also put normal code inside the "if else" structure
+      #if FLOAT_SIZE &gt; 4
+      // double precision
+      // orig had 0.2, don't call the variable cutoff as PAK already has one called that!
+      // Must use UPPERCASE name please.
+      // 0.05 better, 0.1 OK
+      #define CUTOFFHS 0.05
+      #else
+      // 0.1 bad, 0.2 OK, 0.3 good, 0.4 better, 0.8 no good
+      #define CUTOFFHS 0.4
+      #endif
+
+      if(fabs(radius_effective) &lt; 1.E-12) {
+               HARDSPH=1.0;
+//printf("HS1 %g: %g\n",q,HARDSPH);
+               return(HARDSPH);
+      }
+      // removing use of pow(xxx,2) and rearranging the calcs
+      // of A, B &amp; G cut ~40% off execution time ( 0.5 to 0.3 msec)
+      X = 1.0/( 1.0 -volfraction);
+      D= X*X;
+      A= (1.+2.*volfraction)*D;
+      A *=A;
+      X=fabs(q*radius_effective*2.0);
+
+      if(X &lt; 5.E-06) {
+                 HARDSPH=1./A;
+//printf("HS2 %g: %g\n",q,HARDSPH);
+                 return(HARDSPH);
+      }
+      X2 =X*X;
+      B = (1.0 +0.5*volfraction)*D;
+      B *= B;
+      B *= -6.*volfraction;
+      G=0.5*volfraction*A;
+
+      if(X &lt; CUTOFFHS) {
+      // RKH Feb 2016, use Taylor series expansion for small X
+      // else no obvious way to rearrange the equations to avoid
+      // needing a very high number of significant figures.
+      // Series expansion found using Mathematica software. Numerical test
+      // in .xls showed terms to X^2 are sufficient
+      // for 5 or 6 significant figures, but I put the X^4 one in anyway
+            //FF = 8*A +6*B + 4*G - (0.8*A +2.0*B/3.0 +0.5*G)*X2 +(A/35. +B/40. +G/50.)*X4;
+            // refactoring the polynomial makes it very slightly faster (0.5 not 0.6 msec)
+            //FF = 8*A +6*B + 4*G + ( -0.8*A -2.0*B/3.0 -0.5*G +(A/35. +B/40. +G/50.)*X2)*X2;
+
+            FF = 8.0*A +6.0*B + 4.0*G + ( -0.8*A -B/1.5 -0.5*G +(A/35. +0.0125*B +0.02*G)*X2)*X2;
+
+            // combining the terms makes things worse at smallest Q in single precision
+            //FF = (8-0.8*X2)*A +(3.0-X2/3.)*2*B + (4+0.5*X2)*G +(A/35. +B/40. +G/50.)*X4;
+            // note that G = -volfraction*A/2, combining this makes no further difference at smallest Q
+            //FF = (8 +2.*volfraction + ( volfraction/4. -0.8 +(volfraction/100. -1./35.)*X2 )*X2 )*A  + (3.0 -X2/3. +X4/40.)*2.*B;
+            HARDSPH= 1./(1. + volfraction*FF );
+//printf("HS3 %g: %g\n",q,HARDSPH);
+            return(HARDSPH);
+      }
+      X4=X2*X2;
+      SINCOS(X,S,C);
+
+// RKH Feb 2016, use version FISH code as is better than original sasview one
+// at small Q in single precision, and more than twice as fast in double.
+      //FF=A*(S-X*C)/X + B*(2.*X*S -(X2-2.)*C -2.)/X2 + G*( (4.*X2*X -24.*X)*S -(X4 -12.*X2 +24.)*C +24. )/X4;
+      // refactoring the polynomial here &amp; above makes it slightly faster
+
+      FF=  (( G*( (4.*X2 -24.)*X*S -(X4 -12.*X2 +24.)*C +24. )/X2 + B*(2.*X*S -(X2-2.)*C -2.) )/X + A*(S-X*C))/X ;
+      HARDSPH= 1./(1. + 24.*volfraction*FF/X2 );
+
+      // changing /X and /X2 to *MX1 and *MX2, no significantg difference?
+      //MX=1.0/X;
+      //MX2=MX*MX;
+      //FF=  (( G*( (4.*X2 -24.)*X*S -(X4 -12.*X2 +24.)*C +24. )*MX2 + B*(2.*X*S -(X2-2.)*C -2.) )*MX + A*(S-X*C)) ;
+      //HARDSPH= 1./(1. + 24.*volfraction*FF*MX2*MX );
+
+// grouping the terms, was about same as sasmodels for single precision issues
+//     FF=A*(S/X-C) + B*(2.*S/X - C +2.0*(C-1.0)/X2) + G*( (4./X -24./X3)*S -(1.0 -12./X2 +24./X4)*C +24./X4 );
+//     HARDSPH= 1./(1. + 24.*volfraction*FF/X2 );
+// remove 1/X2 from final line, take more powers of X inside the brackets, stil bad
+//      FF=A*(S/X3-C/X2) + B*(2.*S/X3 - C/X2 +2.0*(C-1.0)/X4) + G*( (4./X -24./X3)*S -(1.0 -12./X2 +24./X4)*C +24./X4 )/X2;
+//      HARDSPH= 1./(1. + 24.*volfraction*FF );
+//printf("HS4 %g: %g\n",q,HARDSPH);
+      return(HARDSPH);
+}</code>
+</pre>
+<a class="btn btn-default" href="/models/68/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/hardsphere.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

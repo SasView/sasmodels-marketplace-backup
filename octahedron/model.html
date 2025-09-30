@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Octahedron | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/parallelepiped/">Parallelepiped</a></li>
+<li><a href="/models/134/">Octahedron</a></li>
+</ol>
+<h1>Octahedron</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>The octahedron is defined by three dimensions along the two-fold axis which contain the 6 vertices. $length_a$, $length_b$ and $length_c$ are the distances from the center of the octahedron to its vertices. Coordinates of the six vertices are :<br/>$$(length_a,0,0)\\<br/>(-length_a,0,0)\\<br/>(0,length_b,0)\\<br/>(0,-length_b,0)\\<br/>(0,0,length_c)\\<br/>(0,0,-length_c)$$<br/>A visualisation is given here: https://mycore.core-cloud.net/index.php/s/d11CPNr6g1P6IGR</p>
+<p>The model is using $length_a$ and the two ratios $b2a_{ratio}$ and $c2a_{ratio}$ :<br/> $$b2a_{ratio} = length_b/length_a\\<br/> c2a_{ratio} = length_c/length_a$$<br/>These three parameters are implemented with the polydispersity option.</p>
+<p>Volume of the octahedron is:<br/>$$V = \frac{4}{3} \cdot length_a \cdot length_b \cdot length_c = \frac{4}{3} \cdot length_a^3 \cdot b2a_{ratio} \cdot c2a_{ratio}$$</p>
+<p>Lengths of edges are equal to :<br/>    $$A_{edge}^2 = length_a^2+length_b^2\\<br/>    B_{edge}^2 = length_a^2+length_c^2\\<br/>    C_{edge}^2 = length_b^2+length_c^2$$</p>
+<p>For a regular octahedron : <br/>    $$b2a_{ratio} = c2a_{ratio} = 1\\   <br/>    A_{edge} = B_{edge} = C_{edge} = length_a \cdot \sqrt2\\<br/>    length_a = length_b = length_c = \frac{A_{edge}}{\sqrt2}\\<br/>    V = \frac{4}{3}\cdot length_a^3 = \frac{\sqrt2}{3} \cdot A_{edge}^3  $$<br/> <br/>Amplitude of the form factor AP is calculated with a scaled scattering vector $(Qx,Qy,Qz)$ :<br/>   $$ Qx = qx \cdot length_a \\<br/>    	   Qy = qy \cdot length_b \\<br/>    	    Qz = qz \cdot length_c $$<br/>    $$AP = \frac{3}{4} \cdot \frac{A+B}{Qx^2-Qy^2}$$<br/>    with :<br/>       $$ A = 8 \cdot \frac{Qy \cdot \sin{Qy}-Qz \cdot \sin{Qz}}{Qy^2-Qz^2}\\<br/>        B = 8 \cdot \frac{Qz \cdot \sin{Qz}-Qx \cdot \sin{Qx}}{Qx^2-Qz^2}$$</p>
+<p> The angles are introduced in the same way as for other parallelepiped models (like the rectangular prism). Note that the $a$, $b$ and $c$ axis are oriented from the center of the octahedron towards the vertices. <br/>            $$qa = q \cdot \sin{\theta} \cdot \cos{\phi} \\<br/>    	    qb = q \cdot \sin{\theta} \cdot  \sin{\phi} \\<br/>    	    qc = q \cdot \cos{\theta} $$    	       <br/>$\theta$ is the angle between the $z$ axis and the $c$ axis of the octahedron ($length_c$), and $\phi$ is the angle between the scattering vector (lying in the $xy$ plane) and the $y$ axis.</p>
+<p>The normalized form factor in 1D is obtained averaging over all possible orientations. This is the same code as for the rectangular prism model.</p>
+<p>The example is generated in SasView using the default values (no polydispersity).</p>
+<p>References<br/>--------------<br/>1. Wei-Ren Chen et al. “Scattering functions of Platonic solids”. <br/>In:Journal of AppliedCrystallography - J APPL CRYST44 (June 2011).<br/>https://DOI:10.1107/S0021889811011691<br/>2. Croset, Bernard, "Form factor of any polyhedron: a general compact<br/>formula and its singularities" In: J. Appl. Cryst. (2017). 50, 1245–1255 <br/>https://doi.org/10.1107/S1600576717010147</p>
+<p>Authorship and Verification<br/>----------------------------------</p>
+<p>* **Authors: Marianne Imperor-Clerc (marianne.imperor@universite-paris-saclay.fr)<br/>             Alexandra Beikert (abeikert@gmx.de)**<br/>* **Last Modified by MI: 9 October 2020**<br/>* **Last Reviewed by:**</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Octahedron',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 107210.590507},{x: 0.010693877551, y: 105721.151012},{x: 0.020887755102, y: 101616.692315},{x: 0.0310816326531, y: 95167.1459664},{x: 0.0412755102041, y: 86786.9520543},{x: 0.0514693877551, y: 76995.4196784},{x: 0.0616632653061, y: 66368.6149723},{x: 0.0718571428571, y: 55488.4699515},{x: 0.0820510204082, y: 44894.8628816},{x: 0.0922448979592, y: 35045.7034874},{x: 0.10243877551, y: 26288.7129897},{x: 0.112632653061, y: 18846.8569019},{x: 0.122826530612, y: 12817.548128},{x: 0.133020408163, y: 8184.06298974},{x: 0.143214285714, y: 4836.3260133},{x: 0.153408163265, y: 2597.4605359},{x: 0.163602040816, y: 1252.31464917},{x: 0.173795918367, y: 574.506596407},{x: 0.183989795918, y: 349.268957879},{x: 0.194183673469, y: 390.342545504},{x: 0.20437755102, y: 550.204721791},{x: 0.214571428571, y: 723.858236893},{x: 0.224765306122, y: 847.141846635},{x: 0.234959183673, y: 890.990599414},{x: 0.245153061224, y: 853.260871376},{x: 0.255346938776, y: 749.674922199},{x: 0.265540816327, y: 605.192764244},{x: 0.275734693878, y: 446.759580376},{x: 0.285928571429, y: 297.977978727},{x: 0.29612244898, y: 175.877715501},{x: 0.306316326531, y: 89.6452028681},{x: 0.316510204082, y: 40.9557709166},{x: 0.326704081633, y: 25.4300444895},{x: 0.336897959184, y: 34.7045522814},{x: 0.347091836735, y: 58.6488611142},{x: 0.357285714286, y: 87.3551051052},{x: 0.367479591837, y: 112.647500145},{x: 0.377673469388, y: 128.987728935},{x: 0.387867346939, y: 133.769085984},{x: 0.39806122449, y: 127.08503997},{x: 0.408255102041, y: 111.118908182},{x: 0.418448979592, y: 89.3285383613},{x: 0.428642857143, y: 65.5959489238},{x: 0.438836734694, y: 43.4832301313},{x: 0.449030612245, y: 25.6914576837},{x: 0.459224489796, y: 13.7685227883},{x: 0.469418367347, y: 8.06354687129},{x: 0.479612244898, y: 7.886904365},{x: 0.489806122449, y: 11.8100953966},{x: 0.5, y: 18.0301154938},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/33/">alexandra</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Oct. 14, 2020, 3:24 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Parallelepiped</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/628">octahedron_h_mi.py</a><br>
+<a href="/uploads/629">octahedron_h_mi.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

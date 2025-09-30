@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lamellar Slab Partition Constant | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/lamellae/">Lamellae</a></li>
+<li><a href="/models/149/">Lamellar Slab Partition Constant</a></li>
+</ol>
+<h1>Lamellar Slab Partition Constant</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Note: model title and parameter table are inserted automatically</p>
+<p>This model (Tan et al. J. Appl. Cryst. 2022) provides the scattering intensity, $I(q)$, for a lyotropic lamellar phase, randomly distributed in solution in the presence of a co-solvent which partitions into the lamellar phase. The lamellar phase structure is considered here as three layers; a core layer centered on the lamellar phase midpoint and excluding the primary solvent, and two symmetric outer layers (solvent-exposed<br/>and solvent-containing). The co-solvent is permitted to partition into both layers of the lamellar phase.</p>
+<p>This model describes the lamellar phase structure and co-solvent partitioning. The model is intended to be used with input parameters including; the molecular volume and  bound coherent scattering length of the molecules comprising the lamellar structure, along with those of the primary solvent and co-solvent. The user is also required to enter the molar concentration of the constituent molecules.</p>
+<p>The variable parameters are intended to be the APL, the average area per amphiphile (lipid) molecule at the core/outer layer interface, the n_W, the number of solvent (water) molecules residing in the outer layer of the bilayer, Kp, the partition constant, and P_s, the co-solvent localization constant which defines the fraction of the co-solvent located in the core layer.</p>
+<p>This model is adapted from the lamellar_APL_Nw model in Tan et al. (2021) and earlier models (Nagle and Wiener, 1988) and the fitting function lamellar_hg (Nallet 1993) and (Berghausen 2001).</p>
+<p>Note that the model can be applied with other combinations of input parameters/assumptions; and is ideally applied as a simultaneous fit to datasets with multiple independent measurements; such as neutron contrast variation strategies.</p>
+<p>Definition<br/>----------</p>
+<p>The scattering intensity $I(q)$ is</p>
+<p>    $$P(q) = \frac{4}{q^2}<br/>        \left\lbrace<br/>            \Delta \rho_H<br/>            \left[\sin[q(\delta_H + \delta_T)\ - \sin(q\delta_T)\right]<br/>            + \Delta\rho_T\sin(q\delta_T)<br/>        \right\rbrace^2$$</p>
+<p>where $\delta_T$ is $length_{tail}$, $\delta_H$ is $length_{head}$,<br/>$\Delta\rho_H$ is the head contrast ($sld_{head} - sld_{solvent}$),<br/>and $\Delta\rho_T$ is tail contrast ($sld_{tail} - sld_{solvent}$),<br/>$length_{tail}$ equals $(V_c+P_sV_sN_s)/APL$,<br/>$length_{head}$ equals $(V_h+N_wV_w+(1-P_s)V_sN_s)/APL$,<br/>$sld_{head}$ equals $(B_h+N_wB_w+(1-P_s)B_sN_s)/(V_h+N_wV_w+(1-P_s)V_sN_s)$,<br/>$sld_{tails}$ equals $(B_c+P_sB_sN_s)/(V_c+P_sV_sN_s)$. Where $V_h$, $V_c$, $V_w$, $V_s$ are the molecular volume of lipid headgroup, lipid tails, solvent (water), and co-sovlent. $N_w$, $N_s$ are number of solvent and co-solvent molecules partitioning in lipid on a per lipid basis.</p>
+<p>The total thickness of the lamellar sheet is $\delta_H + \delta_T + \delta_T + \delta_H$.<br/>Note that in a non aqueous solvent the chemical "head" group may be the<br/>"Tail region" and vice-versa.</p>
+<p>The 2D scattering intensity is calculated in the same way as 1D, where<br/>the $q$ vector is defined as</p>
+<p>$q = \sqrt{q_x^2 + q_y^2}$</p>
+<p>References<br/>----------</p>
+<p>Tan, L., Smith, M. D., Scott, H. L., Yahya, A., Elkins, J. G., Katsaras, J., ... &amp; Nickels, J. D. (2022). Modeling the partitioning of amphiphilic molecules and co-solvents in biomembranes. Journal of Applied Crystallography, 55(6).<br/>Tan, L., Elkins, J. G., Davison, B. H., Kelley, E. G., &amp; Nickels, J. (2021). Implementation of a self-consistent slab model of bilayer structure in the SasView suite. Journal of Applied Crystallography, 54(1), 363-370.<br/>Nagle, J., &amp; Wiener, M. (1988). Structure of fully hydrated bilayer dispersions. Biochimica et Biophysica Acta (BBA)-Biomembranes, 942(1), 1-10<br/>F Nallet, R Laversanne, and D Roux, *J. Phys. II France*, 3, (1993) 487-502<br/>J Berghausen, J Zipfel, P Lindner, W Richtering, *J. Phys. Chem. B*, 105, (2001) 11081-11088</p>
+<p>Authorship and Verification<br/>----------------------------</p>
+<p>Luoxi Tan, Micholas Dean Smith, Haden L. Scott, Ahmad Yahya, James G. Elkins, John Katsaras, Hugh M O'Neill, Sai Venkatesh Pingali, Jeremy C. Smith, Brian H Davison, Jonathan D. Nickels</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/36/">jnickels</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Nov. 7, 2022, 6:33 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Lamellae</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/852">lamellar_Slab_APL_Partition.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

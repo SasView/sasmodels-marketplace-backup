@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Fractal S(q) | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/119/">Fractal S(q)</a></li>
+</ol>
+<h1>Fractal S(q)</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Calculates the structure factor term ONLY from the Fractal model.</p>
+<p>Definition<br/>------------<br/>The Teixeira &amp; Chen fractal structure factor.</p>
+<p>Calculates the structure factor for mass fractal aggregates of monodisperse spherical particles of effective radius $R_p$ according to</p>
+<p>\begin{equation}<br/>                S(q) = 1 + \frac{D_m\Gamma(D_m - 1)}{(qR_p)^{D_m}<br/>                [1+(q\xi)^{-2}]^{(D_m-1)/2}} sin[(D_m - 1) tan^{-1}(q\xi)]<br/>\end{equation}</p>
+<p>where $D_m$ is the mass fractal dimension, $R_p$ is assumed to be equivalent to the lower fractal cutoff length, and $\xi$ is the upper fractal cutoff length (the distance above which the mass distribution of the fractal no longer scales as $size^{D^m}$).</p>
+<p>The returned value is a dimensionless structure factor, $S(q)$.</p>
+<p>The radius-of-gyration for the mass fractal is given by</p>
+<p>\begin{equation}<br/>                R_g = \frac{D_m(D_m + 1)\xi^{2}}{2}<br/>\end{equation}</p>
+<p>Unlike most other structure factor models, this $S(q)$ does not explicitly include the particle volume fraction and so the $volfraction$ parameter that SasView adds by default has no effect. If combining this model with a particulate form factor, use the $scale$ parameter to adjust the effective volume fraction.</p>
+<p>Combining this structure factor model with either the Sphere model or the Core_Shell_Sphere model replicates the Fractal model or the Fractal_Core_Shell model, respectively. In the latter case, make $radius$_$effective$ = $radius$ + $thickness$.</p>
+<p>The mass fractal dimension, which can be fractional, is only valid in the range $1 &lt;= D_m &lt;= 3$. The S(q) function here goes negative if $D_m$ is too large, and the Gamma function diverges at $D_m$ = 0 and $D_m$ = 1.</p>
+<p>References<br/>---------------<br/>J Teixeira, J. Appl. Cryst., 21 (1988) 781-785</p>
+<p>Chapter 6, Equation 6.51 in<br/>Small-Angle Scattering from Confined and Interfacial Fluids<br/>Yuri B. Melnichenko<br/>Springer, 2016</p>
+<p>Authorship and Verification<br/>-----------------------------------<br/>Author: Ziggy Attala Date: 10/09/2019<br/>Last Modified by: Steve King Date: 19/09/2019<br/>Last Reviewed by: Date:</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/3/">smk78</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 19, 2019, 11:10 a.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Structure Factor</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/609">fractal_sq.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<div class="comment well">
+<div class="detail-container">
+<div class="user">
+                    smk78:
+                </div>
+<div class="time">
+                    Thu 19 Sep 2019 at 11:12
+                </div>
+</div>
+<div class="content">
+                Confirmed that sphere * fractal_sq = fractal and that core_shell_sphere * fractal_sq = fractal_core_shell
+            </div>
+</div>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

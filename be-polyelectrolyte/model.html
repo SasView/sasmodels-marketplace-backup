@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Be Polyelectrolyte | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/42/">Be Polyelectrolyte</a></li>
+</ol>
+<h1>Be Polyelectrolyte</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>.. note:: Please read the Validation section below. </p>
+<p> Definition </p>
+<p> This model calculates the structure factor of a polyelectrolyte solution with the RPA expression derived by Borue and Erukhimovich.  Note however that the fitting procedure here does not follow the notation in that reference as 's' and 't' are **not** decoupled. Instead the scattering intensity $I(q)$ is calculated as </p>
+<p> $$  I(q) = K\frac{q^2+k^2}{4\pi L_b\alpha ^2} \frac{1}{1+r_{0}^4(q^2+k^2)(q^2-12hC_a/b^2)} + \text{background} \\ k^2 = 4\pi L_b(2C_s + \alpha C_a) \\ r_{0}^2 = \frac{b}{\alpha \sqrt{C_a 48\pi L_b}} <br/>$$<br/>where </p>
+<p> $K$ is the contrast factor for the polymer which is defined differently than in other models and is given in barns where 1 $barn = 10^{-24}$ $cm^2$.  $K$ is defined as: </p>
+<p> $$  K = a^2 \\ a = b_p - (v_p/v_s) b_s <br/>$$<br/>where: </p>
+<p> - $b_p$ and $b_s$ are **sum of the scattering lengths of the atoms**   constituting the polymer monomer and the solvent molecules, respectively. </p>
+<p> - $v_p$ and $v_s$ are the partial molar volume of the polymer and the   solvent, respectively. </p>
+<p> - $L_b$ is the Bjerrum length (|Ang|) - **Note:** This parameter needs to be   kept constant for a given solvent and temperature! </p>
+<p>- $h$ is the virial parameter (|Ang^3|) - **Note:** S_ for the<br/>   correct interpretation of this parameter.  It incorporates second and third   virial coefficients and can be *negative*. </p>
+<p> - $b$ is the monomer length (|Ang|). </p>
+<p> - $C_s$ is the concentration of monovalent salt(1/|Ang^3| - internally   converted from mol/L). </p>
+<p> - $\alpha$ is the degree of ionization (the ratio of charged monomers to the   total number of monomers) </p>
+<p> - $C_a$ is the polymer molar concentration (1/|Ang^3| - internally converted   from mol/L) </p>
+<p> - $\text{background}$ is the incoherent background. </p>
+<p> For 2D data the scattering intensity is calculated in the same way as 1D, where the $\vec q$ vector is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$<br/>Validation </p>
+<p> </p>
+<p> As of the last revision, this code is believed to be correct.  However it needs further validation and should be used with caution at this time.  The history of this code goes back to a 1998 implementation. It was recently noted that in that implementation, while both the polymer concentration and salt concentration were converted from experimental units of mol/L to more dimensionally useful units of 1/|Ang^3|, only the converted version of the polymer concentration was actually being used in the calculation while the unconverted salt concentration (still in apparent units of mol/L) was being used.  This was carried through to Sasmodels as used for SasView 4.1 (though the line of code converting the salt concentration to the new units was removed somewhere along the line). Simple dimensional analysis of the calculation shows that the converted salt concentration should be used, which the original code suggests was the intention, so this has now been corrected (for SasView 4.2). Once better validation has been performed this note will be removed. </p>
+<p> References </p>
+<p> </p>
+<p> For further details, see [#Joanny1990]_, [#Moussaid1993]_, [#Raphael1990]_. </p>
+<p> V Y Borue, I Y Erukhimovich, *Macromolecules*, 21 (1988) 3240<br/> .. [#Joanny1990] J F Joanny, L Leibler, *Journal de Physique*, 51 (1990) 545 .. [#Moussaid1993] A Moussaid, F Schosseler, J P Munch, S Candau,    *J. Journal de Physique II France*, 3 (1993) 573 .. [#Raphael1990] E Raphael, J F Joanny, *Europhysics Letters*, 11 (1990) 179 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** NIST IGOR/DANSE **Date:** pre 2010<br/>**Last Modified by:** Paul Butler **Date:** September 25, 2018<br/>**Last Reviewed by:** Paul Butler **Date:** September 25, 2018<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/775">be_polyelectrolyte.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

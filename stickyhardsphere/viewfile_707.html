@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/28/">Stickyhardsphere</a></li>
+<li><a href="/uploads/707">stickyhardsphere.c</a></li>
+</ol>
+<h1>Stickyhardsphere - stickyhardsphere.c</h1>
+<pre>
+    <code>double Iq(double q, double radius_effective, double volfraction, double perturb, double stickiness)
+{
+    double onemineps,eta;
+    double sig,aa,etam1,etam1sq,qa,qb,qc,radic;
+    double lam,lam2,test,mu,alpha,beta;
+    double kk,k2,k3,ds,dc,aq1,aq2,aq3,aq,bq1,bq2,bq3,bq,sq;
+
+    onemineps = 1.0-perturb;
+    eta = volfraction/onemineps/onemineps/onemineps;
+
+    sig = 2.0 * radius_effective;
+    aa = sig/onemineps;
+    etam1 = 1.0 - eta;
+    etam1sq=etam1*etam1;
+    //C
+    //C  SOLVE QUADRATIC FOR LAMBDA
+    //C
+    qa = eta/6.0;
+    qb = stickiness + eta/etam1;
+    qc = (1.0 + eta/2.0)/etam1sq;
+    radic = qb*qb - 2.0*qa*qc;
+    if(radic&lt;0) {
+        //if(x&gt;0.01 &amp;&amp; x&lt;0.015)
+        //    Print "Lambda unphysical - both roots imaginary"
+        //endif
+        return(-1.0);
+    }
+    //C   KEEP THE SMALLER ROOT, THE LARGER ONE IS UNPHYSICAL
+    radic = sqrt(radic);
+    lam = (qb-radic)/qa;
+    lam2 = (qb+radic)/qa;
+    if(lam2&lt;lam) {
+        lam = lam2;
+    }
+    test = 1.0 + 2.0*eta;
+    mu = lam*eta*etam1;
+    if(mu&gt;test) {
+        //if(x&gt;0.01 &amp;&amp; x&lt;0.015)
+        // Print "Lambda unphysical mu&gt;test"
+        //endif
+        return(-1.0);
+    }
+    alpha = (1.0 + 2.0*eta - mu)/etam1sq;
+    beta = (mu - 3.0*eta)/(2.0*etam1sq);
+    //C
+    //C   CALCULATE THE STRUCTURE FACTOR
+    //C
+    kk = q*aa;
+    k2 = kk*kk;
+    k3 = kk*k2;
+    SINCOS(kk,ds,dc);
+    //ds = sin(kk);
+    //dc = cos(kk);
+    aq1 = ((ds - kk*dc)*alpha)/k3;
+    aq2 = (beta*(1.0-dc))/k2;
+    aq3 = (lam*ds)/(12.0*kk);
+    aq = 1.0 + 12.0*eta*(aq1+aq2-aq3);
+    //
+    bq1 = alpha*(0.5/kk - ds/k2 + (1.0 - dc)/k3);
+    bq2 = beta*(1.0/kk - ds/k2);
+    bq3 = (lam/12.0)*((1.0 - dc)/kk);
+    bq = 12.0*eta*(bq1+bq2-bq3);
+    //
+    sq = 1.0/(aq*aq +bq*bq);
+
+    return(sq);
+}</code>
+</pre>
+<a class="btn btn-default" href="/models/28/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/stickyhardsphere.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

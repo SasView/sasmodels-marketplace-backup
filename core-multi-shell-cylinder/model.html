@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>core_multi_shell_cylinder | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/155/">core_multi_shell_cylinder</a></li>
+</ol>
+<h1>core_multi_shell_cylinder</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Core multi-shell cylinders or discs, may be used for multi-walled tubes or a stack of discs.</p>
+<p>This model will eventually be added to a Sasview release, there are still some (rather technical) issues as noted in the python code.  Meanwhile though this is a work in progress, it should give good results, and has been road tested by several different users.</p>
+<p>There are many parameters to the model, you may need to use constraints to limit the number being fit, and even then some common sense plus trial &amp; error adjustments.</p>
+<p>NOTE previous test versions were call core_multishell_cylinder, this new version is core_multi_shell_cylinder to conform with the naming of other Sasview models.</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/11/">richardh</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Nov. 8, 2023, 1:42 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/819">core_multi_shell_cylinder.py</a><br/>
+<a href="/uploads/820">core_multi_shell_cylinder.c</a><br/>
+</td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<div class="comment well">
+<div class="detail-container">
+<div class="user">
+                    richardh:
+                </div>
+<div class="time">
+                    Wed 08 Nov 2023 at 13:48
+                </div>
+</div>
+<div class="content">
+                I have a png file for the geometry parameters, but no way to upload ???
+            </div>
+</div>
+<div class="comment well">
+<div class="detail-container">
+<div class="user">
+                    smk78:
+                </div>
+<div class="time">
+                    Thu 09 Nov 2023 at 12:14
+                </div>
+</div>
+<div class="content">
+                smk78: I have made the compiled docs with the figure available here: https://www.sasview.org/downloads/core_multi_shell_cylinder_docs.pdf
+            </div>
+</div>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

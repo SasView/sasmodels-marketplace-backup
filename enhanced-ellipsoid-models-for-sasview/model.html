@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Enhanced Ellipsoid Models for SasView | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/ellipsoid/">Ellipsoid</a></li>
+<li><a href="/models/163/">Enhanced Ellipsoid Models for SasView</a></li>
+</ol>
+<h1>Enhanced Ellipsoid Models for SasView</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>These models are designed to handle the integration of the highly oscillatory functions more effectively. By dynamically adjusting the number of Gauss–Legendre quadrature points based on the specific parameters of each function, these models ensure more precise and reliable results.<br/>This approach significantly improves integration accuracy compared to standard methods, particularly in challenging scenarios where a quadrature with a fixed number of points might fail or be too inefficient. These optimized models are ready for use in SasView, providing enhanced performance without altering the original model functionalities.<br/> <br/>Available Enhanced Ellipsoid Models<br/>- Core-Shell Ellipsoid<br/>- Ellipsoid</p>
+<p>Installation<br/>- Navigate to the models folder in the sasmodels package. This should be located in your Sasview installation.</p>
+<p>- Copy the files ending in `*_high_res.c` and `*_high_res.py` here. You don't need to install all of them, just the `.py` and `.c` files of the model you require.</p>
+<p>- Copy the `kron.c`, `lookup_cos.c`, `lookup_sin.c` to the `lib` folder located in the models folder. <br/>These files exceed the maximum size of flies that can be uploaded so you can find them [here](https://github.com/davidnwobi/Integral-Fitting-Tool/tree/master/models/lib)</p>
+<p>- In the same directory as the `lib` folder, create a folder named `integration` and place the `*_integration.c` file of the model you require there.</p>
+<p>TL;DR <br/>`*_high_res.c` and `*_high_res.py` -&gt; sasmodels/models directory<br/>`kron.c`, `lookup_cos.c`, `lookup_sin.c` -&gt;  sasmodels/models/lib directory<br/>`*_integration.c` -&gt;  sasmodels/models/integration directory (create if it does not exist)</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/62/">davidnwobi</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Aug. 29, 2024, 10:10 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Ellipsoid</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/841">core_shell_ellipsoid_high_res.c</a><br>
+<a href="/uploads/842">core_shell_ellipsoid_high_res.py</a><br>
+<a href="/uploads/843">core_shell_ellipsoid_high_res_integration.c</a><br>
+<a href="/uploads/844">ellipsoid_high_res.c</a><br>
+<a href="/uploads/845">ellipsoid_high_res.py</a><br>
+<a href="/uploads/846">ellipsoid_high_res_integration.c</a><br>
+</br></br></br></br></br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

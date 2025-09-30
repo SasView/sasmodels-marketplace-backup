@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Porod | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/13/">Porod</a></li>
+</ol>
+<h1>Porod</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model is a special case of the power law model, deriving its special name from the Porod Law which it models, where the power law exponent is fixed to -4. </p>
+<p> $$ I(q) = C/q^4 + Background <br/>$$<br/>Where the power law constant $C$ in this case is just the scale factor. </p>
+<p> The Porod law, similar to the Guinier model, is a broadly applicable model to a very restricted portion of the data. While the Guinier model applies to any dilute particulate system regardless of shape or size but only to the very low $q$ (being a taylor expansion around $q$ = 0), the Porod Law applies to any scattering system with sharp scattering length density interfaces between the phases but only at very high $q$ (technically in the limit as $q \to \infty$ .. except of course that, practically, the continuum approach breaks down there). It is based on the idea that at sufficiently high $q$ there is no shape information left and all scattering is just reflections off the sharp interfaces. </p>
+<p> In the special case of a two phase system, the power law constant $C$ derived from the appropriate $q$ limit portion of the data is known as the Porod Constant and can be written as: </p>
+<p> $$ C = 2\pi (\Delta\rho)^2 S_v <br/>$$<br/>where $S_v$ is the specific surface area (ie, surface area / volume) of the material under study, and $\Delta\rho$ is the contrast factor between the two phases. </p>
+<p> Thus, by extracting the Porod Constant from experimental data, and knowing the contrast factor between the two phases, one can obtain the specific surface area for the material. This can be very useful for example in understanding porosity in materials, particularly when used in conjunction with complementary techniques such as BET. </p>
+<p> .. Note:: While it is straightforward to calculate the specific surface area,     $S_v$ of the material from the Porod Constant returned here, the Invariant     analysis panel will also compute the $S_v$ by entering the contrast term     and the Porod Constant obtained here into the appropriate entry boxes. </p>
+<p>     There are, however, several caveats regarding obtaining a good experimental     value of the Porod Constant. </p>
+<p>     * First, as it is the scale value, the data **must** be on an absolute scale. </p>
+<p>     * Next of course, there must be a sufficiently large $q$ range that is in       the Porod region to be able to be fit. But this may not always be       possible: for example, polymer coils in solution will often not reach that       limit within typical SAS ranges, nor even the $q$ ranges where the       continuum approach of using the SLD is even valid. </p>
+<p>     * For highly monodisperse systems with limited resolution smearing, the       data will contain large oscillations which will make the estimate from       this fit unreliable.  It will vary depending on the exact range of the fit       that is chosen. This is because numerical integration using a finite       number of points cannot properly capture the exact area under the data       across these very sharp dips. </p>
+<p>     * Ironically, large resolution smearing, and/or polydispersity smearing,       will make the value obtained much more consistent and reliable. Thus the       problem is less severe for typical real data than for simulated data that       does not simulate any resolution smearing. </p>
+<p>     * If in any doubt, using several values of $q_{min}$ in the fitting, and       comparing with the value obtained in a different manner, is highly       advisable. One such method uses the Porod plot ($I(q)* q^4$ vs. $q^4$).       Fitting the highest $q$ (strictly speaking $q^4$) data to a straight line       using as much of the high $q$ as fits well to a straight line, yields a       slope which is the flat background and an intercept which is the Porod       Constant. </p>
+<p> For 2D data: The 2D scattering intensity is calculated in the same way as 1D, where the q vector is defined as </p>
+<p> $$ q = \sqrt{q_x^2+q_y^2} <br/>$$<br/>References </p>
+<p> </p>
+<p> #. G Porod. *Kolloid Zeit*. 124 (1951) 83 #. L A Feigin, D I Svergun, G W Taylor. *Structure Analysis by Small-Angle    X-ray and Neutron Scattering*. Springer. (1987) </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by: Paul Butler, 28Mar2020**<br/>**Last Reviewed by:**<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/717">porod.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

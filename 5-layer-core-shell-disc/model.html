@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>5 Layer Core Shell Disc | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/137/">5 Layer Core Shell Disc</a></li>
+</ol>
+<h1>5 Layer Core Shell Disc</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model calculates the form factor for a core-shell circular cylinder. The core includes <br/>three layers, two methylene and one methyl, which creates a five-layer model when combined <br/>with the two headgroup layers. The shell on the walls and ends of the model can be of <br/>different thicknesses and scattering length densities, but is only a single shell (see the figure in <br/>the second reference below). Normalization of the form factor is done using the particle volume. <br/>Cylindrical symmetry is assumed for this model.</p>
+<p>Given the scattering length densities (sld) $\rho_{mlene}$, the methylene sld, $\rho_{myl}$,<br/>the methyl sld, $\rho_f$, the face sld, $\rho_r$, the rim sld and $\rho_s$ the solvent sld, <br/>the scattering length density variation along the cylinder axis is:</p>
+<p>\begin{align}<br/>    \rho(r) = <br/>      \begin{cases} <br/>      &amp;\rho_{mlene} \text{ for } 0 \lt r \lt R; -L_c/2 \lt z\lt L_c/2 \\[1.5ex]<br/>      &amp;\rho_{myl} \text{ for } 0 \lt r \lt R; -L_{myl}/2 \lt z\lt L_{myl}/2 \\[1.5ex]<br/>      &amp;\rho_f \text{ for } 0 \lt r \lt R; -(L_c+2t_f)/2 \lt z\lt -L; L \lt z\lt (L_c+2t_f)/2 \\[1.5ex]<br/>      &amp;\rho_r\text{ for } R \lt r \lt R+t_r; -(L_c+2t_f)/2 \lt z\lt -L; L \lt z\lt (L_c+2t_f)/2<br/>      \end{cases}<br/>\end{align}</p>
+<p>Cylindrical coordinates are used for this model, where $\alpha$ is the angle between the <br/>$Q$ vector and the cylinder axis, to give:</p>
+<p>     \begin{align}<br/>    I(Q,\alpha) = \frac{\text{scale}}{V_t} \cdot<br/>        F(Q,\alpha)^2.sin(\alpha) + \text{background}<br/>     \end{align}</p>
+<p>where</p>
+<p>        \begin{align}    <br/>    F(Q,\alpha) = &amp;\bigg[ <br/>    (\rho_{myl} - \rho_{mlene}) V_{myl} \frac{2J_1(QRsin\alpha)}{QRsin\alpha}\frac{sin(Q(L_{myl})cos\alpha/2)}{Q(L_{myl}/2)cos\alpha} \\<br/>    &amp;+(\rho_{mlene} - \rho_f) V_c \frac{2J_1(QRsin\alpha)}{QRsin\alpha}\frac{sin(QL_ccos\alpha/2)}{Q(L_c/2)cos\alpha} \\<br/>    &amp;+(\rho_f - \rho_r) V_{c+f} \frac{2J_1(QRsin\alpha)}{QRsin\alpha}\frac{sin(Q(L_c/2+t_f)cos\alpha)}{Q(L_c/2+t_f)cos\alpha} \\<br/>    &amp;+(\rho_r - \rho_s) V_t \frac{2J_1(Q(R+t_r)sin\alpha)}{Q(R+t_r)sin\alpha}\frac{sin(Q(L_c/2+t_f)cos\alpha)}{Q(L_c/2+t_f)cos\alpha}<br/>    \bigg]<br/>    \end{align}<br/>        \begin{align}<br/>    L_c = &amp;\bigg[<br/>        2L_{mlene}+L_{myl}<br/>    \bigg]<br/>    \end{align}</p>
+<p>where $V_t$ is the total volume of the bicelle, $V_c$ the volume of the core,<br/>$V_{c+f}$ the volume of the core plus the volume of the faces, $R$ is the radius<br/>of the core, $L_c$ the length of the core, $L_{mlene}$ is the length of the methylene<br/>layer, $L_{myl}$ the length of the methyl layer, $t_f$ the thickness of the face, <br/>$t_r$ the thickness of the rim and $J_1$ the usual first order bessel function.</p>
+<p>The 1D scattering intensity for randomly oriented cylinders is calculated by <br/>integrating over all possible $\theta$ and $\phi$.</p>
+<p>The 1D output does not use the *theta* and *phi* parameters. The scattering kernel <br/>and the 1D scattering intensity use the c-library from NIST.</p>
+<p>References<br/>----------</p>
+<p>.. [#] D Singh (2009). *Small angle scattering studies of self assembly in<br/>   lipid mixtures*, John's Hopkins University Thesis (2009) 223-225. `Available<br/>   from Proquest &lt;http://search.proquest.com/docview/304915826?accountid<br/>   =26379&gt;`_<br/>   [#] C Cheu, L Yang, M P Nieh (2020). *Refining internal bilayer structure of bicelles resolved <br/>   by extended-q small angle X-ray scattering*, Chemistry and Physics of Lipids, 231<br/>   (2020) 104945.</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/34/">cc777</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Dec. 19, 2020, 10:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/634">five_layer_core_shell_bicelle.c</a><br>
+<a href="/uploads/636">five_layer_core_shell_bicelle.py</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

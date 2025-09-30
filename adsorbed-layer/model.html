@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Adsorbed Layer | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/23/">Adsorbed Layer</a></li>
+</ol>
+<h1>Adsorbed Layer</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> This model describes the scattering from a layer of surfactant or polymer adsorbed on large, smooth, notionally spherical particles under the conditions that (i) the particles (cores) are contrast-matched to the dispersion medium, (ii) $S(Q) \sim 1$ (ie, the particle volume fraction is dilute), (iii) the particle radius is &gt;&gt; layer thickness (ie, the interface is locally flat), and (iv) scattering from excess unadsorbed adsorbate in the bulk medium is absent or has been corrected for. </p>
+<p> Unlike many other core-shell models, this model does not assume any form for the density distribution of the adsorbed species normal to the interface (cf, a core-shell model normally assumes the density distribution to be a homogeneous step-function). For comparison, if the thickness of a (traditional core-shell like) step function distribution is $t$, the second moment about the mean of the density distribution (ie, the distance of the centre-of-mass of the distribution from the interface), $\sigma = \sqrt{t^2/12}$. </p>
+<p> $$  I(q) = \text{scale} \cdot (\rho_\text{poly}-\rho_\text{solvent})^2 \left[ \frac{6\pi\phi_\text{core}}{Q^2} \frac{\Gamma^2}{\delta_\text{poly}^2R_\text{core}} \exp(-Q^2\sigma^2) \right] + \text{background} <br/>$$<br/>where *scale* is a scale factor, $\rho_\text{poly}$ is the sld of the polymer (or surfactant) layer, $\rho_\text{solv}$ is the sld of the solvent/medium and cores, $\phi_\text{core}$ is the volume fraction of the core particles, $\delta_\text{poly}$ is the bulk density of the polymer, $\Gamma$ is the adsorbed amount, and $\sigma$ is the second moment of the thickness distribution. </p>
+<p> Note that all parameters except $\sigma$ are correlated so fitting more than one of these parameters will generally fail. Also note that unlike other shape models, no volume normalization is applied to this model (the calculation is exact). </p>
+<p> The code for this model is based originally on a a fortran implementation by Steve King at ISIS in the SANDRA package c. 1990 [#King2002]_. </p>
+<p> References </p>
+<p> </p>
+<p> .. [#King2002] S King, P Griffiths, J Hone, and T Cosgrove, *SANS from    Adsorbed Polymer Layers*, *Macromol. Symp.*, 190 (2002) 33-42. </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** Jae-Hi Cho **Date:** pre 2010<br/>**Last Modified by:** Paul Kienzle **Date:** April 14, 2016<br/>**Last Reviewed by:** Steve King **Date:** March 18, 2016<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/790">adsorbed_layer.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

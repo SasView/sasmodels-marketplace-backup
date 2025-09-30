@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Jeff's test model | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/147/">Jeff's test model</a></li>
+</ol>
+<h1>Jeff's test model</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This is a test. This is only a test.</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Jeff&#x27;s test model',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 1600.367045300002},{x: 0.01069387755102041, y: 1441.557406470473},{x: 0.02088775510204082, y: 1062.748765524569},{x: 0.03108163265306123, y: 619.555789170822},{x: 0.04127551020408163, y: 262.5782853391732},{x: 0.05146938775510204, y: 63.83260771881351},{x: 0.06166326530612246, y: 4.008714783518299},{x: 0.07185714285714286, y: 14.62570634062417},{x: 0.08205102040816327, y: 33.28442531845857},{x: 0.09224489795918368, y: 33.35008539486674},{x: 0.1024387755102041, y: 19.38229093072235},{x: 0.1126326530612245, y: 5.866830170049399},{x: 0.1228265306122449, y: 0.7852739665355789},{x: 0.1330204081632653, y: 2.57366341974593},{x: 0.1432142857142857, y: 5.689735896155644},{x: 0.1534081632653061, y: 6.396214224940106},{x: 0.1636020408163265, y: 4.526384850819851},{x: 0.173795918367347, y: 1.97191743269242},{x: 0.1839897959183674, y: 0.4599516475023996},{x: 0.1941836734693878, y: 0.3833800136850963},{x: 0.2043775510204082, y: 1.002334926686563},{x: 0.2145714285714286, y: 1.37552032032438},{x: 0.224765306122449, y: 1.130852461492541},{x: 0.2349591836734694, y: 0.5536850336826825},{x: 0.2451530612244898, y: 0.1260932700141957},{x: 0.2553469387755102, y: 0.05763964485579724},{x: 0.2655408163265306, y: 0.2030455271458491},{x: 0.275734693877551, y: 0.309199295534954},{x: 0.2859285714285714, y: 0.2648939350251346},{x: 0.2961224489795918, y: 0.1369161788091455},{x: 0.3063163265306122, y: 0.04192766145530773},{x: 0.3165102040816327, y: 0.02772725833828814},{x: 0.3267040816326531, y: 0.06123046863259506},{x: 0.3368979591836735, y: 0.0898229384775795},{x: 0.3470918367346939, y: 0.09299826531573978},{x: 0.3572857142857143, y: 0.08276779980055654},{x: 0.3674795918367347, y: 0.07379944181684862},{x: 0.3776734693877551, y: 0.06561657237194775},{x: 0.3878673469387755, y: 0.05228428974894264},{x: 0.3980612244897959, y: 0.03881230063190637},{x: 0.4082551020408163, y: 0.03896807912820037},{x: 0.4184489795918367, y: 0.05685997987295172},{x: 0.4286428571428572, y: 0.07727080124405224},{x: 0.4388367346938776, y: 0.07911898402786958},{x: 0.449030612244898, y: 0.05752683818711041},{x: 0.4592244897959184, y: 0.0293617997180225},{x: 0.4694183673469388, y: 0.01638489927201002},{x: 0.4796122448979592, y: 0.02463002075638841},{x: 0.4898061224489796, y: 0.0407772645020966},{x: 0.5, y: 0.04688228149898586},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/5/">krzywon</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Aug. 24, 2022, 4:02 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Structure Factor</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/675">core_multishell_cylinder.c</a><br/>
+<a href="/uploads/680">core_multishell_cylinder.py</a><br/>
+</td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<div class="comment well">
+<div class="detail-container">
+<div class="user">
+                    krzywon:
+                </div>
+<div class="time">
+                    Thu 25 Aug 2022 at 14:17
+                </div>
+</div>
+<div class="content">
+                This is a test comment to be sure comments work
+            </div>
+</div>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

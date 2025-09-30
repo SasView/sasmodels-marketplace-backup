@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/68/">Hardsphere</a></li>
+<li><a href="/uploads/718">hardsphere.py</a></li>
+</ol>
+<h1>Hardsphere - hardsphere.py</h1>
+<pre>
+    <code># Note: model title and parameter table are inserted automatically
+r"""
+Calculates the interparticle structure factor for monodisperse
+spherical particles interacting through hard sphere (excluded volume)
+interactions. This $S(q)$ may also be a reasonable approximation for
+other particle shapes that freely rotate (but see the note below),
+and for moderately polydisperse systems.
+
+.. note::
+
+   This routine is intended for uncharged particles! For charged
+   particles try using the :ref:`hayter-msa` $S(q)$ instead.
+
+.. note::
+
+   Earlier versions of SasView did not incorporate the so-called
+   $\beta(q)$ ("beta") correction [1] for polydispersity and non-sphericity.
+   This is only available in SasView versions 5.0 and higher.
+
+radius_effective is the effective hard sphere radius.
+volfraction is the volume fraction occupied by the spheres.
+
+In SasView the effective radius may be calculated from the parameters
+used in the form factor $P(q)$ that this $S(q)$ is combined with.
+
+For numerical stability the computation uses a Taylor series expansion
+at very small $qR$, but there may be a very minor glitch at the
+transition point in some circumstances.
+
+This S(q) uses the Percus-Yevick closure relationship [2] where the
+interparticle potential $U(r)$ is
+
+.. math::
+
+    U(r) = \begin{cases}
+    \infty &amp; r &lt; 2R \\
+    0 &amp; r \geq 2R
+    \end{cases}
+
+where $r$ is the distance from the center of a sphere of a radius $R$.
+
+For a 2D plot, the wave transfer is defined as
+
+.. math::
+
+    q = \sqrt{q_x^2 + q_y^2}
+
+
+References
+----------
+
+#.  M Kotlarchyk &amp; S-H Chen, *J. Chem. Phys.*, 79 (1983) 2461-2469
+
+#.  J K Percus, J Yevick, *J. Phys. Rev.*, 110, (1958) 1
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:**
+"""
+
+import numpy as np
+from numpy import inf
+
+name = "hardsphere"
+title = "Hard sphere structure factor, with Percus-Yevick closure"
+description = """\
+    [Hard sphere structure factor, with Percus-Yevick closure]
+        Interparticle S(Q) for random, non-interacting spheres.
+    May be a reasonable approximation for other particle shapes
+    that freely rotate, and for moderately polydisperse systems
+    . The "beta(q)" correction is available in versions 4.2.2
+    and higher.
+    radius_effective is the hard sphere radius
+    volfraction is the volume fraction occupied by the spheres.
+"""
+category = "structure-factor"
+structure_factor = True
+single = False # TODO: check
+
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [["radius_effective", "Ang", 50.0, [0, inf], "",
+               "effective radius of hard sphere"],
+              ["volfraction", "", 0.2, [0, 0.74], "",
+               "volume fraction of hard spheres"],
+             ]
+
+source = ["hardsphere.c"]
+
+def random():
+    """Return a random parameter set for the model."""
+    pars = dict(
+        scale=1, background=0,
+        radius_effective=10**np.random.uniform(1, 4),
+        volfraction=10**np.random.uniform(-2, 0),  # high volume fraction
+    )
+    return pars
+
+# Q=0.001 is in the Taylor series, low Q part, so add Q=0.1,
+# assuming double precision sasview is correct
+tests = [
+    [{'scale': 1.0, 'background' : 0.0, 'radius_effective' : 50.0,
+      'volfraction' : 0.2},
+     [0.001, 0.1], [0.209128, 0.930587]],
+]
+# ADDED by: RKH  ON: 16Mar2016  using equations from FISH as better than
+# orig sasview, see notes above. Added Taylor expansions at small Q.
+</code>
+</pre>
+<a class="btn btn-default" href="/models/68/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/hardsphere.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

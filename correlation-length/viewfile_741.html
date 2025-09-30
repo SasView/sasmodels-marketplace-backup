@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/66/">Correlation Length</a></li>
+<li><a href="/uploads/741">correlation_length.py</a></li>
+</ol>
+<h1>Correlation Length - correlation_length.py</h1>
+<pre>
+    <code>#correlation length model
+# Note: model title and parameter table are inserted automatically
+r"""
+Definition
+----------
+
+The scattering intensity I(q) is calculated as
+
+.. math::
+    I(Q) = \frac{A}{Q^n} + \frac{C}{1 + (Q\xi)^m} + \text{background}
+
+The first term describes Porod scattering from clusters (exponent = $n$) and
+the second term is a Lorentzian function describing scattering from
+polymer chains (exponent = $m$). This second term characterizes the
+polymer/solvent interactions and therefore the thermodynamics. The two
+multiplicative factors $A$ and $C$, and the two exponents $n$ and $m$ are
+used as fitting parameters. (Respectively *porod_scale*, *lorentz_scale*,
+*porod_exp* and *lorentz_exp* in the parameter list.) The remaining
+parameter $\xi$ (*cor_length* in the parameter list) is a correlation
+length for the polymer chains. Note that when $m=2$ this functional form
+becomes the familiar Lorentzian function. Some interpretation of the
+values of $A$ and $C$ may be possible depending on the values of $m$ and $n$.
+
+For 2D data: The 2D scattering intensity is calculated in the same way as 1D,
+where the q vector is defined as
+
+.. math::  q = \sqrt{q_x^2 + q_y^2}
+
+References
+----------
+
+#. B Hammouda, D L Ho and S R Kline, Insight into Clustering in
+   Poly(ethylene oxide) Solutions, Macromolecules, 37 (2004) 6932-6937
+
+Authorship and Verification
+----------------------------
+
+* **Author:** NIST IGOR/DANSE **Date:** pre 2010
+* **Last Modified by:** Steve King **Date:** September 24, 2019
+* **Last Reviewed by:**
+"""
+
+from numpy import inf, errstate
+
+name = "correlation_length"
+title = """Calculates an empirical functional form for SAS data characterized
+by a low-Q signal and a high-Q signal."""
+description = """
+"""
+category = "shape-independent"
+# pylint: disable=bad-continuation, line-too-long
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [
+              ["lorentz_scale", "", 10.0, [0, inf], "", "Lorentzian Scaling Factor"],
+              ["porod_scale", "", 1e-06, [0, inf], "", "Porod Scaling Factor"],
+              ["cor_length", "Ang", 50.0, [0, inf], "", "Correlation length, xi, in Lorentzian"],
+              ["porod_exp", "", 3.0, [0, inf], "", "Porod Exponent, n, in q^-n"],
+              ["lorentz_exp", "", 2.0, [0, inf], "", "Lorentzian Exponent, m, in 1/( 1 + (q.xi)^m)"],
+             ]
+# pylint: enable=bad-continuation, line-too-long
+
+def Iq(q, lorentz_scale, porod_scale, cor_length, porod_exp, lorentz_exp):
+    """
+    1D calculation of the Correlation length model
+    """
+    with errstate(divide='ignore'):
+        porod = porod_scale / q**porod_exp
+        lorentz = lorentz_scale / (1.0 + (q * cor_length)**lorentz_exp)
+    inten = porod + lorentz
+    return inten
+Iq.vectorized = True
+
+tests = [[{}, 0.001, 1009.98],
+         [{}, 0.150141, 0.175645],
+         [{}, 0.442528, 0.0213957]]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/66/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/correlation_length.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

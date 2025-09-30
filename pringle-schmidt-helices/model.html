@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Pringle-Schmidt Helices | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/150/">Pringle-Schmidt Helices</a></li>
+</ol>
+<h1>Pringle-Schmidt Helices</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This is the Pringle-Schmidt equation for fitting the helical form factor of an infinitely long helix formed from two helical tapes wrapped around each other at an angle $\epsilon$. The two helices are assumed to have the same width and thickness. Please see Figure 1 in Reference [1]. Note that this figure uses $\phi$ in place of the $\epsilon$ used here (because $\phi$ has another meaning in SasView).</p>
+<p>This model can also be used to model a single helical tape. To do this, set $\epsilon$ = 0.</p>
+<p>    $$I(q) = \frac{\pi}{q L} \sum^{\inf}_{n = 0} \epsilon_{n} \cos^2 \left( \frac{n \epsilon}{2} \right) \frac{\sin^{2} \left( n \omega / 2 \right)}{\left( n \omega / 2 \right)^2} \left[ g_{n} \left( q, R, a \right) \right]^2$$</p>
+<p>where</p>
+<p>    $$g_{n} \left( q, R, a \right) = 2 R^{-2} \left(1 - a^{2} \right) \times \int^{R}_{aR} r dr J_{n} \left[ q r \left( 1 - q^{2}_{n}) \right)^{1/2} \right]$$</p>
+<p>    $$q_{n} = \frac{2 \pi n}{P q}$$</p>
+<p>and $L$ is the total length of the tape, $\epsilon$ is the angle of separation between the helices, $\omega$ is the angle of the helical cross section occupied by a tape, $n$ is the order of the layer line, $R$ is the outer radius of the tape, $aR$ is the inner radius of the tape, and $P$ is the helical pitch.</p>
+<p>References<br/>----------</p>
+<p>1) O. A. Pringle and P. W. Schmidt, Journal of Applied Crystallography, 1971, 4, 290-293, DOI: 10.1107/S002188987100699X<br/>2) C. V. Teixeira, H. Amenitsch, T. Fukushima et al., Journal of Applied Crystallography, 2010, 43, 850-857, DOI: 10.1107/S0021889810015736</p>
+<p>The fitting equation can be found in Reference [2] as Equations 15 &amp; 16.</p>
+<p>Authorship and Verification<br/>----------------------------</p>
+<p>* **Author:** Tim Snow **Date:** November 25, 2016<br/>* **Last Modified by:** Tim Snow **Date:** January 23, 2016<br/>* **Last Reviewed by:** Steve King **Date:** November 18, 2022</p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/3/">smk78</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Nov. 18, 2022, 6:02 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/682">pringle_schmidt_helices.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<div class="comment well">
+<div class="detail-container">
+<div class="user">
+                    smk78:
+                </div>
+<div class="time">
+                    Fri 18 Nov 2022 at 18:08
+                </div>
+</div>
+<div class="content">
+                This is a revision of the model originally posted to the old Marketplace. The description has been updated to clarify that the model can be used to fit a single helical tape. In testing it was also discovered that the model would not compile because one of the angle parameters was called phi. Phi has a special meaning in SasView, being one of the orientational parameters. All references to phi in this model were therefore changed to epsilon. The model now works, but it remains untested!
+            </div>
+</div>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

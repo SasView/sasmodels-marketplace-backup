@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/107/">Nanodisc</a></li>
+<li><a href="/uploads/475">nanodisc.c</a></li>
+</ol>
+<h1>Nanodisc - nanodisc.c</h1>
+<pre>
+    <code>static double
+form_volume(double radius, double thick_rim, double thick_face, double length)
+{
+    return M_PI*square(radius+thick_rim)*(length+2.0*thick_face);
+}
+
+static double
+bicelle_kernel(double qab,
+    double qc,
+    double lipid_radius,
+    double tails_thick,
+    double belt_thick,
+    double heads_thick, 
+    double tails_sld,
+    double belt_sld, 
+    double belt_solv,
+    double heads_sld, 
+    double heads_solv,
+    double solvent_sld,
+    double halflength
+    )
+{
+    const double heads_sld_hy = heads_solv * solvent_sld + (1 - heads_solv) * heads_sld;
+    const double belt_sld_hy = belt_solv * solvent_sld + (1 - belt_solv) * belt_sld;
+    const double dr1 = tails_sld-heads_sld_hy;
+    const double dr2 = belt_sld_hy-solvent_sld;
+    const double dr3 = heads_sld_hy-belt_sld_hy;
+    const double vol1 = M_PI*square(lipid_radius)*2.0*(halflength);
+    const double vol2 = M_PI*square(lipid_radius+belt_thick)*2.0*(halflength+heads_thick);
+    const double vol3 = M_PI*square(lipid_radius)*2.0*(halflength+heads_thick);
+
+    const double be1 = sas_2J1x_x((lipid_radius)*qab);
+    const double be2 = sas_2J1x_x((lipid_radius+belt_thick)*qab);
+    const double si1 = sas_sinx_x((halflength)*qc);
+    const double si2 = sas_sinx_x((halflength+heads_thick)*qc);
+
+    const double t = vol1*dr1*si1*be1 +
+                     vol2*dr2*si2*be2 +
+                     vol3*dr3*si2*be1;
+
+    return t;
+}
+
+static double
+Iq(double q,
+    double lipid_radius,
+    double tails_thick,
+    double belt_thick,
+    double heads_thick, 
+    double tails_sld,
+    double belt_sld, 
+    double belt_solv,
+    double heads_sld, 
+    double heads_solv,
+    double solvent_sld)
+{
+    // set up the integration end points
+    const double uplim = M_PI_4;
+    const double halflength = 0.5*tails_thick;
+
+    double total = 0.0;
+    for(int i=0;i&lt;GAUSS_N;i++) {
+        double theta = (GAUSS_Z[i] + 1.0)*uplim;
+        double sin_theta, cos_theta; // slots to hold sincos function output
+        SINCOS(theta, sin_theta, cos_theta);
+        double fq = bicelle_kernel(q*sin_theta, q*cos_theta, lipid_radius, tails_thick, 
+            belt_thick, heads_thick, tails_sld, belt_sld, belt_solv, heads_sld, 
+            heads_solv, solvent_sld, halflength);
+        total += GAUSS_W[i]*fq*fq*sin_theta;
+    }
+
+    // calculate value of integral to return
+    double answer = total*uplim;
+    return 1.0e-4*answer;
+}
+
+static double
+Iqac(double qab, double qc,
+    double lipid_radius,
+    double tails_thick,
+    double belt_thick,
+    double heads_thick, 
+    double tails_sld,
+    double belt_sld, 
+    double belt_solv,
+    double heads_sld, 
+    double heads_solv,
+    double solvent_sld)
+{
+    double fq = bicelle_kernel(qab, qc, lipid_radius, tails_thick, 
+        belt_thick, heads_thick, tails_sld, belt_sld, belt_solv, heads_sld, 
+        heads_solv, solvent_sld, 0.5*tails_thick);
+    return 1.0e-4*fq*fq;
+}</code>
+</pre>
+<a class="btn btn-default" href="/models/107/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/nanodisc.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

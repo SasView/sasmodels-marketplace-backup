@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Spherical Micelle | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/157/">Spherical Micelle</a></li>
+</ol>
+<h1>Spherical Micelle</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Form factors of spherical micelles based on J. Appl. Cryst. (2000). 33, 637±640 (Section 2 equation 2-6)</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Spherical Micelle',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005237261180003165, y: 287423919520.0798},{x: 0.0005485780933513635, y: 287419145244.6111},{x: 0.0005746093505018498, y: 287413907203.5869},{x: 0.0006018758490100341, y: 287408160356.683},{x: 0.0006304362038403404, y: 287401855290.7729},{x: 0.0006603518113683154, y: 287394937796.7218},{x: 0.0006916869813648103, y: 287387348403.1419},{x: 0.0007245090752430989, y: 287379021867.4806},{x: 0.0007588886508661356, y: 287369886615.2703},{x: 0.0007948996142252376, y: 287359864127.1591},{x: 0.0008326193783162658, y: 287348868266.1059},{x: 0.0008721290295548306, y: 287336804539.0498},{x: 0.0009135135020882696, y: 287323569287.9138},{x: 0.0009568617603791271, y: 287309048801.8881},{x: 0.00100226699045262, y: 287293118345.4851},{x: 0.001049826800219222, y: 287275641091.0828},{x: 0.001099643429303014, y: 287256466950.1369},{x: 0.001151823968826847, y: 287235431291.0885},{x: 0.001206480591626805, y: 287212353534.6097},{x: 0.001263730793390863, y: 287187035613.764},{x: 0.001323697645240115, y: 287159260286.5812},{x: 0.001386510058295532, y: 287128789286.6224},{x: 0.001452303060799023, y: 287095361297.6575},{x: 0.001521218088384502, y: 287058689733.6958},{x: 0.001593403288122955, y: 287018460308.7346},{x: 0.00166901383699515, y: 286974328374.231},{x: 0.001748212275476568, y: 286925916004.5165},{x: 0.001831168856951686, y: 286872808805.7676},{x: 0.001918061913708767, y: 286814552423.8432},{x: 0.002009078240301904, y: 286750648722.8272},{x: 0.002104413495104446, y: 286680551605.0458},{x: 0.00220427262091706, y: 286603662439.5413},{x: 0.002308870285534551, y: 286519325064.6459},{x: 0.002418431343218585, y: 286426820326.3492},{x: 0.002533191318068324, y: 286325360112.2173},{x: 0.002653396910328057, y: 286214080836.6215},{x: 0.002779306526720295, y: 286092036330.7039},{x: 0.00291119083594433, y: 285958190086.4301},{x: 0.00304933335053444, y: 285811406801.4227},{x: 0.003194031036328602, y: 285650443167.2014},{x: 0.003345594950857817, y: 285473937840.684},{x: 0.003504350912028449, y: 285280400535.1603},{x: 0.003670640198535057, y: 285068200164.0205},{x: 0.003844820283509358, y: 284835551967.885},{x: 0.004027265602982465, y: 284580503553.3065},{x: 0.004218368360812421, y: 284300919769.7676},{x: 0.004418539371807301, y: 283994466350.9805},{x: 0.00462820894485639, y: 283658592246.7589},{x: 0.004847827807967957, y: 283290510573.8445},{x: 0.005077868077202089, y: 282887178117.9396},{x: 0.005318824271581564, y: 282445273325.4474},{x: 0.005571214376162549, y: 281961172732.7657},{x: 0.00583558095555034, y: 281430925794.2339},{x: 0.006112492320253915, y: 280850228087.5203},{x: 0.006402543748386662, y: 280214392898.6845},{x: 0.006706358765339491, y: 279518321219.5914},{x: 0.007024590484177295, y: 278756470228.9368},{x: 0.007357923009640278, y: 277922820376.8955},{x: 0.007707072908768225, y: 277010841253.9482},{x: 0.008072790751309181, y: 276013456499.2588},{x: 0.008455862723224032, y: 274923008095.4142},{x: 0.008857112316755426, y: 273731220507.3623},{x: 0.009277402100694209, y: 272429165257.2713},{x: 0.009717635574649131, y: 271007226687.1302},{x: 0.01017875911130553, y: 269455069851.2588},{x: 0.0106617639908488, y: 267761611705.4421},{x: 0.01116768853192561, y: 265914997022.2171},{x: 0.01169762032372411, y: 263902580767.2402},{x: 0.01225269856397128, y: 261710919023.065},{x: 0.01283411650787347, y: 259325770947.2822},{x: 0.0134431240332647, y: 256732114703.3667},{x: 0.01408103032747697, y: 253914180804.5226},{x: 0.01474920670170849, y: 250855506860.0161},{x: 0.01544908953894008, y: 247539018302.5001},{x: 0.01618218338173679, y: 243947140290.4931},{x: 0.01695006416657249, y: 240061946601.4633},{x: 0.01775438261163056, y: 235865351926.9097},{x: 0.01859686776536321, y: 231339354507.3621},{x: 0.01947933072343779, y: 226466336442.167},{x: 0.02040366852206076, y: 221229429196.2465},{x: 0.02137186821604828, y: 215612951700.1457},{x: 0.02238601115041064, y: 209602927869.9659},{x: 0.02344827743463274, y: 203187689199.6678},{x: 0.02456095062926925, y: 196358566108.0678},{x: 0.02572642265492925, y: 189110668735.5802},{x: 0.026947198934203, y: 181443753636.857},{x: 0.02822590377758481, y: 173363167049.9723},{x: 0.02956528602496994, y: 164880847897.2685},{x: 0.03096822495485305, y: 156016364190.6559},{x: 0.03243773647393144, y: 146797944975.8293},{x: 0.0339769796004188, y: 137263456424.2531},{x: 0.03558926325500659, y: 127461255497.1671},{x: 0.03727805337407182, y: 117450838462.4207},{x: 0.03904698036042249, y: 107303185642.2697},{x: 0.04089984688759735, y: 97100689937.4814},{x: 0.0428406360744974, y: 86936547477.24875},{x: 0.04487352004792172, y: 76913487539.13757},{x: 0.04700286891141484, y: 67141729741.57175},{x: 0.04923326013970614, y: 57736083969.72784},{x: 0.05156948841893605, y: 48812157024.84843},{x: 0.05401657595382337, y: 40481703106.60458},{x: 0.05657978326393033, y: 32847254225.74483},{x: 0.05926462049223502, y: 25996288863.44781},{x: 0.06207685925032052, y: 19995334207.75972},{x: 0.06502254502564488, y: 14884533143.18827},{x: 0.06810801017756359, y: 10673317436.06756},{x: 0.07133988755004285, y: 7337881182.983411},{x: 0.07472512473032619, y: 4821107439.29876},{x: 0.07827099898420638, y: 3035433099.943934},{x: 0.08198513290001026, y: 1868824066.080009},{x: 0.0858755107749249, y: 1193584326.063453},{x: 0.08995049577889155, y: 877190138.0497776},{x: 0.09421884793296548, y: 793823368.8507015},{x: 0.09868974294078842, y: 834915778.798031},{x: 0.1033727919136565, y: 916959611.7149036},{x: 0.1082780620315877, y: 985200707.2442971},{x: 0.1134160981848019, y: 1012617483.058761},{x: 0.1187979456421381, y: 994658622.3991522},{x: 0.1244351737951392, y: 941264727.9797076},{x: 0.1303399010288461, y: 868355620.563349},{x: 0.1365248207727661, y: 790922166.1216506},{x: 0.1430032287880195, y: 719073297.43509},{x: 0.1497890517493212, y: 657166741.7231568},{x: 0.1568968771832412, y: 605073639.331087},{x: 0.1643419848271027, y: 560228665.3588461},{x: 0.1721403794759309, y: 519512475.5597804},{x: 0.1803088253880614, y: 480734193.5049605},{x: 0.1888648823233727, y: 443785021.2097191},{x: 0.1978269432916132, y: 411092022.935991},{x: 0.2072142740919709, y: 386429538.324065},{x: 0.217047054728883, y: 371666701.5198444},{x: 0.2273464227931203, y: 363128311.4374809},{x: 0.2381345189013994, y: 351344433.7968332},{x: 0.2494345342922059, y: 326932291.0308703},{x: 0.2612707606801477, y: 289753004.8759716},{x: 0.2736686424760069, y: 252326392.5927159},{x: 0.2866548314847516, y: 230205243.4165737},{x: 0.3002572441990878, y: 225259464.8612672},{x: 0.3145051218117226, y: 220968654.8941466},{x: 0.3294290930753407, y: 200829928.1507522},{x: 0.3450612401454263, y: 170740660.0395009},{x: 0.3614351675474782, y: 152039837.7461461},{x: 0.3785860744168699, y: 149214124.1786893},{x: 0.3965508301666525, y: 142454436.8572516},{x: 0.4153680537459675, y: 122667037.2503861},{x: 0.4350781966594453, y: 107420199.053011},{x: 0.4557236299260591, y: 104296220.9356626},{x: 0.4773487351643757, y: 96656852.90397742},{x: 0.5, y: 82971910.27024296},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/55/">kiranvad</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>March 8, 2024, 3:54 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Sphere</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/822">spherical_micelle.py</a><br/>
+</td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

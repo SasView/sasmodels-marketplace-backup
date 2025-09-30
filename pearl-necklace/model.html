@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Pearl Necklace | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/48/">Pearl Necklace</a></li>
+</ol>
+<h1>Pearl Necklace</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This model provides the form factor for a pearl necklace composed of two elements: *N* pearls (homogeneous spheres of radius *R*) freely jointed by *M* rods (like strings - with a total mass *Mw* = *M* \* *m*`r` + *N* \* *m*\ `s`, and the string segment length (or edge separation) *l* (= *A* - 2*R*)). *A* is the center-to-center pearl separation distance. </p>
+<p> </p>
+<p>     Pearl Necklace schematic </p>
+<p> Definition </p>
+<p> </p>
+<p> The output of the scattering intensity function for the pearl_necklace is given by (Schweins, 2004) </p>
+<p> $$  I(q)=\frac{ \text{scale} }{V} \cdot \frac{(S_{ss}(q)+S_{ff}(q)+S_{fs}(q))} {(M \cdot m_f + N \cdot m_s)^2} + \text{bkg} <br/>$$<br/>where </p>
+<p> $$  S_{ss}(q) = 2m_s^2\psi^2(q)\left[\frac{N}{1-sin(qA)/qA}-\frac{N}{2}- \frac{1-(sin(qA)/qA)^N}{(1-sin(qA)/qA)^2}\cdot\frac{sin(qA)}{qA}\right] \\ S_{ff}(q) = m_r^2\left[M\left\{2\Lambda(q)-\left(\frac{sin(ql/2)}{ql/2}\right)\right\}+ \frac{2M\beta^2(q)}{1-sin(qA)/qA}-2\beta^2(q)\cdot \frac{1-(sin(qA)/qA)^M}{(1-sin(qA)/qA)^2}\right] \\ S_{fs}(q) = m_r \beta (q) \cdot m_s \psi (q) \cdot 4\left[ \frac{N-1}{1-sin(qA)/qA}-\frac{1-(sin(qA)/qA)^{N-1}}{(1-sin(qA)/qA)^2} \cdot \frac{sin(qA)}{qA}\right] \\ \psi(q) = 3 \cdot \frac{sin(qR)-(qR)\cdot cos(qR)}{(qR)^3} \\ \Lambda(q) = \frac{\int_0^{ql}\frac{sin(t)}{t}dt}{ql} \\ \beta(q) = \frac{\int_{qR}^{q(A-R)}\frac{sin(t)}{t}dt}{ql} <br/>$$<br/>where the mass *m*`i` is (SLD`i` - SLD`solvent`) \* (volume of the *N* pearls/rods). *V* is the total volume of the necklace. </p>
+<p> .. note:: </p>
+<p>    *num_pearls* must be an integer. </p>
+<p> The 2D scattering intensity is the same as $P(q)$ above, regardless of the orientation of the *q* vector. </p>
+<p> References </p>
+<p> </p>
+<p> #. R Schweins and K Huber, *Particle Scattering Factor of Pearl Necklace Chains*,    *Macromol. Symp.* 211 (2004) 25-42 2004 </p>
+<p> #. L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:** Andrew Jackson **Date:** March 28, 2019<br/>**Last Reviewed by:** Steve King **Date:** March 28, 2019<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/744">pearl_necklace.py</a><br>
+<a href="/uploads/745">pearl_necklace.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

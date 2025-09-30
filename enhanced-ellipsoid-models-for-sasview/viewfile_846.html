@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/ellipsoid/">Ellipsoid</a></li>
+<li><a href="/models/163/">Enhanced Ellipsoid Models for SasView</a></li>
+<li><a href="/uploads/846">ellipsoid_high_res_integration.c</a></li>
+</ol>
+<h1>Enhanced Ellipsoid Models for SasView - ellipsoid_high_res_integration.c</h1>
+<pre>
+    <code>
+
+#define min(a,b) ((a) &lt; (b) ? (a) : (b))
+#define max(a,b) ((a) &gt; (b) ? (a) : (b))
+
+const double coeffs[] = {-3.4642539074800607e-14, 0.3684780758596396, 0.35752237537072834, 0.2692683938811623, 0.044966067529780614, 0.07629283209630257, 0.05302119319693169, 0.07659139238021585, -0.0986895674230704, 0.06084377611678292, 0.0008423623756695666, 0.0016806597353984942, 0.0019175048498948116, 0.002345110027970389, -0.002630061858112548, 0.0015588577445786694, -0.0024725461924337442, 0.0036659961517777106, 0.003283121229255571, -0.002481660505434884, -3.654880966457715e-05, -0.00025646737934223327, -6.400505516347556e-05, -0.0005405758397514663, 8.476260898502353e-05, -0.00033919909231283396, -0.00036626624065601776, -8.881020770035688e-05, 7.550570094533425e-05, -0.00027835434588737253, -1.0021005859930985e-05, 0.00010039314607481115, -0.0005181254455630624, 0.00018395995151758494, -1.2261849453824331e-05};
+const double intercept = 1.2026407426875778;
+const double limits[][2] = {{5e-05, 0.5}, {1.0, 200000.0}, {1.0, 200000.0}};
+
+
+inline float log2m (float val)
+{
+   int * const    exp_ptr = (int *) (&amp;val);
+   int            x = *exp_ptr;
+   const int      log_2 = ((x &gt;&gt; 23) &amp; 255) - 128;
+   x &amp;= ~(255 &lt;&lt; 23);
+   x += 127 &lt;&lt; 23;
+   *exp_ptr = x;
+
+   val = ((-1.0f/3) * val + 2) * val - 2.0f/3;   // (1)
+
+   return (val + log_2);
+}
+
+
+
+double eval_poly(double var0, double var1, double var2){
+    return 1 * coeffs[0] + var0 * coeffs[1] + var1 * coeffs[2] + var2 * coeffs[3] + (var0 * var0) * coeffs[4] + var0 * var1 * coeffs[5] + var0 * var2 * coeffs[6] + (var1 * var1) * coeffs[7] + var1 * var2 * coeffs[8] + (var2 * var2) * coeffs[9] + (var0 * var0 * var0) * coeffs[10] + (var0 * var0) * var1 * coeffs[11] + (var0 * var0) * var2 * coeffs[12] + var0 * (var1 * var1) * coeffs[13] + var0 * var1 * var2 * coeffs[14] + var0 * (var2 * var2) * coeffs[15] + (var1 * var1 * var1) * coeffs[16] + (var1 * var1) * var2 * coeffs[17] + var1 * (var2 * var2) * coeffs[18] + (var2 * var2 * var2) * coeffs[19] + (var0 * var0 * var0 * var0) * coeffs[20] + (var0 * var0 * var0) * var1 * coeffs[21] + (var0 * var0 * var0) * var2 * coeffs[22] + (var0 * var0) * (var1 * var1) * coeffs[23] + (var0 * var0) * var1 * var2 * coeffs[24] + (var0 * var0) * (var2 * var2) * coeffs[25] + var0 * (var1 * var1 * var1) * coeffs[26] + var0 * (var1 * var1) * var2 * coeffs[27] + var0 * var1 * (var2 * var2) * coeffs[28] + var0 * (var2 * var2 * var2) * coeffs[29] + (var1 * var1 * var1 * var1) * coeffs[30] + (var1 * var1 * var1) * var2 * coeffs[31] + (var1 * var1) * (var2 * var2) * coeffs[32] + var1 * (var2 * var2 * var2) * coeffs[33] + (var2 * var2 * var2 * var2) * coeffs[34] + intercept;
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/163/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/ellipsoid_high_res_integration.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

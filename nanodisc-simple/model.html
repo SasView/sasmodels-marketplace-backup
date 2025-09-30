@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>nanodisc_simple | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/86/">nanodisc_simple</a></li>
+</ol>
+<h1>nanodisc_simple</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>This is a simple model that loads the built-in "core_shell_bicelle" model and re-defines its fit parameters in molecular terms. For example, you would specify the number of lipids, number of belt proteins, and sum of scattering lengths for a lipid molecule and a belt protein molecule. The numbers of molecules should be used as fit parameters, whereas the sum of scattering lengths for each molecule would normally be held fixed (e.g. you know what kind of lipids you used, so there wouldn't be a need to "fit" this). This model will then use these parameters, combined with the volumes of the disc core, face, and rim, to calculate the SLDs of each part of the disc. Finally, the SLDs and geometric parameters are fed to the "core_shell_bicelle" model for the actual scattering calculations.</p>
+<p>SLDs are fixed during polydispersity calculations. For example, if you include radial polydispersity, the SLDs will be calculated based on the *average* radius, and then held fixed for the discs with a distribution of radii about the average.</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'nanodisc_simple',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 16.9348},{x: 0.0106939, y: 15.7049},{x: 0.0208878, y: 12.6275},{x: 0.0310816, y: 8.65254},{x: 0.0412755, y: 4.87785},{x: 0.0514694, y: 2.12376},{x: 0.0616633, y: 0.688074},{x: 0.0718571, y: 0.366457},{x: 0.082051, y: 0.677116},{x: 0.0922449, y: 1.13846},{x: 0.102439, y: 1.45638},{x: 0.112633, y: 1.56066},{x: 0.122827, y: 1.52437},{x: 0.13302, y: 1.4495},{x: 0.143214, y: 1.39113},{x: 0.153408, y: 1.3447},{x: 0.163602, y: 1.27653},{x: 0.173796, y: 1.16083},{x: 0.18399, y: 0.997812},{x: 0.194184, y: 0.80927},{x: 0.204378, y: 0.623175},{x: 0.214571, y: 0.46053},{x: 0.224765, y: 0.330777},{x: 0.234959, y: 0.234268},{x: 0.245153, y: 0.167062},{x: 0.255347, y: 0.124375},{x: 0.265541, y: 0.101737},{x: 0.275735, y: 0.0947477},{x: 0.285929, y: 0.0986612},{x: 0.296122, y: 0.108458},{x: 0.306316, y: 0.119407},{x: 0.31651, y: 0.127757},{x: 0.326704, y: 0.131201},{x: 0.336898, y: 0.128929},{x: 0.347092, y: 0.121339},{x: 0.357286, y: 0.109589},{x: 0.36748, y: 0.0951868},{x: 0.377673, y: 0.0797023},{x: 0.387867, y: 0.0645738},{x: 0.398061, y: 0.0509545},{x: 0.408255, y: 0.0395977},{x: 0.418449, y: 0.0308143},{x: 0.428643, y: 0.0245249},{x: 0.438837, y: 0.0203787},{x: 0.449031, y: 0.0178851},{x: 0.459224, y: 0.0165173},{x: 0.469418, y: 0.0157832},{x: 0.479612, y: 0.0152781},{x: 0.489806, y: 0.0147229},{x: 0.5, y: 0.0139776},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/15/">tecleveland</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Dec. 4, 2017, 8:34 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/346">nanodisc_simple.py</a><br/>
+</td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

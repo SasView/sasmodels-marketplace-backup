@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Oblate Spheroid | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/ellipsoid/">Ellipsoid</a></li>
+<li><a href="/models/8/">Oblate Spheroid</a></li>
+</ol>
+<h1>Oblate Spheroid</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Follows the surface $\frac{x^2 + y^2}{a^2} + \frac{z^2}{c^2} = 1$ where $a$ is the equatorial radius, $c$ is the polar radius, and $a &gt; c$.</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Oblate Spheroid',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 925.996},{x: 0.0106939, y: 367.443},{x: 0.0208878, y: 223.061},{x: 0.0310816, y: 157.529},{x: 0.0412755, y: 109.525},{x: 0.0514694, y: 73.3954},{x: 0.0616633, y: 48.3089},{x: 0.0718571, y: 30.6127},{x: 0.082051, y: 17.9656},{x: 0.0922449, y: 9.93264},{x: 0.102439, y: 5.6446},{x: 0.112633, y: 3.62735},{x: 0.122827, y: 2.72546},{x: 0.13302, y: 2.22351},{x: 0.143214, y: 1.74291},{x: 0.153408, y: 1.21162},{x: 0.163602, y: 0.698561},{x: 0.173796, y: 0.29286},{x: 0.18399, y: 0.065123},{x: 0.194184, y: 0.0148962},{x: 0.204378, y: 0.0744495},{x: 0.214571, y: 0.164057},{x: 0.224765, y: 0.224744},{x: 0.234959, y: 0.233633},{x: 0.245153, y: 0.202685},{x: 0.255347, y: 0.15704},{x: 0.265541, y: 0.118869},{x: 0.275735, y: 0.0994527},{x: 0.285929, y: 0.0947379},{x: 0.296122, y: 0.0923268},{x: 0.306316, y: 0.0821915},{x: 0.31651, y: 0.0616546},{x: 0.326704, y: 0.0360928},{x: 0.336898, y: 0.0145336},{x: 0.347092, y: 0.00337146},{x: 0.357286, y: 0.00392958},{x: 0.36748, y: 0.0126098},{x: 0.377673, y: 0.0229131},{x: 0.387867, y: 0.0293517},{x: 0.398061, y: 0.0298986},{x: 0.408255, y: 0.0259879},{x: 0.418449, y: 0.0210101},{x: 0.428643, y: 0.017772},{x: 0.438837, y: 0.0169467},{x: 0.449031, y: 0.0173882},{x: 0.459224, y: 0.017248},{x: 0.469418, y: 0.0147644},{x: 0.479612, y: 0.0106148},{x: 0.489806, y: 0.00616708},{x: 0.5, y: 0.00212417},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/9/">robertdfrench</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Dec. 7, 2016, 7:12 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Ellipsoid</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/7">oblate_spheroid.py</a><br/>
+</td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

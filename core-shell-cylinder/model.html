@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Core Shell Cylinder | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/1/">Core Shell Cylinder</a></li>
+</ol>
+<h1>Core Shell Cylinder</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> The output of the 2D scattering intensity function for oriented core-shell cylinders is given by Kline [#Kline2006]_. The form factor is normalized by the particle volume. Note that in this model the shell envelops the entire core so that besides a "sleeve" around the core, the shell also provides two flat end caps of thickness = shell thickness. In other words the length of the total cylinder is the length of the core cylinder plus twice the thickness of the shell. If no end caps are desired one should use the `core-shell-bicelle` and set the thickness of the end caps (in this case the "thick_face") to zero. </p>
+<p> $$  I(q,\alpha) = \frac{\text{scale}}{V_s} F^2(q,\alpha).sin(\alpha) + \text{background} <br/>$$<br/>where </p>
+<p> $$  F(q,\alpha) =  (\rho_c - \rho_s) V_c \frac{\sin \left( q \tfrac12 L\cos\alpha \right)} {q \tfrac12 L\cos\alpha} \frac{2 J_1 \left( qR\sin\alpha \right)} {qR\sin\alpha} \\ + (\rho_s - \rho_\text{solv}) V_s \frac{\sin \left( q \left(\tfrac12 L+T\right) \cos\alpha \right)} {q \left(\tfrac12 L +T \right) \cos\alpha} \frac{ 2 J_1 \left( q(R+T)\sin\alpha \right)} {q(R+T)\sin\alpha} <br/>$$<br/>and </p>
+<p> $$  V_s = \pi (R + T)^2 (L + 2T) <br/>$$<br/>and $\alpha$ is the angle between the axis of the cylinder and $\vec q$, $V_s$ is the total volume (i.e. including both the core and the outer shell), $V_c$ is the volume of the core, $L$ is the length of the core, $R$ is the radius of the core, $T$ is the thickness of the shell, $\rho_c$ is the scattering length density of the core, $\rho_s$ is the scattering length density of the shell, $\rho_\text{solv}$ is the scattering length density of the solvent, and *background* is the background level.  The outer radius of the shell is given by $R+T$ and the total length of the outer shell is given by $L+2T$. $J_1$ is the first order Bessel function. </p>
+<p> .. _core-shell-cylinder-geometry: </p>
+<p> </p>
+<p>     Core shell cylinder schematic. </p>
+<p> To provide easy access to the orientation of the core-shell cylinder, we define the axis of the cylinder using two angles $\theta$ and $\phi$. (see `cylinder model &lt;cylinder-angle-definition&gt;`) </p>
+<p> NB: The 2nd virial coefficient of the cylinder is calculated based on the radius and 2 length values, and used as the effective radius for $S(q)$ when $P(q) \cdot S(q)$ is applied. </p>
+<p> The $\theta$ and $\phi$ parameters are not used for the 1D output. </p>
+<p> Reference </p>
+<p> </p>
+<p> See also Livsey [#Livsey1987]_ and Onsager [#Onsager1949]_. </p>
+<p> .. [#Livsey1987] I Livsey, *J. Chem. Soc., Faraday Trans. 2*, 83 (1987) 1445-1452 </p>
+<p> .. [#Kline2006] S R Kline, *J Appl. Cryst.*, 39 (2006) 895 </p>
+<p> .. [#Onsager1949] L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** NIST IGOR/DANSE **Date:** pre 2010<br/>**Last Modified by:** Paul Kienzle **Date:** Aug 8, 2016<br/>**Last Reviewed by:** Richard Heenan **Date:** March 18, 2016<br/> </p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: 'Core Shell Cylinder',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.0005, y: 1987.71},{x: 0.0106939, y: 1137.66},{x: 0.0208878, y: 535.831},{x: 0.0310816, y: 297.272},{x: 0.0412755, y: 166.37},{x: 0.0514694, y: 86.9585},{x: 0.0616633, y: 40.2587},{x: 0.0718571, y: 15.5517},{x: 0.082051, y: 4.37239},{x: 0.0922449, y: 0.6699},{x: 0.102439, y: 0.553898},{x: 0.112633, y: 1.4658},{x: 0.122827, y: 1.99477},{x: 0.13302, y: 1.84389},{x: 0.143214, y: 1.29766},{x: 0.153408, y: 0.678204},{x: 0.163602, y: 0.21476},{x: 0.173796, y: 0.0321158},{x: 0.18399, y: 0.0822169},{x: 0.194184, y: 0.203368},{x: 0.204378, y: 0.277996},{x: 0.214571, y: 0.275767},{x: 0.224765, y: 0.205059},{x: 0.234959, y: 0.102918},{x: 0.245153, y: 0.0278404},{x: 0.255347, y: 0.00933538},{x: 0.265541, y: 0.0291674},{x: 0.275735, y: 0.0585011},{x: 0.285929, y: 0.0793887},{x: 0.296122, y: 0.0783417},{x: 0.306316, y: 0.0539657},{x: 0.31651, y: 0.0242873},{x: 0.326704, y: 0.00733038},{x: 0.336898, y: 0.00525358},{x: 0.347092, y: 0.012972},{x: 0.357286, y: 0.0250558},{x: 0.36748, y: 0.0325989},{x: 0.377673, y: 0.0290203},{x: 0.387867, y: 0.0182754},{x: 0.398061, y: 0.00847847},{x: 0.408255, y: 0.00309214},{x: 0.418449, y: 0.00290664},{x: 0.428643, y: 0.00781802},{x: 0.438837, y: 0.0137672},{x: 0.449031, y: 0.0154979},{x: 0.459224, y: 0.0126166},{x: 0.469418, y: 0.00806842},{x: 0.479612, y: 0.00379424},{x: 0.489806, y: 0.00140623},{x: 0.5, y: 0.00246673},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 8, 2016, 9:33 a.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Cylinder</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>2
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by Lewis O'Driscoll on 08 Sep 2016</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/757">core_shell_cylinder.py</a><br>
+<a href="/uploads/758">core_shell_cylinder.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

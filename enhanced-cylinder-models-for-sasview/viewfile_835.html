@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/cylinder/">Cylinder</a></li>
+<li><a href="/models/161/">Enhanced Cylinder Models for SasView</a></li>
+<li><a href="/uploads/835">flexible_cylinder_elliptical_high_res.c</a></li>
+</ol>
+<h1>Enhanced Cylinder Models for SasView - flexible_cylinder_elliptical_high_res.c</h1>
+<pre>
+    <code>
+double form_volume(double length, double kuhn_length, double radius);
+double Iq(double q, double length, double kuhn_length, double radius,
+          double axis_ratio, double sld, double solvent_sld);
+double flexible_cylinder_ex_kernel(double q, double length, double kuhn_length,
+                                double radius, double axis_ratio, double sld,
+                                double solvent_sld);
+double elliptical_crosssection(double q, double a, double b);
+
+double form_volume(double length, double kuhn_length, double radius)
+{
+    return 1.0;
+}
+
+double
+integrand_elliptical_crosssection(double x, double q, double a,  double b, double* out, int n, int i){
+    double sn, cn;
+    get_sin_x(n, i, &amp;sn);
+    get_cos_x(n, i, &amp;cn);
+
+    const double arg = q * sqrt(a*a*sn*sn + b*b*cn*cn);
+    const double yyy = sas_2J1x_x(arg);
+    *out = yyy * yyy;
+}
+
+void integrate_elliptical_crosssection(double al, double bu, double q, double a, double b, double* res){
+
+    double a_q = a*q;
+    double b_q = b*q;
+
+    // Determine the number of points for the Gauss quadrature
+    int expo = (int)(eval_poly(log2m(max(limits[0][0],min(limits[0][1], a_q))), log2m(max(limits[1][0],min(limits[1][1], b_q)))) + 1);
+    int n = (int)(pow(2, max(1, min(15, expo))));
+
+    double *xg, *wg;
+    get_gauss_points(n, &amp;xg, &amp;wg);
+
+    // Perform the integration
+    *res = 0;
+    for (int i = 0; i &lt; n; i++){
+        double temp;
+        integrand_elliptical_crosssection(al + (bu - al) * 0.5 * (xg[i] + 1), q, a, b, &amp;temp, n, i);
+        *res += temp * wg[i];
+    }
+    *res *= (bu - al) * 0.5;
+
+
+}
+
+double
+elliptical_crosssection(double q, double a, double b)
+{
+    double sum;
+    integrate_elliptical_crosssection(0, M_PI_2, q, a, b, &amp;sum);
+    return sum;
+
+}
+
+double flexible_cylinder_ex_kernel(double q,
+          double length,
+          double kuhn_length,
+          double radius,
+          double axis_ratio,
+          double sld,
+          double solvent_sld)
+{
+
+    double flex,crossSect, cont;
+
+    cont = sld - solvent_sld;
+    crossSect = elliptical_crosssection(q,radius,(radius*axis_ratio));
+
+    flex = Sk_WR(q,length,kuhn_length);
+    flex *= crossSect;
+    flex *= M_PI*radius*radius*axis_ratio*axis_ratio*length;
+    flex *= cont*cont;
+    flex *= 1.0e-4;
+
+    return flex;
+}
+
+double Iq(double q,
+          double length,
+          double kuhn_length,
+          double radius,
+          double axis_ratio,
+          double sld,
+          double solvent_sld)
+{
+
+    double result = flexible_cylinder_ex_kernel(q,
+                    length,
+                    kuhn_length,
+                    radius,
+                    axis_ratio,
+                    sld,
+                    solvent_sld);
+
+    return result;
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/161/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/flexible_cylinder_elliptical_high_res.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

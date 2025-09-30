@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/77/">Polymer Micelle</a></li>
+<li><a href="/uploads/812">polymer_micelle.c</a></li>
+</ol>
+<h1>Polymer Micelle - polymer_micelle.c</h1>
+<pre>
+    <code>double Iq(double q,
+        double ndensity,
+        double v_core,
+        double v_corona,
+        double solvent_sld,
+        double core_sld,
+        double corona_sld,
+        double radius_core,
+        double rg,
+        double d_penetration,
+        double n_aggreg);
+
+static double micelle_spherical_kernel(double q,
+        double ndensity,
+        double v_core,
+        double v_corona,
+        double solvent_sld,
+        double core_sld,
+        double corona_sld,
+        double radius_core,
+        double rg,
+        double d_penetration,
+        double n_aggreg)
+{
+    const double rho_solv = solvent_sld;     // sld of solvent [1/A^2]
+    const double rho_core = core_sld;        // sld of core [1/A^2]
+    const double rho_corona = corona_sld;    // sld of corona [1/A^2]
+
+    const double beta_core = v_core * (rho_core - rho_solv);
+    const double beta_corona = v_corona * (rho_corona - rho_solv);
+
+    // Self-correlation term of the core
+    const double bes_core = sas_3j1x_x(q*radius_core);
+    const double term1 = square(n_aggreg*beta_core*bes_core);
+
+    // Self-correlation term of the chains
+    const double qrg2 = square(q*rg);
+    const double debye_chain = (qrg2 == 0.0) ? 1.0 : 2.0*(expm1(-qrg2)+qrg2)/(qrg2*qrg2);
+    const double term2 = n_aggreg * beta_corona * beta_corona * debye_chain;
+
+    // Interference cross-term between core and chains
+    const double chain_ampl = (qrg2 == 0.0) ? 1.0 : -expm1(-qrg2)/qrg2;
+    const double bes_corona = sas_sinx_x(q*(radius_core + d_penetration * rg));
+    const double term3 = 2.0 * n_aggreg * n_aggreg * beta_core * beta_corona *
+                 bes_core * chain_ampl * bes_corona;
+
+    // Interference cross-term between chains
+    const double term4 = n_aggreg * (n_aggreg - 1.0)
+                 * square(beta_corona * chain_ampl * bes_corona);
+
+    // I(q)_micelle : Sum of 4 terms computed above
+    double i_micelle = term1 + term2 + term3 + term4;
+
+    // rescale from [A^2] to [cm^2]
+    i_micelle *= 1.0e-13;
+
+    // "normalize" by number density --&gt; intensity in [cm-1]
+    i_micelle *= ndensity;
+
+    return(i_micelle);
+
+}
+
+double Iq(double q,
+        double ndensity,
+        double v_core,
+        double v_corona,
+        double solvent_sld,
+        double core_sld,
+        double corona_sld,
+        double radius_core,
+        double rg,
+        double d_penetration,
+        double n_aggreg)
+{
+    return micelle_spherical_kernel(q,
+            ndensity,
+            v_core,
+            v_corona,
+            solvent_sld,
+            core_sld,
+            corona_sld,
+            radius_core,
+            rg,
+            d_penetration,
+            n_aggreg);
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/77/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/polymer_micelle.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

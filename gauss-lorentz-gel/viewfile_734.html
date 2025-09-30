@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/26/">Gauss Lorentz Gel</a></li>
+<li><a href="/uploads/734">gauss_lorentz_gel.py</a></li>
+</ol>
+<h1>Gauss Lorentz Gel - gauss_lorentz_gel.py</h1>
+<pre>
+    <code>r"""
+This model calculates the scattering from a gel structure,
+but typically a physical rather than chemical network.
+It is modeled as a sum of a low-q exponential decay (which happens to
+give a functional form similar to Guinier scattering, so interpret with
+care) plus a Lorentzian at higher-q values. See also the gel_fit model.
+
+Definition
+----------
+
+The scattering intensity $I(q)$ is calculated as (Eqn. 5 from the reference)
+
+.. math:: I(q) = I_G(0) \exp(-q^2\Xi ^2/2) + I_L(0)/(1+q^2\xi^2)
+
+$\Xi$ is the length scale of the static correlations in the gel, which can
+be attributed to the "frozen-in" crosslinks. $\xi$ is the dynamic correlation
+length, which can be attributed to the fluctuating polymer chains between
+crosslinks. $I_G(0)$ and $I_L(0)$ are the scaling factors for each of these
+structures. Think carefully about how these map to your particular system!
+
+.. note::
+    The peaked structure at higher $q$ values (Figure 2 from the reference)
+    is not reproduced by the model. Peaks can be introduced into the model
+    by summing this model with the :ref:`gaussian-peak` model.
+
+For 2D data the scattering intensity is calculated in the same way as 1D,
+where the $q$ vector is defined as
+
+.. math:: q = \sqrt{q_x^2 + q_y^2}
+
+References
+----------
+
+#. G Evmenenko, E Theunissen, K Mortensen, H Reynaers,
+   *Polymer*, 42 (2001) 2907-2913
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:**
+"""
+
+import numpy as np
+from numpy import inf, exp
+
+name = "gauss_lorentz_gel"
+title = "Gauss Lorentz Gel model of scattering from a gel structure"
+description = """
+            Class that evaluates a GaussLorentzGel model.
+
+            I(q) = scale_g*exp(- q^2*Z^2 / 2)+scale_l/(1+q^2*z^2)
+                    + background
+            List of default parameters:
+                scale_g = Gauss scale factor
+                Z = Static correlation length
+                scale_l = Lorentzian scale factor
+                z = Dynamic correlation length
+                background = Incoherent background
+            """
+category = "shape-independent"
+# pylint: disable=bad-whitespace, line-too-long
+#            ["name", "units", default, [lower, upper], "type", "description"],
+parameters = [["gauss_scale",   "",    100.0,  [-inf, inf], "", "Gauss scale factor"],
+              ["cor_length_static",    "Ang", 100.0,  [0, inf],    "", "Static correlation length"],
+              ["lorentz_scale", "",     50.0,  [-inf, inf], "", "Lorentzian scale factor"],
+              ["cor_length_dynamic",   "Ang",  20.0,  [0, inf],    "", "Dynamic correlation length"],
+             ]
+# pylint: enable=bad-whitespace, line-too-long
+
+def Iq(q,
+       gauss_scale=100.0,
+       cor_length_static=100.0,
+       lorentz_scale=50.0,
+       cor_length_dynamic=20.0):
+    """
+
+    :param q:                    Input q-value
+    :param gauss_scale:   Gauss scale factor
+    :param cor_length_static:    Static correlation length
+    :param lorentz_scale: Lorentzian scale factor
+    :param cor_length_dynamic:   Dynamic correlation length
+    :return:                     1-D intensity
+    """
+
+    term1 = gauss_scale *\
+            exp(-1.0*q*q*cor_length_static*cor_length_static/2.0)
+    term2 = lorentz_scale /\
+            (1.0+(q*cor_length_dynamic)*(q*cor_length_dynamic))
+
+    return term1 + term2
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+
+def random():
+    """Return a random parameter set for the model."""
+    gauss_scale = 10**np.random.uniform(1, 3)
+    lorentz_scale = 10**np.random.uniform(1, 3)
+    cor_length_static = 10**np.random.uniform(0, 3)
+    cor_length_dynamic = 10**np.random.uniform(0, 3)
+    pars = dict(
+        #background=0,
+        scale=1,
+        gauss_scale=gauss_scale,
+        lorentz_scale=lorentz_scale,
+        cor_length_static=cor_length_static,
+        cor_length_dynamic=cor_length_dynamic,
+    )
+    return pars
+
+
+tests = [
+
+    # Accuracy tests based on content in test/utest_extra_models.py
+    [{'gauss_scale':  100.0,
+      'cor_length_static':   100.0,
+      'lorentz_scale': 50.0,
+      'cor_length_dynamic':   20.0,
+     }, 0.001, 149.482],
+
+    [{'gauss_scale':  100.0,
+      'cor_length_static':   100.0,
+      'lorentz_scale': 50.0,
+      'cor_length_dynamic':   20.0,
+     }, 0.105363, 9.1913],
+
+    [{'gauss_scale':  100.0,
+      'cor_length_static':   100.0,
+      'lorentz_scale': 50.0,
+      'cor_length_dynamic':   20.0,
+     }, 0.441623, 0.633811],
+
+    # Additional tests with larger range of parameters
+    [{'gauss_scale':  10.0,
+      'cor_length_static':  100.0,
+      'lorentz_scale': 3.0,
+      'cor_length_dynamic':   1.0,
+     }, 0.1, 2.9712970297],
+
+    [{'gauss_scale':  10.0,
+      'cor_length_static':  100.0,
+      'lorentz_scale': 3.0,
+      'cor_length_dynamic':   1.0,
+      'background':         100.0
+     }, 5.0, 100.116384615],
+
+    [{'gauss_scale':  10.0,
+      'cor_length_static':  100.0,
+      'lorentz_scale': 3.0,
+      'cor_length_dynamic':   1.0,
+      'background':           0.0,
+     }, 200., 7.49981250469e-05],
+    ]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/26/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/gauss_lorentz_gel.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

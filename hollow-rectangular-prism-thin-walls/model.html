@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Hollow Rectangular Prism Thin Walls | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/parallelepiped/">Parallelepiped</a></li>
+<li><a href="/models/17/">Hollow Rectangular Prism Thin Walls</a></li>
+</ol>
+<h1>Hollow Rectangular Prism Thin Walls</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p># rectangular_prism model # Note: model title and parameter table are inserted automatically Definition </p>
+<p> This model provides the form factor, $P(q)$, for a hollow rectangular prism with infinitely thin walls. It computes only the 1D scattering, not the 2D. The 1D scattering intensity for this model is calculated according to the equations given by Nayuk and Huber[#Nayuk2012]_. </p>
+<p> Assuming a hollow parallelepiped with infinitely thin walls, edge lengths $A \le B \le C$ and presenting an orientation with respect to the scattering vector given by $\theta$ and $\phi$, where $\theta$ is the angle between the $z$ axis and the longest axis of the parallelepiped $C$, and $\phi$ is the angle between the scattering vector (lying in the $xy$ plane) and the $y$ axis, the form factor is given by </p>
+<p> $$  P(q) = \frac{1}{V^2} \frac{2}{\pi} \int_0^{\frac{\pi}{2}} \int_0^{\frac{\pi}{2}} [A_L(q)+A_T(q)]^2 \sin\theta\,d\theta\,d\phi <br/>$$<br/>where </p>
+<p> $$  V = 2AB + 2AC + 2BC \\ A_L(q) =  8 \times \frac{ \sin \left( \tfrac{1}{2} q A \sin\phi \sin\theta \right) \sin \left( \tfrac{1}{2} q B \cos\phi \sin\theta \right) \cos \left( \tfrac{1}{2} q C \cos\theta \right) }{q^2 \, \sin^2\theta \, \sin\phi \cos\phi} \\ A_T(q) =  A_F(q) \times \frac{2\,\sin \left( \tfrac{1}{2} q C \cos\theta \right)}{q\,\cos\theta} <br/>$$<br/>and </p>
+<p> $$  A_F(q) =  4 \frac{ \cos \left( \tfrac{1}{2} q A \sin\phi \sin\theta \right) \sin \left( \tfrac{1}{2} q B \cos\phi \sin\theta \right) } {q \, \cos\phi \, \sin\theta} + 4 \frac{ \sin \left( \tfrac{1}{2} q A \sin\phi \sin\theta \right) \cos \left( \tfrac{1}{2} q B \cos\phi \sin\theta \right) } {q \, \sin\phi \, \sin\theta} <br/>$$<br/>The 1D scattering intensity is then calculated as </p>
+<p> $$  I(q) = \text{scale} \times V \times (\rho_\text{p} - \rho_\text{solvent})^2 \times P(q) <br/>$$<br/>where $V$ is the surface area of the rectangular prism, $\rho_\text{p}$ is the scattering length density of the parallelepiped, $\rho_\text{solvent}$ is the scattering length density of the solvent, and (if the data are in absolute units) *scale* is related to the total surface area. </p>
+<p> **The 2D scattering intensity is not computed by this model.** </p>
+<p> </p>
+<p> Validation </p>
+<p> </p>
+<p> Validation of the code was conducted  by qualitatively comparing the output of the 1D model to the curves shown in (Nayuk, 2012[#Nayuk2012]_). </p>
+<p> </p>
+<p> References </p>
+<p> </p>
+<p> See also Onsager [#Onsager1949]_. </p>
+<p> .. [#Nayuk2012] R Nayuk and K Huber, *Z. Phys. Chem.*, 226 (2012) 837-854 </p>
+<p> .. [#Onsager1949] L. Onsager, *Ann. New York Acad. Sci.*, 51 (1949) 627-659 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** Miguel Gonzales **Date:** February 26, 2016<br/>**Last Modified by:** Paul Kienzle **Date:** October 15, 2016<br/>**Last Reviewed by:** Paul Butler **Date:** September 07, 2018<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Parallelepiped</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/694">hollow_rectangular_prism_thin_walls.py</a><br>
+<a href="/uploads/695">hollow_rectangular_prism_thin_walls.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

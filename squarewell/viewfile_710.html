@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/structure-factor/">Structure Factor</a></li>
+<li><a href="/models/71/">Squarewell</a></li>
+<li><a href="/uploads/710">squarewell.py</a></li>
+</ol>
+<h1>Squarewell - squarewell.py</h1>
+<pre>
+    <code># Note: model title and parameter table are inserted automatically
+r"""
+Calculates the interparticle structure factor for a hard sphere fluid
+with a narrow, attractive, square well potential. **The Mean Spherical
+Approximation (MSA) closure relationship is used, but it is not the most
+appropriate closure for an attractive interparticle potential.** However,
+the solution has been compared to Monte Carlo simulations for a square
+well fluid and these show the MSA calculation to be limited to well
+depths $\epsilon &lt; 1.5$ kT and volume fractions $\phi &lt; 0.08$.
+
+Positive well depths correspond to an attractive potential well. Negative
+well depths correspond to a potential "shoulder", which may or may not be
+physically reasonable. The :ref:`stickyhardsphere` model may be a better
+choice in some circumstances.
+
+Computed values may behave badly at extremely small $qR$.
+
+.. note::
+
+   Earlier versions of SasView did not incorporate the so-called
+   $\beta(q)$ ("beta") correction [2] for polydispersity and non-sphericity.
+   This is only available in SasView versions 5.0 and higher.
+
+The well width $(\lambda)$ is defined as multiples of the particle diameter
+$(2 R)$.
+
+The interaction potential is:
+
+.. math::
+
+    U(r) = \begin{cases}
+    \infty &amp; r &lt; 2R \\
+    -\epsilon &amp; 2R \leq r &lt; 2R\lambda \\
+    0 &amp; r \geq 2R\lambda
+    \end{cases}
+
+where $r$ is the distance from the center of a sphere of a radius $R$.
+
+In SasView the effective radius may be calculated from the parameters
+used in the form factor $P(q)$ that this $S(q)$ is combined with.
+
+For 2D data: The 2D scattering intensity is calculated in the same way as 1D,
+where the $q$ vector is defined as
+
+.. math::
+
+    q = \sqrt{q_x^2 + q_y^2}
+
+References
+----------
+
+#.  R V Sharma, K C Sharma, *Physica*, 89A (1977) 213
+
+#.  M Kotlarchyk and S-H Chen, *J. Chem. Phys.*, 79 (1983) 2461-2469
+
+Authorship and Verification
+----------------------------
+
+* **Author:**
+* **Last Modified by:**
+* **Last Reviewed by:** Steve King **Date:** March 27, 2019
+"""
+
+import numpy as np
+from numpy import inf
+
+name = "squarewell"
+title = "Square well structure factor with Mean Spherical Approximation closure"
+description = """\
+    [Square well structure factor, with MSA closure]
+        Interparticle structure factor S(Q) for a hard sphere fluid
+    with a narrow attractive well. Fits are prone to deliver non-
+    physical parameters; use with care and read the references in
+    the model documentation.The "beta(q)" correction is available
+    in versions 4.2.2 and higher.
+"""
+category = "structure-factor"
+structure_factor = True
+single = False
+
+#single = False
+#             ["name", "units", default, [lower, upper], "type","description"],
+parameters = [
+    #   [ "name", "units", default, [lower, upper], "type",
+    #     "description" ],
+    ["radius_effective", "Ang", 50.0, [0, inf], "volume",
+     "effective radius of hard sphere"],
+    ["volfraction", "", 0.04, [0, 0.08], "",
+     "volume fraction of spheres"],
+    ["welldepth", "kT", 1.5, [0.0, 1.5], "",
+     "depth of well, epsilon"],
+    ["wellwidth", "diameters", 1.2, [1.0, inf], "",
+     "width of well in diameters (=2R) units, must be &gt; 1"],
+    ]
+
+# No volume normalization despite having a volume parameter
+# This should perhaps be volume normalized?
+form_volume = """
+    return 1.0;
+    """
+
+source = ["squarewell.c"]
+
+def random():
+    """Return a random parameter set for the model."""
+    pars = dict(
+        scale=1, background=0,
+        radius_effective=10**np.random.uniform(1, 4.7),
+        volfraction=np.random.uniform(0.00001, 0.08),
+        welldepth=np.random.uniform(0, 1.5),
+        wellwidth=np.random.uniform(1, 1.2),
+    )
+    return pars
+
+#
+tests = [
+    [{'scale': 1.0, 'background': 0.0, 'radius_effective': 50.0,
+      'volfraction': 0.04, 'welldepth': 1.5, 'wellwidth': 1.2,
+      'radius_effective_pd': 0}, [0.001], [0.97665742]],
+    ]
+# ADDED by: converting from sasview RKH  ON: 16Mar2016
+</code>
+</pre>
+<a class="btn btn-default" href="/models/71/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/squarewell.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

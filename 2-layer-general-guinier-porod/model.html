@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>2 Layer General Guinier Porod | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/122/">2 Layer General Guinier Porod</a></li>
+</ol>
+<h1>2 Layer General Guinier Porod</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Implementation of the 2 layer General guinier porod model described in <br/>B. Hammouda, "A new Guinier–Porod model", Journal of Applied Crystallography, 43(4), 716, 2010</p>
+</p>
+<h2>Example Data:</h2>
+<canvas class="center-block" height="500" id="example-graph" style="max-width: 600px;" width="500"></canvas>
+<script type="text/javascript">
+            Chart.defaults.global.legend.display = false;
+            var ctx = $("#example-graph");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        label: '2 Layer General Guinier Porod',
+                        fill: false,
+                        borderColor: "rgba(0,0,255,1)",
+                        data: [{x: 0.004319, y: 4.30780638907},{x: 0.004865, y: 4.23894109988},{x: 0.005414, y: 4.168029855},{x: 0.005964, y: 4.08977121057},{x: 0.006517, y: 4.00794278075},{x: 0.007071, y: 3.92732034147},{x: 0.007625, y: 3.83908390292},{x: 0.00818, y: 3.74719253789},{x: 0.008736, y: 3.64992622847},{x: 0.009293, y: 3.55049265746},{x: 0.009849, y: 3.44841841763},{x: 0.01036, y: 3.35780956681},{x: 0.01041, y: 3.34879573334},{x: 0.01096, y: 3.24430644858},{x: 0.01152, y: 3.13703116021},{x: 0.01167, y: 3.10977674315},{x: 0.01208, y: 3.02910109638},{x: 0.01264, y: 2.92100081629},{x: 0.01299, y: 2.85525023578},{x: 0.01319, y: 2.81230785557},{x: 0.01431, y: 2.59226032125},{x: 0.01431, y: 2.59226032125},{x: 0.01487, y: 2.48318381177},{x: 0.01543, y: 2.37812553117},{x: 0.01564, y: 2.33933061443},{x: 0.01599, y: 2.27064265879},{x: 0.01654, y: 2.18016084758},{x: 0.01697, y: 2.10972287104},{x: 0.0171, y: 2.08398358295},{x: 0.01766, y: 1.99894638211},{x: 0.01822, y: 1.91558217082},{x: 0.0183, y: 1.90464844972},{x: 0.01878, y: 1.83626360055},{x: 0.01934, y: 1.76319627521},{x: 0.01989, y: 1.69445818202},{x: 0.02045, y: 1.62774255537},{x: 0.02097, y: 1.57273495155},{x: 0.02101, y: 1.56858953403},{x: 0.02157, y: 1.50958257237},{x: 0.02213, y: 1.45321294121},{x: 0.0223, y: 1.43730141356},{x: 0.02269, y: 1.40030847172},{x: 0.02324, y: 1.34982780871},{x: 0.02364, y: 1.3171625774},{x: 0.02436, y: 1.25752137359},{x: 0.02492, y: 1.21366650806},{x: 0.02497, y: 1.21004100954},{x: 0.02548, y: 1.17136548902},{x: 0.02603, y: 1.13155097138},{x: 0.02631, y: 1.11317231226},{x: 0.02659, y: 1.09368099131},{x: 0.02715, y: 1.05602674311},{x: 0.02765, y: 1.02604629686},{x: 0.02771, y: 1.02231310679},{x: 0.02827, y: 0.986898913719},{x: 0.02882, y: 0.956289345479},{x: 0.02899, y: 0.947113142156},{x: 0.02938, y: 0.924726897202},{x: 0.02994, y: 0.894432953505},{x: 0.03033, y: 0.875076996458},{x: 0.0305, y: 0.865532462539},{x: 0.03105, y: 0.838378147995},{x: 0.03161, y: 0.812314108098},{x: 0.03167, y: 0.809346976808},{x: 0.03217, y: 0.786361066175},{x: 0.03273, y: 0.761389215332},{x: 0.03301, y: 0.749373336241},{x: 0.03328, y: 0.737592741079},{x: 0.03384, y: 0.714275912684},{x: 0.03434, y: 0.695502646822},{x: 0.0344, y: 0.692087480563},{x: 0.03495, y: 0.67146851909},{x: 0.03551, y: 0.65043934435},{x: 0.03568, y: 0.644533288144},{x: 0.03607, y: 0.630522283326},{x: 0.03662, y: 0.611497924565},{x: 0.03702, y: 0.59811468366},{x: 0.03718, y: 0.592177717537},{x: 0.03774, y: 0.574684932459},{x: 0.03829, y: 0.557196771767},{x: 0.03836, y: 0.55513524566},{x: 0.03885, y: 0.540281868924},{x: 0.0397, y: 0.515488033297},{x: 0.03996, y: 0.508842784354},{x: 0.04104, y: 0.478608682076},{x: 0.04238, y: 0.444749418633},{x: 0.04372, y: 0.413236099906},{x: 0.04506, y: 0.383897925028},{x: 0.04774, y: 0.331331374821},{x: 0.04908, y: 0.307920233237},{x: 0.05042, y: 0.288072064777},{x: 0.05176, y: 0.268671880409},{x: 0.05296, y: 0.252766361975},{x: 0.0531, y: 0.2511278098},{x: 0.05444, y: 0.234501529734},{x: 0.05578, y: 0.220862489844},{x: 0.05712, y: 0.207241048371},{x: 0.05846, y: 0.19583411957},{x: 0.05847, y: 0.195752227825},{x: 0.06114, y: 0.17460486321},{x: 0.06248, y: 0.165348229356},{x: 0.06382, y: 0.156802218869},{x: 0.06399, y: 0.155851898535},{x: 0.06516, y: 0.149006822349},{x: 0.0665, y: 0.142259984144},{x: 0.06784, y: 0.135656834422},{x: 0.06918, y: 0.129493823759},{x: 0.0695, y: 0.128185683128},{x: 0.07051, y: 0.123657707348},{x: 0.07185, y: 0.118750771839},{x: 0.07453, y: 0.109161789863},{x: 0.07502, y: 0.107707370466},{x: 0.07587, y: 0.105202887272},{x: 0.0772, y: 0.101285363696},{x: 0.07854, y: 0.0976305649787},{x: 0.07988, y: 0.0941762010748},],
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            scaleLabel: { display: true, labelString: 'log(Q) [A^-1]' },
+                            gridLines: { display: false }
+                        }],
+                        yAxes: [{
+                            type: 'logarithmic',
+                            scaleLabel: { display: true, labelString: 'log(I) [cm^-1]' },
+                            gridLines: { display: false }
+                        }]
+                    },
+                    responsive: true,
+                }
+
+            });
+        </script>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/28/">dfsunday</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Feb. 3, 2020, 5:52 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-danger"><span class="glyphicon glyphicon-remove"></span> This model has not been verified by a member of the SasView team</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is not currently included in the SasView library. You must download the files and install it yourself.
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/612">general_guinier_porod.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

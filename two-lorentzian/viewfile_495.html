@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/22/">Two Lorentzian</a></li>
+<li><a href="/uploads/495">two_lorentzian.py</a></li>
+</ol>
+<h1>Two Lorentzian - two_lorentzian.py</h1>
+<pre>
+    <code>r"""
+Definition
+----------
+
+The scattering intensity $I(q)$ is calculated as
+
+.. math::
+
+    I(q) = frac{A}{1 +(Qxi_1)^n} + frac{C}{1 +(Qxi_2)^m} + 	ext{B}
+
+where $A$ = Lorentzian scale factor #1, $C$ = Lorentzian scale #2,
+$xi_1$ and $xi_2$ are the corresponding correlation lengths, and $n$ and
+$m$ are the respective power law exponents (set $n = m = 2$ for
+Ornstein-Zernicke behaviour).
+
+For 2D data the scattering intensity is calculated in the same way as 1D,
+where the $q$ vector is defined as
+
+.. math::
+
+    q = sqrt{q_x^2 + q_y^2}
+
+
+References
+----------
+
+None.
+
+Authorship and Verification
+----------------------------
+
+* **Author:** NIST IGOR/DANSE **Date:** pre 2010
+* **Last Modified by:** Piotr rozyczko **Date:** January 29, 2016
+* **Last Reviewed by:** Paul Butler **Date:** March 21, 2016
+"""
+
+import numpy as np
+from numpy import inf, power
+
+name = "two_lorentzian"
+title = "This model calculates an empirical functional form for SAS data 
+characterized by two Lorentzian-type functions."
+description = """I(q) = scale_1/(1.0 + pow((q*length_1),exponent_1))
+             + scale_2/(1.0 + pow((q*length_2),exponent_2) )+ background
+
+             scale_1    = Lorentzian term scaling #1
+             length_1   = Lorentzian screening length #1 [A]
+             exponent_1 = Lorentzian exponent #1
+             scale_2    = Lorentzian term scaling #2
+             length_2   = Lorentzian screening length #2 [A]
+             exponent_2 = Lorentzian exponent #2
+             background = Incoherent background
+        """
+category = "shape-independent"
+
+# pylint: disable=bad-whitespace, line-too-long
+#            ["name", "units", default, [lower, upper], "type", "description"],
+parameters = [["lorentz_scale_1",  "",     10.0, [-inf, inf], "", "First power law scale factor"],
+              ["lorentz_length_1", "Ang", 100.0, [-inf, inf], "", "First Lorentzian screening length"],
+              ["lorentz_exp_1",    "",      3.0, [-inf, inf], "", "First exponent of power law"],
+              ["lorentz_scale_2",  "",      1.0, [-inf, inf], "", "Second scale factor for broad Lorentzian peak"],
+              ["lorentz_length_2", "Ang",  10.0, [-inf, inf], "", "Second Lorentzian screening length"],
+              ["lorentz_exp_2",    "",      2.0, [-inf, inf], "", "Second exponent of power law"],
+             ]
+# pylint: enable=bad-whitespace, line-too-long
+
+
+def Iq(q,
+       lorentz_scale_1=10.0,
+       lorentz_length_1=100.0,
+       lorentz_exp_1=3.0,
+       lorentz_scale_2=1.0,
+       lorentz_length_2=10.0,
+       lorentz_exp_2=2.0):
+
+    """
+    :param q:                   Input q-value (float or [float, float])
+    :param lorentz_scale_1:     Second scale factor for broad Lorentzian peak
+    :param lorentz_length_1:    First Lorentzian screening length
+    :param lorentz_exp_1:       Exponent of the second Lorentz function
+    :param lorentz_scale_2:     Second scale factor for broad Lorentzian peak
+    :param lorentz_length_2:    Second Lorentzian screening length
+    :param lorentz_exp_2:       Exponent of the second Lorentz function
+    :return:                    Calculated intensity
+    """
+# pylint: disable=bad-whitespace
+    intensity  = lorentz_scale_1/(1.0 +
+                                  power(q*lorentz_length_1, lorentz_exp_1))
+    intensity += lorentz_scale_2/(1.0 +
+                                  power(q*lorentz_length_2, lorentz_exp_2))
+# pylint: enable=bad-whitespace
+    return intensity
+
+Iq.vectorized = True  # Iq accepts an array of q values
+
+def random():
+    """Return a random parameter set for the model."""
+    scale = 10**np.random.uniform(0, 4, 2)
+    length = 10**np.random.uniform(1, 4, 2)
+    expon = np.random.uniform(1, 6, 2)
+
+    pars = dict(
+        #background=0,
+        scale=1, # scale provided in model
+        lorentz_scale_1=scale[0],
+        lorentz_length_1=length[0],
+        lorentz_exp_1=expon[0],
+        lorentz_scale_2=scale[1],
+        lorentz_length_2=length[1],
+        lorentz_exp_2=expon[1],
+    )
+    return pars
+
+
+demo = dict(scale=1, background=0.1,
+            lorentz_scale_1=10,
+            lorentz_length_1=100.0,
+            lorentz_exp_1=3.0,
+            lorentz_scale_2=1,
+            lorentz_length_2=10,
+            lorentz_exp_2=2.0)
+
+tests = [
+
+    # Accuracy tests based on content in test/utest_extra_models.py
+    [{'lorentz_scale_1':   10.0,
+      'lorentz_length_1': 100.0,
+      'lorentz_exp_1':      3.0,
+      'lorentz_scale_2':    1.0,
+      'lorentz_length_2':  10.0,
+      'lorentz_exp_2':      2.0,
+      'background':         0.1,
+     }, 0.001, 11.08991],
+
+    [{'lorentz_scale_1':   10.0,
+      'lorentz_length_1': 100.0,
+      'lorentz_exp_1':      3.0,
+      'lorentz_scale_2':    1.0,
+      'lorentz_length_2':  10.0,
+      'lorentz_exp_2':      2.0,
+      'background':         0.1,
+     }, 0.150141, 0.410245],
+
+    [{'lorentz_scale_1':   10.0,
+      'lorentz_length_1': 100.0,
+      'lorentz_exp_1':      3.0,
+      'lorentz_scale_2':    1.0,
+      'lorentz_length_2':  10.0,
+      'lorentz_exp_2':      2.0,
+      'background':         0.1,
+     }, 0.442528, 0.148699],
+
+    # Additional tests with larger range of parameters
+    [{'lorentz_scale_1':   10.0,
+      'lorentz_length_1': 100.0,
+      'lorentz_exp_1':      3.0,
+      'lorentz_scale_2':    1.0,
+      'lorentz_length_2':  10.0,
+      'lorentz_exp_2':      2.0,
+     }, 0.000332070182643, 10.9996228107],
+
+    [{'lorentz_scale_1':  0.0,
+      'lorentz_length_1': 0.0,
+      'lorentz_exp_1':    0.0,
+      'lorentz_scale_2':  0.0,
+      'lorentz_length_2': 0.0,
+      'lorentz_exp_2':    0.0,
+      'background':     100.0
+     }, 5.0, 100.0],
+
+    [{'lorentz_scale_1': 200.0,
+      'lorentz_length_1': 10.0,
+      'lorentz_exp_1':     0.1,
+      'lorentz_scale_2':   0.1,
+      'lorentz_length_2':  5.0,
+      'lorentz_exp_2':     2.0
+     }, 20000., 45.5659201896],
+    ]
+</code>
+</pre>
+<a class="btn btn-default" href="/models/22/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/two_lorentzian.py"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>View File | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="/static/marketplace/tomorrow-night.css" rel="stylesheet"/>
+<script src="/static/marketplace/highlight.pack.js"></script>
+<script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/sphere/">Sphere</a></li>
+<li><a href="/models/88/">coreshellmicrogel (SASfit)</a></li>
+<li><a href="/uploads/363">sasfit_coreshellmicrogel.c</a></li>
+</ol>
+<h1>coreshellmicrogel (SASfit) - sasfit_coreshellmicrogel.c</h1>
+<pre>
+    <code>///////////////////////////////////////////////////
+//    This is automatically genearted file       //
+//    by sasfit_convert.py                       //
+//    Some editting might be required            //
+///////////////////////////////////////////////////
+
+double Iq( double q, double W_CORE,  double SIGMA_CORE,  double W_SH,
+           double SIGMA_SHIN,  double D,  double SIGMA_OUT,  double ETA_CORE,
+           double ETA_SHELL,  double ETA_SOL);
+double Fq( double q,  double W_CORE,  double SIGMA_CORE,  double W_SH,
+           double SIGMA_SHIN,  double D,  double SIGMA_OUT,  double ETA_CORE,
+           double ETA_SHELL,  double ETA_SOL);
+double form_volume(  double W_CORE,  double SIGMA_CORE,  double W_SH,
+                     double SIGMA_SHIN, double D, double SIGMA_OUT);
+
+#define R_CORE		W_CORE+SIGMA_CORE
+#define R_OUT		R_CORE+D+SIGMA_SHIN+W_SH+SIGMA_OUT
+#define R_SHIN		R_CORE+D
+double ampl(double q, double rad, double sigma, double contrast)
+{
+    double u,v,w,t,s,Vol;
+    u = q*fabs(rad);
+    v=q*(fabs(rad)+fabs(sigma));
+    w=q*(fabs(rad)-fabs(sigma));
+    t=sas_pow_5(q)*sas_pow_2(sigma);
+    s=sas_pow_4(q)*sas_pow_2(sigma);
+    Vol=4.*M_PI*(sas_pow_3(rad)/3.+rad*sas_pow_2(sigma)/6.0);
+
+    if (Vol==0) return 0;
+    if (sigma*q&lt;1e-3)
+    {
+        if (q==0)
+        {
+            return Vol * contrast;
+        }
+        else
+        {
+            return Vol
+                   * contrast / (sas_pow_3(rad)/3.+rad*sas_pow_2(sigma)/6.0) *
+                   (					 (sin(u)-u*cos(u))/sas_pow_3(q)
+                                        + sas_pow_2(sigma) * (sin(u)+u*cos(u))/(12.*q)
+                                        - sas_pow_4(sigma) * ((1./360.)*q*u*cos(u)+1./120.*q*sin(u))
+                   );
+        }
+    }
+    else
+    {
+        if (q==0)
+        {
+            return Vol * contrast;
+        }
+        else
+        {
+            return Vol
+                   * contrast / (sas_pow_3(rad)/3.+rad*sas_pow_2(sigma)/6.0)
+                   * ( (rad/sas_pow_2(sigma)+1/sigma) * cos(v)/sas_pow_4(q)
+                       +(rad/sas_pow_2(sigma)-1/sigma) * cos(w)/sas_pow_4(q)
+                       -3*sin(v)/t
+                       -3*sin(w)/t
+                       -2*rad*cos(u)/s
+                       +6*sin(u)/t
+                     );
+        }
+    }
+}
+double Iq( double q, double W_CORE,  double SIGMA_CORE,  double W_SH,
+           double SIGMA_SHIN,  double D,  double SIGMA_OUT,  double ETA_CORE,
+           double ETA_SHELL,  double ETA_SOL)
+{
+    return sas_pow_2(Fq(q,W_CORE, SIGMA_CORE, W_SH, SIGMA_SHIN, D, SIGMA_OUT,
+                        ETA_CORE, ETA_SHELL, ETA_SOL));
+}
+double Fq( double q,  double W_CORE,  double SIGMA_CORE,  double W_SH,
+           double SIGMA_SHIN,  double D,  double SIGMA_OUT,  double ETA_CORE,
+           double ETA_SHELL,  double ETA_SOL)
+{
+    return		ampl(q,R_OUT,SIGMA_OUT,(ETA_SHELL-ETA_SOL))
+                -	ampl(q,R_SHIN,SIGMA_SHIN,(ETA_SHELL-ETA_SOL))
+                +	ampl(q,R_CORE,SIGMA_CORE,(ETA_CORE -ETA_SOL));
+}
+double form_volume(  double W_CORE,  double SIGMA_CORE,  double W_SH,
+                     double SIGMA_SHIN, double D, double SIGMA_OUT)
+{
+       return 4.*M_PI*sas_pow_3(R_OUT+SIGMA_OUT)/3.;
+}
+</code>
+</pre>
+<a class="btn btn-default" href="/models/88/">Back to Model</a>
+<a class="btn btn-primary" href="/uploads/uploaded_models/sasfit_coreshellmicrogel.c"><span class="glyphicon glyphicon-download"></span> Download</a>
+</div>
+</body>
+</html>

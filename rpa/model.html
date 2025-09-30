@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Rpa | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/33/">Rpa</a></li>
+</ol>
+<h1>Rpa</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>.. warning:: This model is not functioning correctly in SasView and it              appears it has not done so for some time. Whilst the              problem is investigated, a workaround for Case 0 below              (the most common use case) is to use the binary_blend              model available on the `Model Maketplace               &lt;https://marketplace.sasview.org/models/124/&gt;`_ . For further              information, please email help@sasview.org . *The              SasView Developers. February 2022.* </p>
+<p> Definition </p>
+<p> </p>
+<p> Calculates the macroscopic scattering intensity for a multi-component homogeneous mixture of polymers using the Random Phase Approximation. This general formalism contains 10 specific cases </p>
+<p> Case 0: C/D binary mixture of homopolymers </p>
+<p> Case 1: C-D diblock copolymer </p>
+<p> Case 2: B/C/D ternary mixture of homopolymers </p>
+<p> Case 3: C/C-D mixture of a homopolymer B and a diblock copolymer C-D </p>
+<p> Case 4: B-C-D triblock copolymer </p>
+<p> Case 5: A/B/C/D quaternary mixture of homopolymers </p>
+<p> Case 6: A/B/C-D mixture of two homopolymers A/B and a diblock C-D </p>
+<p> Case 7: A/B-C-D mixture of a homopolymer A and a triblock B-C-D </p>
+<p> Case 8: A-B/C-D mixture of two diblock copolymers A-B and C-D </p>
+<p> Case 9: A-B-C-D tetra-block copolymer </p>
+<p> .. note::     These case numbers are different from those in the NIST SANS package! </p>
+<p> The models are based on the papers by Akcasu *et al.* [1] and by Hammouda [2] assuming the polymer follows Gaussian statistics such that $R_g^2 = n b^2/6$ where $b$ is the statistical segment length and $n$ is the number of statistical segment lengths. A nice tutorial on how these are constructed and implemented can be found in chapters 28, 31 and 34, and Part H, of Hammouda's 'SANS Toolbox' [3]. </p>
+<p> In brief, the macroscopic cross sections are derived from the general forms for homopolymer scattering and the multiblock cross-terms while the inter, polymer cross terms are described in the usual way by the $\chi$ parameter. </p>
+<p> USAGE NOTES: </p>
+<p>**Component D is assumed to be the "background" component (ie, all contrasts<br/> * Only one case can be used at any one time. * The RPA (mean field) formalism only applies only when the multicomponent   polymer mixture is in the homogeneous mixed-phase region.   are calculated with respect to component D).** So the scattering contrast   for a C/D blend $\rho_{C/D} = [\rho_C - \rho_D]$`2`. * Depending on which case is being used, the number of fitting parameters can   vary. </p>
+<p>   .. Note::     * In general the degrees of polymerization, the volume       fractions, the molar volumes, and the neutron scattering lengths for each       component are obtained from other methods and held fixed while The *scale*       parameter should be held equal to unity.     * The variables are normally the segment lengths ($b_a$, $b_b$,       etc.) and $\chi$ parameters ($K_{ab}$, $K_{ac}$, etc). </p>
+<p> References </p>
+<p> </p>
+<p> #. A Z Akcasu, R Klein and B Hammouda, *Macromolecules*, 26 (1993) 4136 #. B. Hammouda, *Advances in Polymer Science* 106 (1993) 87 #. B. Hammouda, *SANS Toolbox*    https://www.ncnr.nist.gov/staff/hammouda/the_sans_toolbox.pdf. </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:** Boualem Hammouda - NIST IGOR/DANSE **Date:** pre 2010<br/>**Converted to sasmodels by:** Paul Kienzle **Date:** July 18, 2016<br/>**Last Modified by:** Paul Butler **Date:** March 12, 2017<br/>**Last Reviewed by:** Steve King **Date:** March 27, 2019<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/746">rpa.py</a><br>
+<a href="/uploads/747">rpa.c</a><br>
+</br></br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>

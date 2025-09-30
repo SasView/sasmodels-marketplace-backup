@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Unified Power Rg | SasView Model Marketplace</title>
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" rel="stylesheet"/>
+<link charset="utf-8" href="/static/marketplace/style.css" rel="stylesheet">
+<link href="/static/marketplace/ball.ico" rel="shortcut icon" type="image/x-icon"/>
+<script charset="utf-8" src="/static/marketplace/jquery-2.2.4.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    window.MathJax = ({
+        elements: ["model-desc"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], [ "\\(", "\\)" ] ],
+            processEscapes: true
+        },
+        asciimath2jax: {
+            delimiters: [],
+        },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+    });
+</script>
+</link></head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container container-fluid">
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<img src="/static/marketplace/logo.png"/><a class="navbar-brand" href="/">SasView Marketplace</a>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/accounts/login/"><span class="glyphicon glyphicon-log-in"></span> Log In </a></li>
+</ul>
+<form action="/search/" class="navbar-form navbar-left" method="get">
+<div class="form-group">
+<input class="form-control" name="query" placeholder="Search" type="text"/>
+</div>
+<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+</div><!-- /.navbar-collapse -->
+</div>
+</nav>
+<div class="container">
+<ol class="breadcrumb">
+<li><a href="/">Categories</a></li>
+<li><a href="/models/shape-independent/">Shape-Independent</a></li>
+<li><a href="/models/52/">Unified Power Rg</a></li>
+</ol>
+<h1>Unified Power Rg</h1>
+<h2>Description:</h2>
+<div class="container" id="model-desc">
+<p>
+<p>Definition </p>
+<p> </p>
+<p> This model employs the empirical multiple level unified Exponential/Power-law fit method developed by Beaucage. Four functions are included so that 1, 2, 3, or 4 levels can be used. In addition a 0 level has been added which simply calculates </p>
+<p> $$  I(q) = \text{scale} / q + \text{background} <br/>$$<br/>The Beaucage method is able to reasonably approximate the scattering from many different types of particles, including fractal clusters, random coils (Debye equation), ellipsoidal particles, etc. </p>
+<p> The model works best for mass fractal systems characterized by Porod exponents between 5/3 and 3. It should not be used for surface fractal systems. Hammouda (2010) has pointed out a deficiency in the way this model handles the transitioning between the Guinier and Porod regimes and which can create artefacts that appear as kinks in the fitted model function. </p>
+<p> Also see the `guinier-porod` model. </p>
+<p> The empirical fit function is: </p>
+<p> $$  I(q) = \text{background} + \sum_{i=1}^N \Bigl[ G_i \exp\Bigl(-\frac{q^2R_{gi}^2}{3}\Bigr) + B_i \exp\Bigl(-\frac{q^2R_{g(i+1)}^2}{3}\Bigr) \Bigl(\frac{1}{q_i^*}\Bigr)^{P_i} \Bigr] <br/>$$<br/>where </p>
+<p> $$  q_i^* = q \left[\operatorname{erf} \left(\frac{q R_{gi}}{\sqrt{6}}\right) \right]^{-3} <br/>$$</p>
+<p> For each level, the four parameters $G_i$, $R_{gi}$, $B_i$ and $P_i$ must be chosen.  Beaucage has an additional factor $k$ in the definition of $q_i^*$ which is ignored here. </p>
+<p> For example, to approximate the scattering from random coils (Debye equation), set $R_{gi}$ as the Guinier radius, $P_i = 2$, and $B_i = 2 G_i / R_{gi}$ </p>
+<p> See the references for further information on choosing the parameters. </p>
+<p> For 2D data: The 2D scattering intensity is calculated in the same way as 1D, where the $q$ vector is defined as </p>
+<p> $$  q = \sqrt{q_x^2 + q_y^2} <br/>$$</p>
+<p> References </p>
+<p> </p>
+<p> #. G Beaucage, *J. Appl. Cryst.*, 28 (1995) 717-728 #. G Beaucage, *J. Appl. Cryst.*, 29 (1996) 134-146 #. B Hammouda, *Analysis of the Beaucage model*,    *J. Appl. Cryst.*, (2010), 43, 1474-1478 </p>
+<p> Authorship and Verification </p>
+<p> </p>
+<p>**Author:**<br/>**Last Modified by:**<br/>**Last Reviewed by:**<br/> </p>
+</p>
+</div>
+<h2>Details:</h2>
+<table class="table">
+<tr>
+<td><strong>Created By</strong></td>
+<td><a href="/accounts/user/12/">sasview</a></td>
+</tr>
+<tr>
+<td><strong>Uploaded</strong></td>
+<td>Sept. 7, 2017, 3:56 p.m.</td>
+</tr>
+<tr>
+<td><strong>Category</strong></td>
+<td>Shape-Independent</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>0
+        
+        </td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>
+<span class="text-success"><span class="glyphicon glyphicon-ok"></span> Verified by SasView Team on 07 Sep 2017</span>
+</td>
+</tr>
+<tr>
+<td><strong>In Library</strong></td>
+<td>
+            
+                This model is included in the SasView library by default
+            
+        </td>
+</tr>
+<tr>
+<td><strong>Files</strong></td>
+<td>
+<a href="/uploads/735">unified_power_Rg.py</a><br>
+</br></td>
+</tr>
+</table>
+<h3>Comments:</h3>
+<p>
+        No comments yet.
+    </p>
+<p>
+        Please log in to add a comment.
+    </p>
+</div>
+</body>
+</html>
